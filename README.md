@@ -17,16 +17,16 @@ however there is only currenlty three race lines recorded zolder, dubai club and
 * This is only a local install i.e. download to a directory in your home directory.
 * Open a terminal
 * cd to src directory. 
-  * # cd ./src
+  * ```# cd ./src```
 * run "make install"
-  * # make install
+  * ```# make install```
 * run "make"
-  * # make
+  * ```# make```
 * cd capture_lap_data
-  * # cd ./bin/capture_lap_data
+  * ```# cd ./bin/capture_lap_data```
 * run "make"
-  * # make
+  * ```# make```
 * Export DYLD_LIBRARY_PATH to ./lib
-  * # export DYLD_LIBRARY_PATH=/home/your_home/your_pars_dir_path/lib
+  * ```# export DYLD_LIBRARY_PATH=/home/your_home/your_pars_dir_path/lib```
 * run pcars
-  * # ./pcars
+  * ```# ./pcars```
