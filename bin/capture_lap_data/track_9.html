@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+
+<script type="text/javascript">
+
+var max_rpm;
+var raceline;
+var corner;
+var corner_ctx;
+var track_name;
+var track;
+var corner_map_element;
+var corner_map_ctx;
+var telemetery_ctx;
+var corners = [];
+var telemetery = [];
+var corner_buttons = [];
+var lap_buttons = [];
+var telemetery_buttons = [];
+var corner_elements = [];
+var lap_elements = [];
+var telemetery_elements = [];
+var corner = null;
+var laps = [];
+var line_colours = [];
+var line_colours2 = [];
+var line_colours3 = [];
+
+var tele_names = [ "brake", "throttle" ]; 
+
+function Corner(start, entry, apex, exit, finish, zoom, x, y) {
+	this.start = start;
+	this.entry = entry;
+	this.apex = apex;
+	this.exit = exit;
+	this.finish = finish;
+	this.zoom = zoom;
+	this.x = x;
+	this.y = y;
+}
+
+function Track(zoom, across, up) {
+	this.zoom = zoom;
+	this.across = across;
+	this.up = up;
+}
+
+function load_json() {
+	// load lap data from json
+	var name_lap = "lap";
+	for (var i = 1; i < 1000; ++i) {
+		try {
+			var name = name_lap.concat(i.toString());
+			var lap = JSON.parse(eval(name));
+			telemetery.push(lap);
+		}
+		catch (e) {
+			break;
+		}
+	}
+
+	// create specific track data
+	switch (telemetery[0].data[0].track_distance) {
+		case "2525":
+			track_name = "Dubai Aero Drome Club";
+			raceline = JSON.parse(dubaiclub_track_raceline);
+			corners.push(new Corner(480, 680, [775], 975, 1060, 1.1, 100, -60));
+			corners.push(new Corner(1060, 1132, [1185], 1210, 1230, 1.1, -100, -200));
+			corners.push(new Corner(1230,1250,[1300],1365,1410, 1.1, -200, -300));
+			corners.push(new Corner(1410,1496,[1525, 1570, 1605],1620,1635, 1.1, -400, -350));
+			corners.push(new Corner(1635,1645,[1735],1800,1825, 1.1, -500, -250));
+			corners.push(new Corner(1825,1845,[1900],2000,2090, 1.1, -650, -180));
+			corners.push(new Corner(2090,2203,[2280],2355,2510, 1.1, -750, -30));
+			track = new Track(0.3, 150, 90);
+			break;
+		case "4146":
+			raceline = JSON.parse(zolder_track_raceline);
+			break;
+		case "3547":
+			track_name = "Oulton Park Island";
+			raceline = JSON.parse(oulton_park_island);
+			corners.push(new Corner(0, 194, [275], 356, 450, 0.6, 250, 265)); // 1st param higher the value move right 2nd param higher the value move higher
+			corners.push(new Corner(450, 690, [802], 883, 1000, 0.6, 410, 470));
+			corners.push(new Corner(1000,1260,[1307],1343,1460, 0.6, 390, 660));
+			corners.push(new Corner(1680,1797,[1841, 1885],1920,1945, 0.6, 530, 510));
+			corners.push(new Corner(1945,1963,[2010],2060,2150, 0.6, 590, 400));
+			corners.push(new Corner(2350,2410,[2491, 2633, 2722],2803,2900, 0.6, 500, 95));
+			corners.push(new Corner(2900,3152,[3202],3280,3380, 1.1, 350, -125));
+			track = new Track(0.2, 360, 215); // 1st param higher the value move right 2nd param higher the value move higher
+			break;
+
+		default:
+			alert("no track data");
+	}
+}
+
+function opening_phase() {
+	draw_lap_buttons();
+	draw_corner_buttons();
+	draw_telemetery_buttons();
+	draw_corner_area();
+	draw_graph_area();
+	draw_track_raceline();
+}
+
+function draw_corner_buttons() {
+	document.getElementById('title').innerHTML = track_name;
+	for ( i = 0; i < corners.length; i++) { 
+		corner_buttons.push(document.createElement("INPUT"));
+		corner_buttons[i].setAttribute("type", "radio");
+		corner_buttons[i].name = "turns";
+		corner_buttons[i].id = i;
+		corner_buttons[i].onclick = function() {
+			corner = corners[this.id];
+			draw_corner_area();
+			draw_corner();
+			draw_graph_area();
+			draw_tele_graph();
+		};
+		corner_elements = document.getElementById('corner_buttons');
+		corner_elements.appendChild(corner_buttons[i]);
+		corner_elements.appendChild(document.createTextNode("Turn "));
+		corner_elements.appendChild(document.createTextNode(i + 1));
+	}
+}
+
+function draw_lap_buttons() {
+	for ( i = 0; i < telemetery.length; i++) { 
+
+		var sector1;
+		var sector2;
+		var sector3;
+		
+		for (var k = 0; k < telemetery[i].data.length; k++) {
+			switch(telemetery[i].data[k].sector * 1) {
+			case 1:
+				sector1 = telemetery[i].data[k].current_time;
+				break;
+			case 2: 
+				sector2 = telemetery[i].data[k].current_time;
+				break;
+			case 3: 
+				sector3 = telemetery[i].data[k].current_time;
+				break;
+			default:
+			}
+
+			telemetery[i].data[k].current_time
+		}
+
+		lap_buttons.push(document.createElement("INPUT"));
+		lap_buttons[i].setAttribute("type", "checkbox");
+		lap_buttons[i].name = "laps";
+		lap_buttons[i].id = i;
+		lap_buttons[i].onclick = function() {
+			draw_corner_area();
+			draw_corner();
+			draw_graph_area();
+			draw_tele_graph();
+		};
+		lap_elements = document.getElementById('lap_checkboxs');
+		lap_elements.appendChild(lap_buttons[i]);
+		lap_elements.appendChild(document.createTextNode("Lap"));
+		lap_elements.appendChild(document.createTextNode(i + 1));
+		lap_elements.appendChild(document.createTextNode(" L"));
+		lap_elements.appendChild(document.createTextNode(i + 1));
+		lap_elements.appendChild(document.createTextNode("--"));
+		lap_elements.appendChild(document.createTextNode(telemetery[i].data[telemetery[i].data.length - 1].current_time));
+		lap_elements.appendChild(document.createTextNode("  S1--"));
+		lap_elements.appendChild(document.createTextNode(sector1));
+		lap_elements.appendChild(document.createTextNode(" S2--"));
+		lap_elements.appendChild(document.createTextNode(sector2));
+		lap_elements.appendChild(document.createTextNode(" S3--"));
+		lap_elements.appendChild(document.createTextNode(sector3));
+		var br = document.createElement("br");
+		lap_elements.appendChild(br);
+	}
+}
+
+function draw_telemetery_buttons() {
+	var obj = Object(telemetery[0].data[0]);
+	var teles = Object.entries(obj);
+	//for (var i = 0; i < tele_names.length; i++) { 
+	var k = 0;
+	for (var i = 6; i < teles.length; i++) { 
+
+		var value1 = randomIntFromInterval(0, 255);
+		var value2 = randomIntFromInterval(0, 255);
+		var value3 = randomIntFromInterval(0, 255);
+
+		line_colours.push(value1);
+		line_colours2.push(value2);
+		line_colours3.push(value3);
+
+		telemetery_buttons.push(document.createElement("INPUT"));
+		telemetery_buttons[k].setAttribute("type", "checkbox");
+		telemetery_buttons[k].name = "tele";
+		telemetery_buttons[k].id = i;
+		telemetery_buttons[k].onclick = function() {
+			draw_corner_area();
+			draw_corner();
+			draw_graph_area();
+			draw_tele_graph();
+		};
+		telemetery_elements = document.getElementById('telemetery_checkboxs');
+		telemetery_elements.appendChild(telemetery_buttons[k]);
+		telemetery_elements.appendChild(document.createTextNode(teles[i][0]));
+		++k;
+	}
+}
+
+function draw_corner_area() {
+	corner_map_element = document.getElementById('corner_map_canvas');
+	while (corner_map_element.hasChildNodes()) {
+		corner_map_element.removeChild(corner_map_element.firstChild);	
+	}
+	var canvas = document.createElement("canvas");
+	canvas.width = 629;
+	canvas.height = 300;
+	corner_map_element.appendChild(canvas);
+	corner_map_ctx = canvas.getContext('2d');
+	corner_map_ctx.rect(0, 0, canvas.width, canvas.height);
+	corner_map_ctx.stroke();
+	corner_map_ctx.transform(1, 0, 0, -1, 0, 300);
+}
+
+
+function draw_corner() {
+	if (corner !== null) {
+		var zoom;
+		var mov_across;
+		var mov_up;
+	//	zoom = 1.1;
+	//	mov_across = -750;
+	//	mov_up = -30;
+		zoom = corner.zoom * 1;
+		mov_across = corner.x * 1;
+		mov_up = corner.y * 1;
+		
+		for (var i = 0; i < telemetery.length; i++) {
+			if (lap_buttons[i].checked === true) {
+				corner_map_ctx.beginPath();
+				for (var j = 1; j < telemetery[i].data.length; j++) {
+					if ((telemetery[i].data[j].current_distance > corner.start) && (telemetery[i].data[j].current_distance < corner.finish)) { 
+						if (corner.apex.length === 1) {
+							corner_map_ctx.moveTo(((telemetery[i].data[j - 1].world_pos_x * 1) * zoom) + mov_across, ((telemetery[i].data[j - 1].world_pos_z * 1) * zoom) + mov_up);
+							corner_map_ctx.lineTo(((telemetery[i].data[j].world_pos_x * 1) * zoom) + mov_across, ((telemetery[i].data[j].world_pos_z * 1) * zoom) + mov_up);
+							if (((telemetery[i].data[j].current_distance * 1) > (corner.entry * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.apex[0] * 1))) {
+								corner_map_ctx.strokeStyle = "blue";
+								corner_map_ctx.stroke();
+							}
+							else if (((telemetery[i].data[j].current_distance * 1) > (corner.apex[0] * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.exit * 1))) {
+								corner_map_ctx.strokeStyle = "red";
+								corner_map_ctx.stroke();
+							}
+							else {
+								corner_map_ctx.strokeStyle = "greenyellow";
+								corner_map_ctx.stroke();
+							}
+							corner_map_ctx.beginPath();
+						}
+						if (corner.apex.length === 2) {
+							corner_map_ctx.moveTo(((telemetery[i].data[j - 1].world_pos_x * 1) * zoom) + mov_across, ((telemetery[i].data[j - 1].world_pos_z * 1) * zoom) + mov_up);
+							corner_map_ctx.lineTo(((telemetery[i].data[j].world_pos_x * 1) * zoom) + mov_across, ((telemetery[i].data[j].world_pos_z * 1) * zoom) + mov_up);
+							if (((telemetery[i].data[j].current_distance * 1) > (corner.entry * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.apex[0] * 1))) {
+								corner_map_ctx.strokeStyle = "blue";
+								corner_map_ctx.stroke();
+							}
+							else if (((telemetery[i].data[j].current_distance * 1) > (corner.apex[0] * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.apex[1] * 1))) {
+								corner_map_ctx.strokeStyle = "red";
+								corner_map_ctx.stroke();
+							}
+							else if (((telemetery[i].data[j].current_distance * 1) > (corner.apex[1] * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.exit * 1))) {
+								corner_map_ctx.strokeStyle = "blue";
+								corner_map_ctx.stroke();
+							}
+							else {
+								corner_map_ctx.strokeStyle = "greenyellow";
+								corner_map_ctx.stroke();
+							}
+							corner_map_ctx.beginPath();
+						}
+						if (corner.apex.length === 3) {
+							corner_map_ctx.moveTo(((telemetery[i].data[j - 1].world_pos_x * 1) * zoom) + mov_across, ((telemetery[i].data[j - 1].world_pos_z * 1) * zoom) + mov_up);
+							corner_map_ctx.lineTo(((telemetery[i].data[j].world_pos_x * 1) * zoom) + mov_across, ((telemetery[i].data[j].world_pos_z * 1) * zoom) + mov_up);
+							if (((telemetery[i].data[j].current_distance * 1) > (corner.entry * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.apex[0] * 1))) {
+								corner_map_ctx.strokeStyle = "blue";
+								corner_map_ctx.stroke();
+							}
+							else if (((telemetery[i].data[j].current_distance * 1) > (corner.apex[0] * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.apex[1] * 1))) {
+								corner_map_ctx.strokeStyle = "red";
+								corner_map_ctx.stroke();
+							}
+							else if (((telemetery[i].data[j].current_distance * 1) > (corner.apex[1] * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.apex[2] * 1))) {
+								corner_map_ctx.strokeStyle = "blue";
+								corner_map_ctx.stroke();
+							}
+							else if (((telemetery[i].data[j].current_distance * 1) > (corner.apex[2] * 1)) && ((telemetery[i].data[j].current_distance * 1) < (corner.exit * 1))) {
+								corner_map_ctx.strokeStyle = "red";
+								corner_map_ctx.stroke();
+							}
+							else {
+								corner_map_ctx.strokeStyle = "greenyellow";
+								corner_map_ctx.stroke();
+							}
+							corner_map_ctx.beginPath();
+						}
+					}
+				}
+				corner_map_ctx.closePath();
+			}
+		}
+	}
+}
+
+function draw_tele_graph() {
+	if (corner !== null) {
+		for (var i = 0; i < lap_buttons.length; i++) {
+			if (lap_buttons[i].checked === true) {
+				var obj = Object(telemetery[0].data[0]);
+				var teles = Object.entries(obj);
+				var t = 0;
+				for (var k = 6; k < teles.length; k++) {
+					if (telemetery_buttons[t].checked === true) {
+						switch(k) { 
+						case 8:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((d[s][teles[k][0]] * 1) / 10); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 9:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((d[s][teles[k][0]] * 1) + 150); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 10:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(((d[s][teles[k][0]] * 1) * 300)); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 11:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(((d[s][teles[k][0]] * 1) * 10)); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 12:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(299); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 13:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									max_rpm = (d[s][teles[k- 1][0]] * 1);
+									line_data.push(((d[s][teles[k][0]] * 1) / max_rpm) * 300); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+						case 14:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(d[s][teles[k][0]] * 1); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 15:
+						case 16:
+						case 17:
+						case 18:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(((d[s][teles[k][0]] * 1) / 100) * 300); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 19:
+						case 20:
+						case 21:
+						case 22:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(((d[s][teles[k][0]] * 1) / 10) * 300); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 23:
+						case 24:
+						case 25:
+						case 26:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								//console.log((d[s][teles[k][0]] * 1));
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1) / 400) * 300) + 150); 
+								//	console.log((((d[s][teles[k][0]] * 1) / 400) * 300) + 150); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 27:
+						case 28:
+						case 29:
+						case 30: // tyre temp
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								//console.log((d[s][teles[k][0]] * 1));
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1) / 120) * 300)); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 47:
+						case 48:
+						case 49:
+						case 50:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+							//	console.log((d[s][teles[k][0]] * 1));
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1) / 425) * 300)); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 31:
+						case 32:
+						case 33:
+						case 34:
+						case 35:
+						case 36:
+						case 37:
+						case 38:
+						case 39:
+						case 40:
+						case 41:
+						case 42:
+						case 51:
+						case 52:
+						case 53:
+						case 54:
+						case 67:
+						case 68:
+						case 69:
+						case 70:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								//console.log((d[s][teles[k][0]] * 1));
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1) / 800) * 300)); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 43:
+						case 44:
+						case 45:
+						case 46:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								//console.log((d[s][teles[k][0]] * 1));
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(((((d[s][teles[k][0]] * 1))) * 100000) + 100); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 59:
+						case 60:
+						case 61:
+						case 62:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								//console.log((d[s][teles[k][0]] * 1));
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1)) * 300)); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 55:
+						case 56:
+						case 57:
+						case 58:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								//console.log((d[s][teles[k][0]] * 1));
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1)) * 300) + 150); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						case 63:
+						case 64:
+						case 65:
+						case 66:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								//console.log((d[s][teles[k][0]] * 1));
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push((((d[s][teles[k][0]] * 1) * 100))); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							break;
+						default:
+							var d = Object(telemetery[i].data);
+							var line_data = []; 
+							var line_position = []; 
+							for (var s = 0; s < telemetery[i].data.length; ++s) {
+								var dist = telemetery[i].data[s].current_distance * 1;
+								if ((corner.start < dist) && (corner.finish > dist)) {
+									line_data.push(((d[s][teles[k][0]] * 1) / 255) * 300); 
+									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
+								}
+							}
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+						}
+					}
+					++t;
+				}
+			}
+		}
+	}
+}
+
+function randomIntFromInterval(min,max)
+{
+	    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+function draw_line_data(data, pos, col) {
+	telemetery_ctx.beginPath();
+	telemetery_ctx.moveTo(0, data[0]);
+	for (var s = 1; s < data.length; s++) {
+		telemetery_ctx.lineTo(pos[s], data[s]);
+	}
+
+	telemetery_ctx.strokeStyle = col;
+	telemetery_ctx.stroke();
+
+}
+
+
+function draw_graph_area() {
+	telemetery_element = document.getElementById('corner_canvas');
+	while (telemetery_element.hasChildNodes()) {
+		telemetery_element.removeChild(telemetery_element.firstChild);	
+	}
+	var canvas = document.createElement("canvas");
+	canvas.width = 1265;
+	canvas.height = 300;
+	telemetery_element.appendChild(canvas);
+	telemetery_ctx = canvas.getContext('2d');
+	telemetery_ctx.rect(0, 0, canvas.width, canvas.height);
+	telemetery_ctx.stroke();
+
+	telemetery_ctx.beginPath();
+	telemetery_ctx.moveTo(0, 150);
+	telemetery_ctx.lineTo(1265, 150);
+	telemetery_ctx.strokeStyle = "lightGrey";
+	telemetery_ctx.stroke();
+
+	telemetery_ctx.beginPath();
+	telemetery_ctx.moveTo(0, 225);
+	telemetery_ctx.lineTo(1265, 225);
+	telemetery_ctx.strokeStyle = "lightGrey";
+	telemetery_ctx.stroke();
+
+	telemetery_ctx.beginPath();
+	telemetery_ctx.moveTo(0, 75);
+	telemetery_ctx.lineTo(1265, 75);
+	telemetery_ctx.strokeStyle = "lightGrey";
+	telemetery_ctx.stroke();
+
+
+	if (corner !== null) {
+		var diff = (1265/(corner.finish - corner.start));
+		var entry = (corner.entry - corner.start) * diff;
+		var exit = (corner.exit - corner.start) * diff;
+
+		var entry50 = ((corner.entry - 25) - corner.start) * diff;
+		var entry100 = ((corner.entry - 75) - corner.start) * diff;
+		var entry150 = ((corner.entry - 125) - corner.start) * diff;
+		var entry200 = ((corner.entry - 175) - corner.start) * diff;
+		
+		telemetery_ctx.beginPath();
+		telemetery_ctx.moveTo(entry50, 0);
+		telemetery_ctx.lineTo(entry50, 300);
+		telemetery_ctx.stroke();
+		
+		telemetery_ctx.beginPath();
+		telemetery_ctx.moveTo(entry100, 0);
+		telemetery_ctx.lineTo(entry100, 300);
+		telemetery_ctx.stroke();
+		
+		telemetery_ctx.beginPath();
+		telemetery_ctx.moveTo(entry150, 0);
+		telemetery_ctx.lineTo(entry150, 300);
+		telemetery_ctx.stroke();
+		
+		telemetery_ctx.beginPath();
+		telemetery_ctx.moveTo(entry200, 0);
+		telemetery_ctx.lineTo(entry200, 300);
+		telemetery_ctx.stroke();
+
+		telemetery_ctx.strokeStyle = "black";
+
+		telemetery_ctx.beginPath();
+		telemetery_ctx.moveTo(entry, 0);
+		telemetery_ctx.lineTo(entry, 300);
+		telemetery_ctx.stroke();
+
+		for (var i = 0; i < corner.apex.length; ++i) {
+			var ap = (corner.apex[i] - corner.start) * diff;
+			telemetery_ctx.beginPath();
+			telemetery_ctx.moveTo(ap, 0);
+			telemetery_ctx.lineTo(ap, 300);
+			telemetery_ctx.stroke();
+		}
+
+		telemetery_ctx.beginPath();
+		telemetery_ctx.moveTo(exit, 0);
+		telemetery_ctx.lineTo(exit, 300);
+		telemetery_ctx.stroke();
+	}
+
+	telemetery_ctx.transform(1, 0, 0, -1, 0, 300);
+}
+
+
+function draw_track_raceline() {
+	var element = document.getElementById('track_canvas');
+	while (element.hasChildNodes()) {
+		element.removeChild(element.firstChild);	
+	}
+	var canvas = document.createElement("canvas");
+	canvas.width = 629;
+	canvas.height = 300;
+	element.appendChild(canvas);
+	track_ctx = canvas.getContext('2d');
+	track_ctx.rect(0, 0, canvas.width, canvas.height);
+	track_ctx.stroke();
+	track_ctx.transform(1, 0, 0, -1, 0, 300);
+	track_ctx.beginPath();
+
+	for (var i = 1; i < raceline.data.length; i++) {
+		track_ctx.moveTo(((raceline.data[i - 1].x * 1) * track.zoom) + track.across, ((raceline.data[i - 1].z * 1) * track.zoom) + track.up);
+		track_ctx.lineTo(((raceline.data[i].x * 1) * track.zoom) + track.across, ((raceline.data[i].z * 1) * track.zoom) + track.up);
+		if ((raceline.data[i].sector * 1) === 1) {
+			track_ctx.strokeStyle = "blue";
+			track_ctx.stroke();
+		}
+		else if ((raceline.data[i].sector * 1) === 2) {
+			track_ctx.strokeStyle = "red";
+			track_ctx.stroke();
+		}
+		else {
+			track_ctx.strokeStyle = "green";
+			track_ctx.stroke();
+		}
+		track_ctx.beginPath();
+	}
+	track_ctx.closePath();
+}
+
+function main() {
+	load_json();
+	opening_phase();
+}
+
+</script>
+<script type="text/javascript" src="lap_data.json"></script>
+<script type="text/javascript" src="zolder_raceline_track.json"></script>
+<script type="text/javascript" src="DubaiAeroDromeClub_raceline_track.json"></script>
+<script type="text/javascript" src="oulton_park_island.json"></script>
+
+</head>
+<body onload='main()'>
+<div id="title"></div>
+<div id="lap_checkboxs"></div>
+<div id="corner_buttons"></div>
+<div id="corner_map_canvas" style="float: left" ></div>
+<div id="track_canvas"  style="float: right"></div>
+<div id="corner_canvas"></div>
+<div id="telemetery_checkboxs"></div>
+<br />
+</body>
+</html>
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+
+<script type="text/javascript">
+
+var zolder_inside;
+var zolder_outside;
+var zolder_raceline;
+var ctx;
+var telemetery = [];
+
+function load_json() {
+	// load lap data from json
+	var name_lap = "lap";
+	for (var i = 1; i < 1000; ++i) {
+		try {
+			var name = name_lap.concat(i.toString());
+			var lap = JSON.parse(eval(name));
+			telemetery.push(lap);
+		}
+		catch (e) {
+			break;
+		}
+	}
+}
+
+function track_func() {
+	//zolder_inside = JSON.parse(track_inside);
+	//zolder_outside = JSON.parse(track_outside);
+	//zolder_raceline = JSON.parse(track_raceline);
+
+	var canvas = document.createElement("canvas");
+	canvas.width = 4800;
+	canvas.height = 5500;
+	var element = document.getElementById('zoldertrack');
+	//while (element.hasChildNodes()) {
+    	//	element.removeChild(element.lastChild);
+	//}
+	element.appendChild(canvas);
+	ctx = canvas.getContext('2d');
+	//ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	ctx.lineWidth = 1;
+}
+
+var zoom = 4;
+var movz = 1500; // higher the value lower the image goes
+var movx = 4000; // hight the value the image moves right
+
+function drawLap1ColourRaceLinetext(track) {
+	for (var i = 1; i < track.data.length; i++) {
+		ctx.beginPath();
+		ctx.moveTo(((track.data[i - 1].x * 1) * zoom) + movx, ((track.data[i - 1].z * 1) * -zoom) + movz);
+		ctx.lineTo(((track.data[i].x * 1) * zoom) + movx, ((track.data[i].z * 1) * -zoom) + movz);
+		ctx.stroke();
+		ctx.closePath();
+	}
+	ctx.font = "bold 24px verdana, sans-serif ";
+	ctx.textAlign = "start";
+	ctx.textBaseline = "bottom";
+	for (var i = 1; i < track.data.length; i++) {
+		if (((track.data[i].d) % 20) == 0) {
+			ctx.fillText(track.data[i].d, ((track.data[i].x * 1) * zoom) + movx, ((track.data[i].z * 1) * -zoom) + movz);
+		}
+	}
+}
+function drawLap1ColourRaceLine(track) {
+	for (var i = 1; i < track.data.length; i++) {
+		ctx.beginPath();
+		ctx.moveTo(((track.data[i - 1].x * 1) * zoom) + movx, ((track.data[i - 1].z * 1) * -zoom) + movz);
+		ctx.lineTo(((track.data[i].x * 1) * zoom) + movx, ((track.data[i].z * 1) * -zoom) + movz);
+
+		ctx.stroke();
+		ctx.closePath();
+	}
+}
+
+function drawLine(x,y,z,w) {
+	ctx.beginPath();
+	ctx.moveTo(((x * 1) * zoom) + movx, ((y * 1) * -zoom) + movz);
+	ctx.lineTo(((z * 1) * zoom) + movx, ((w * 1) * -zoom) + movz);
+	ctx.stroke();
+	ctx.closePath();
+}
+
+function main() {
+	load_json();
+	track_func();
+	//drawLap1ColourRaceLine(zolder_inside);
+	//drawLap1ColourRaceLine(zolder_outside);
+	//drawLap1ColourRaceLinetext(zolder_raceline);
+	drawLap1ColourRaceLine(telemetery[0]);
+	drawLap1ColourRaceLine(telemetery[1]);
+	drawLap1ColourRaceLinetext(telemetery[2]);
+	//drawLine(900,-200,600,600);
+}
+
+</script>
+<script type="text/javascript" src="track.json"></script>
+<script type="text/javascript" src="outside_dubai_track.json"></script>
+<script type="text/javascript" src="inside_dubai_track.json"></script>
+<script type="text/javascript" src="raceline_dubai_track.json"></script>
+
+</head>
+<body onload='main()'>
+<div id="zoldertrack"></div>
+<br />
+</body>
+</html>
+
