@@ -22,6 +22,9 @@ $(MAIN): $(OBJS)
 $(OBJDIR)/%.o: %.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
+install:
+	mkdir -p ../obj
+
 clean:
 	$(RM) $(OBJDIR)/*.o *~ $(MAIN)
 
