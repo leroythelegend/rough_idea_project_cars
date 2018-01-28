@@ -17,8 +17,6 @@ public:
 private:
 	Request * request_;
 
-	Request_Race_State_Racing racing_;
-
 	Request_Session_State_Practice(const Request_Session_State_Practice&) = delete;
 	Request_Session_State_Practice& operator=(const Request_Session_State_Practice&) = delete;
 };

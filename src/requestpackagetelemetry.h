@@ -16,7 +16,7 @@ public:
 
 private:
 	Request_Package * request_;
-	
+	Record_Post_Lap record_;	
 	Request_Race_State_Racing racing_;
 };
 

@@ -28,12 +28,12 @@ void process_func(const Process::Lap_Data data) {
 	global_process_lap->process(data);
 };
 
-Record_Lap::Record_Lap()
+Record_Post_Lap::Record_Post_Lap()
 	: lap_number_{-1}
 {
 }
 
-void Record_Lap::record(Decoder * decoder)
+void Record_Post_Lap::record(Decoder * decoder)
 {
 	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
 	if (tdecoder) {
@@ -62,11 +62,6 @@ void Record_Lap::record(Decoder * decoder)
 			}
 		}
 	}
-}
-
-
-void Record_Lap::clear() {
-	lap_data_.clear();
 }
 
 }

@@ -17,8 +17,6 @@ public:
 private:
 	Request * request_;
 
-	Request_Race_State_Racing racing_;
-
 	Request_Session_State_Qualify(const Request_Session_State_Qualify&) = delete;
 	Request_Session_State_Qualify& operator=(const Request_Session_State_Qualify&) = delete;
 };
