@@ -8,9 +8,6 @@
 
 namespace pcars {
 
-extern Process * global_process_lap;
-extern Live * global_live_lap;
-
 class Capture_Telemetry {
 public:
 	Capture_Telemetry();

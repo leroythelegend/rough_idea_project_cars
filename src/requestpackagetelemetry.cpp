@@ -10,6 +10,7 @@ namespace pcars {
 
 Request_Package_Telemetry::Request_Package_Telemetry(Request_Package * request)
 	: request_{request},
+	  record_{&process_},
 	  racing_{&record_} {}
 
 bool Request_Package_Telemetry::request(const PCars_Data & packet) {
