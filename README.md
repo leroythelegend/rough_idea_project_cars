@@ -27,6 +27,6 @@ however there is only currenlty three race lines recorded zolder, dubai club and
 * run "make"
   * ```# make```
 * Export DYLD_LIBRARY_PATH to ./lib
-  * ```# export DYLD_LIBRARY_PATH=/home/your_home/your_pars_dir_path/lib```
+  * ```# export DYLD_LIBRARY_PATH=/home/your_home/your_pcars_dir_path/lib```
 * run pcars
   * ```# ./pcars```
