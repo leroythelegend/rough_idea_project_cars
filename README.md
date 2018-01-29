@@ -37,7 +37,7 @@ TODO add instructions on creating more track data.
 #### OSX
 * cd capture_lap_data
   * ```# cd ./bin/capture_lap_data```
-* Export DYLD_LIBRARY_PATH to ./lib (Have not tested, but should work on linux e.g. LD_LIBRARY_PATH)
+* Export DYLD_LIBRARY_PATH to ./lib
   * ```# export DYLD_LIBRARY_PATH=../../lib```
 * Run pcars
   * ```# ./pcars```
