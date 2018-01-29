@@ -8,7 +8,7 @@ A set of cpp classes for capturing Project Cars UDP telemetry.
 * [Introduction](#T-Introduction)
 * [Build Library](#T-Build)
 * [Install Binarys](#T-Installation)
-* [Roll Your Own Post Lap] 
+* [Roll Your Own Post Lap](#T-post_lap)
 
 ## <a name="T-Introduction"></a>Introduction
 
