@@ -13,29 +13,18 @@ A set of cpp classes for capturing Project Cars UDP telemetry.
 
 ## Contents
 * [Introduction](#T-Introduction)
-* [Build Library](#T-Build)
 * [Install Binarys](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
+* [Build Library](#T-Build)
 
 ## <a name="T-Introduction"></a>Introduction
 
 A set of classes that can be used to roll your own Project Cars UDP Telemetry application. 
 
-This project is broken up into three parts: 
+This project is in three parts: 
 * Demo binarys ( [Install Binarys](#T-Installation) )
 * Create your own Post lap processing and live telemetry 
 * Create your own native application.
-
-## <a name="T-Build"></a>Build Library
-#### OSX
-* This is only a local install i.e. download to a directory in your home directory.
-* Open a terminal
-* cd to src directory. 
-  * ```# cd ./src```
-* Run "make install"
-  * ```# make install```
-* Run "make"
-  * ```# make```
   
 ## <a name="T-Installation"></a>Install Binarys
 
@@ -63,3 +52,14 @@ however there is only currenlty three race lines recorded zolder, dubai club and
 Currently I have written two Post Lap Processes (process.h), both create json files one for capturing telemetry Process_Lap to be used with track_9.html and the other for captureing track data Process_Track, which I use with track_map.html to create track data for track_9.html.  
 
 I then pass one of these Process objects to Capture_Telemetry's constructor (capturetelemetry.h).
+
+## <a name="T-Build"></a>Build Library
+#### OSX
+* This is only a local install i.e. download to a directory in your home directory.
+* Open a terminal
+* cd to src directory. 
+  * ```# cd ./src```
+* Run "make install"
+  * ```# make install```
+* Run "make"
+  * ```# make```
