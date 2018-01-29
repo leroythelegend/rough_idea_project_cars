@@ -8,6 +8,7 @@ A set of cpp classes for capturing Project Cars UDP telemetry.
 * [Introduction](#T-Introduction)
 * [Build Library](#T-Build)
 * [Install Binarys](#T-Installation)
+* [Roll Your Own Post Lap] 
 
 ## <a name="T-Introduction"></a>Introduction
 
@@ -36,7 +37,6 @@ Capture lap data creates a lap_data.json file with all the previous laps data.
 You can either write your on html file to view the json in a browser or use track_9.html,
 however there is only currenlty three race lines recorded zolder, dubai club and oulton park island.
 #### OSX
-* Make sure you have built the library as described in [Build Library](#T-Build)
 * cd capture_lap_data
   * ```# cd ./bin/capture_lap_data```
 * Export DYLD_LIBRARY_PATH to ./lib
@@ -48,6 +48,11 @@ however there is only currenlty three race lines recorded zolder, dubai club and
 * Recording starts once you begin a full lap however it will not be recorded until you finish that lap.
 * There should be a lap_data.json file which you can see the results if you open track_9.html in a browser.
 
-* To see live feed you need to be doing either warmup or qualy. Currently the live feed on uses std out to show braking as a demo.
+* To see live feed you need to be doing either warmup or qualy. Currently the live feed only uses std out to show braking as a demo.
 * You can edit live.cpp Live_Feed::live to display live telemetry. 
 * See decodertelemetrydata.h for available telemetery interface. (rebuild [Build Library](#T-Build))
+
+## <a name="T-post_lap"></a>Roll Your Own Post Lap
+Currently I have written two Post Lap Processes (process.h), both create json files one for capturing telemetry Process_Lap to be used with track_9.html and the other for captureing track data Process_Track, which I use with track_map.html to create track data for track_9.html.  
+
+I then pass one of these Process objects to Capture_Telemetry's constructor (capturetelemetry.h).
