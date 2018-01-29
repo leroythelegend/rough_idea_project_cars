@@ -3,7 +3,9 @@
 
 #include "requestpackage.h"
 
-#include "requestracestateracing.h"
+#include "requestsessionstatepractice.h"
+#include "requestsessionstatequalify.h"
+#include "requestsessionstaterace.h"
 
 namespace pcars {
 
@@ -16,9 +18,13 @@ public:
 
 private:
 	Request_Package * request_;
+
 	Process_Lap process_;
 	Record_Post_Lap record_;	
-	Request_Race_State_Racing racing_;
+
+	Request_Session_State_Practice practice_;
+	Request_Session_State_Qualify  qualy_;
+	Request_Session_State_Race     race_;
 };
 
 }

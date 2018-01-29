@@ -11,7 +11,9 @@ namespace pcars {
 Request_Package_Telemetry::Request_Package_Telemetry(Request_Package * request)
 	: request_{request},
 	  record_{&process_},
-	  racing_{&record_} {}
+	  practice_{&record_},
+	  qualy_{&practice_}, 
+	  race_{&qualy_} {}
 
 bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 
@@ -29,7 +31,7 @@ bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 
 			// Build Version 1200 decoder.build_version();
 
-			return racing_.request(&decoder);
+			return race_.request(&decoder);
 		}
 
 		if (request_) {

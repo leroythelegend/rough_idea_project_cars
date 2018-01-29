@@ -4,8 +4,9 @@
 
 namespace pcars {
 
-Request_Session_State_Practice::Request_Session_State_Practice(Request * request)
-	: request_{request} {}
+Request_Session_State_Practice::Request_Session_State_Practice(Record_Lap * record, Request * request)
+	: request_{request},
+	  racing_{record} {}
 
 bool Request_Session_State_Practice::request(Decoder * decoder) {
 
@@ -14,6 +15,7 @@ bool Request_Session_State_Practice::request(Decoder * decoder) {
 	if (tdecoder) {
 
 		if (tdecoder->session_state() == Session_State::SESSION_PRACTICE) {
+			racing_.request(decoder);
 			return true;
 		}
 
