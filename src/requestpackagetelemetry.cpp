@@ -8,12 +8,13 @@
 
 namespace pcars {
 
-Request_Package_Telemetry::Request_Package_Telemetry(Request_Package * request)
+Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live, Request_Package * request)
 	: request_{request},
-	  record_{&process_},
-	  practice_{&record_},
-	  qualy_{&practice_}, 
-	  race_{&qualy_} {}
+	  recordlap_{process},
+	  recordlive_{live},
+	  practice_{&recordlap_},
+	  qualy_{&recordlive_, &practice_}, 
+	  race_{&recordlive_, &qualy_} {}
 
 bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 

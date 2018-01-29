@@ -10,10 +10,7 @@ namespace pcars {
 
 class Capture_Telemetry {
 public:
-	Capture_Telemetry();
-	Capture_Telemetry(Process *);
 	Capture_Telemetry(Process *, Live *);
-	Capture_Telemetry(Live *);
 };
 
 }

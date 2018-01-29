@@ -11,7 +11,7 @@ namespace pcars {
 
 class Request_Package_Telemetry : public Request_Package {
 public:
-	Request_Package_Telemetry(Request_Package * request = NULL);
+	Request_Package_Telemetry(Process *, Live *, Request_Package * request = NULL);
 	virtual ~Request_Package_Telemetry() {}
 
 	bool request(const PCars_Data &) override;
@@ -19,8 +19,8 @@ public:
 private:
 	Request_Package * request_;
 
-	Process_Lap process_;
-	Record_Post_Lap record_;	
+	Record_Post_Lap recordlap_;	
+	Record_Live_Data recordlive_;
 
 	Request_Session_State_Practice practice_;
 	Request_Session_State_Qualify  qualy_;
