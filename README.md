@@ -21,7 +21,7 @@ A set of cpp classes for capturing Project Cars UDP telemetry.
 
 A set of classes that can be used to roll your own Project Cars UDP Telemetry application. 
 
-This is project is broken up into three parts: 
+This project is broken up into three parts: 
 * Demo binarys ( [Install Binarys](#T-Installation) )
 * Create your own Post lap processing and live telemetry 
 * Create your own native application.
