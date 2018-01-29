@@ -4,12 +4,13 @@
 #include "request.h"
 
 #include "requestracestateracing.h"
+#include "recordlap.h"
 
 namespace pcars {
 
 class Request_Session_State_Race : public Request {
 public:
-	Request_Session_State_Race(Request * request = nullptr);
+	Request_Session_State_Race(Record_Lap *, Request * request = nullptr);
 	virtual ~Request_Session_State_Race() {}
 
 	bool request(Decoder *) override;

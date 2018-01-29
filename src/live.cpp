@@ -13,7 +13,7 @@ void Live_Feed::live(Decoder * decoder) const
 	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
 
 	if (tdecoder) {
-		cout << "version " << tdecoder->build_version() << endl;
+		cout << "Brake " << tdecoder->brake() << endl;
 	}
 }
 
