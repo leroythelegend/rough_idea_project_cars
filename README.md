@@ -4,6 +4,13 @@
 
 A set of cpp classes for capturing Project Cars UDP telemetry.
 
+## TODO
+
+* Improve all current content
+* Add roll your own live feed
+* Add how the classes are structured
+* Maybe add about how html pages work i.e. creating track data
+
 ## Contents
 * [Introduction](#T-Introduction)
 * [Build Library](#T-Build)
