@@ -43,6 +43,11 @@ however there is only currenlty three race lines recorded zolder, dubai club and
   * ```# export DYLD_LIBRARY_PATH=../../lib```
 * Run pcars
   * ```# ./pcars```
+  
 * To capture post lap data you need to be doing practice i.e. not warmup, qualy or race.
 * Recording starts once you begin a full lap however it will not be recorded until you finish that lap.
-* There should be a lap_data.json file which you can see the results if you open track_9.html in a browser
+* There should be a lap_data.json file which you can see the results if you open track_9.html in a browser.
+
+* To see live feed you need to be doing either warmup or qualy. Currently the live feed on uses std out to show braking as a demo.
+* You can edit live.cpp Live_Feed::live to display live telemetry. 
+* See decodertelemetrydata.h for available telemetery interface. (rebuild [Build Library](#T-Build))
