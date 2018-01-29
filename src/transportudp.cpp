@@ -2,12 +2,24 @@
 
 #include "exception.h"
 
+#ifdef _WIN32
+
+#define close closesocket
+
+#pragma comment(lib, "Ws2_32.lib")
+#include <Ws2tcpip.h>
+
+#else
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <errno.h>
 #include <cstring>
 #include <unistd.h>
+
+#endif
+
 #include <string>
 
 using std::to_string;
@@ -15,7 +27,7 @@ using std::string;
 
 namespace pcars {
 
-Transport_UDP::Transport_UDP(const unsigned int port) {
+Transport_UDP::Transport_UDP(const Port port) {
 
     struct addrinfo hints, *servinfo, *p;
     int rv = 0;
@@ -61,7 +73,7 @@ Transport_UDP::~Transport_UDP() {
 }
 
 
-PCars_Data Transport_UDP::read(const unsigned int amount) {
+PCars_Data Transport_UDP::read(const Amount amount) {
 
     int numbytes;
     struct sockaddr_storage their_addr;
@@ -69,10 +81,17 @@ PCars_Data Transport_UDP::read(const unsigned int amount) {
 
     PCars_Data buffer(amount);
 
-    if ((numbytes = recvfrom(socketfd_, buffer.data(), amount , 0,
+#ifdef _WIN32
+    if ((numbytes = recvfrom(socketfd_, reinterpret_cast<char *>(buffer.data()), amount , 0,
         (struct sockaddr *)&their_addr, &addr_len)) == -1) {
     	throw PCars_Exception(__LINE__, __FILE__, errno, "recvfrom");
     }
+#else
+	if ((numbytes = recvfrom(socketfd_, buffer.data(), amount, 0,
+		(struct sockaddr *)&their_addr, &addr_len)) == -1) {
+		throw PCars_Exception(__LINE__, __FILE__, errno, "recvfrom");
+	}
+#endif
 
     buffer.resize(numbytes);
 
