@@ -11,11 +11,11 @@ A set of cpp classes for capturing Project Cars UDP telemetry.
 
 ## <a name="T-Introduction"></a>Introduction
 
-A set of classes that can be used to roll your own UDP capture telemetry application. 
+A set of classes that can be used to roll your own Project Cars UDP Telemetry application. 
 
 This is project is broken up into three parts: 
 * Demo binarys ( [Install Binarys](#T-Installation) )
-* Post lap processing and live telemetry 
+* Create your own Post lap processing and live telemetry 
 * Create your own native application.
 
 ## <a name="T-Build"></a>Build Library
@@ -39,10 +39,10 @@ however there is only currenlty three race lines recorded zolder, dubai club and
 * Make sure you have built the library as described in [Build Library](#T-Build)
 * cd capture_lap_data
   * ```# cd ./bin/capture_lap_data```
-* Run "make"
-  * ```# make```
 * Export DYLD_LIBRARY_PATH to ./lib
-  * ```# export DYLD_LIBRARY_PATH=/home/your_home/your_pcars_dir_path/lib```
+  * ```# export DYLD_LIBRARY_PATH=../../lib```
 * Run pcars
   * ```# ./pcars```
-* Open track_9.html in a browser
+* To capture post lap data you need to be doing practice i.e. not warmup, qualy or race.
+* Recording starts once you begin a full lap however it will not be recorded until you finish that lap.
+* There should be a lap_data.json file which you can see the results if you open track_9.html in a browser
