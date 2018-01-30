@@ -10,6 +10,7 @@ A set of cpp classes for capturing Project Cars Version 1 UDP Format.
 * Add roll your own live feed
 * Add how the classes are structured
 * Maybe add about how html pages work i.e. creating track data
+* Version two format
 
 ## Contents
 * [Introduction](#T-Introduction)
