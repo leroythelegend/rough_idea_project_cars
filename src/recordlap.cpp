@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <thread>
+#include <mutex>
 
 #include "process.h"
 #include "capturetelemetry.h"
