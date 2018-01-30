@@ -46,7 +46,7 @@ TODO add instructions on creating more track data.
 * To capture post lap data you need to be doing practice i.e. not warmup, qualy or race.
 * Recording starts once you begin a full lap, however it will not be recorded until you finish that lap.
 * There should be a lap_data.json file which you can has the results of all your laps.
-* You can use track_9.html in a browser or write your own javascript.
+* You can use track_9.html in a browser or write your own javascript.[track_9 screen shot](img/track_9.png)
 
 * To see live feed you need to be doing either race or qualy. 
 * Currently the live feed only uses std out to show braking as a demo.
