@@ -5,20 +5,10 @@
 A set of cpp classes for capturing Project Cars Version 1 UDP Format.
 
 ## Contents
-* [Introduction](#T-Introduction)
 * [Install Binarys](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
 * [Class Structure](#T-classes)
 * [Build Library](#T-Build)
-
-## <a name="T-Introduction"></a>Introduction
-
-A set of classes that can be used to roll your own Project Cars UDP Telemetry application. 
-
-This project is in three parts: 
-* Demo binarys ( [Install Binarys](#T-Installation) )
-* Create your own Post lap processing and live telemetry 
-* Create your own native application.
   
 ## <a name="T-Installation"></a>Install Binarys
 
