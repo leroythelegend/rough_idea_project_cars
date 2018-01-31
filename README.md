@@ -7,6 +7,7 @@ A set of cpp classes for capturing Project Cars Version 1 UDP Format.
 ## Contents
 * [Install Binarys](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
+* [Roll Your Own Live Feed](#T-live_feed)
 * [Class Structure](#T-classes)
 * [Build Library](#T-Build)
   
@@ -42,6 +43,15 @@ Currently I have written two Post Lap Processes (process.h), both create json fi
 I then pass one of these Process objects to Capture_Telemetry's constructor (capturetelemetry.h).
 
 You can dervie a new Process class that can then be used with Capture_Telemetery to create your own post lap processing.
+
+## <a name="T-live_feed"></a>Roll Your Own Live Feed
+
+Take a look at live.h there is one Abstract class (Live) and one Concrete class (Live_Feed). I'm more into post lap analysis but I thought others would like a live feed this is why i just print brake data to the std out.
+
+To create your own live feed you can implement the current live feed (Live_Feed) and rebuild the library, however I only have the live feed for race and qualy.  If you need live feed for practice you will need to go to requestpackagetelemetry.cpp and in the constructors initialisation list remove recordlap_ and replace with recordlive_.
+
+Once you have rebuilt the library you can just run the executable "pcars" in capture_lap_data to get the live feed up and running.
+
 
 ## <a name="T-classes"></a>Class Structure
 ### Transport
