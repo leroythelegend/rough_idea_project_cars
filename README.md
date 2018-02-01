@@ -103,7 +103,7 @@ Decoder is loosely based on the interpreter pattern, which decodes specific elem
 ``` 
 
 Decoder_F32 is a Decoder that decodes a Float 32bit element such as a "f32   sBestLapTime;"
-Position is the position of the current element in the packet and may get incremented to the next packet e.g. for f32 we would increment by 4 because 32/8 is 4, however if it was a bit wise operation say MS 3bit it would not increment the value because the next decoder may need the LS 3bit. Anyway this is done under the covers in the Decoder and the Decoder_Composite.
+Position is the position of the current element this is incremented under the covers in the Decoder and the Decoder_Composite.
 
 
 ### Decoder_Compiste
@@ -126,7 +126,7 @@ Position is the position of the current element in the packet and may get increm
 
 ```
 
-Decoder_Composite is a Decoder it is the Composite Pattern and is used to string together Packages, Decoder_Telemetry_Data is Decoder_Composite and is an example of creating a package decoder by adding Decoders.
+Decoder_Composite is a Decoder it is the Composite Pattern and is used to string together Packages, Decoder_Telemetry_Data is a Decoder_Composite and is an example of creating a package decoder by adding Decoders.
 
 Decoder Note: I know just copying a package to a struct is QUICK and my decoder is slow in comparison however copying a struct is not as fun as implementing a design pattern :-). 
 
