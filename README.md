@@ -18,7 +18,6 @@ A set of cpp classes for capturing Project Cars Version 1 UDP Format.
 Capture lap data creates a lap_data.json file with all the previous laps data.
 You can either write your on html file to view the json in a browser or use track_9.html,
 however there is only currently three race lines recorded zolder, dubai club and oulton park island. 
-TODO add instructions on creating more track data.
 
 #### OSX
 * cd capture_lap_data
