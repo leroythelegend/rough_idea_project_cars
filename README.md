@@ -5,18 +5,19 @@
 A set of cpp classes for capturing Project Cars Version 1 UDP Format.
 
 ## Contents
-* [Install Binarys](#T-Installation)
+* [Install Binaries](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
 * [Roll Your Own Live Feed](#T-live_feed)
 * [Class Structure](#T-classes)
 * [Build Library](#T-Build)
+* [Windows and \*nix](#T-win)
   
-## <a name="T-Installation"></a>Install Binarys
+## <a name="T-Installation"></a>Install Binaries
 
 ### Capture Lap Data Demo
 Capture lap data creates a lap_data.json file with all the previous laps data.
 You can either write your on html file to view the json in a browser or use track_9.html,
-however there is only currenlty three race lines recorded zolder, dubai club and oulton park island. 
+however there is only currently three race lines recorded zolder, dubai club and oulton park island. 
 TODO add instructions on creating more track data.
 
 #### OSX
@@ -29,20 +30,20 @@ TODO add instructions on creating more track data.
   
 * To capture post lap data you need to be doing practice i.e. not warmup, qualy or race.
 * Recording starts once you begin a full lap, however it will not be recorded until you finish that lap.
-* There should be a lap_data.json file which has the results of all your laps.
+* There should be a lap_data.json file, which has the results of all your laps.
 * You can use track_9.html to veiw lap_data.json in a browser or write your own javascript.( [track_9 screen shot](img/track_9.png) )
 
 * To see live feed you need to be doing either race or qualy. 
 * Currently the live feed only uses std out to show braking as a demo.
 * You can edit live.cpp Live_Feed::live() to display more live telemetry. 
-* See decodertelemetrydata.h for available telemetery data. (rebuild [Build Library](#T-Build))
+* See decodertelemetrydata.h for available telemetry data. (rebuild [Build Library](#T-Build))
 
 ## <a name="T-post_lap"></a>Roll Your Own Post Lap
-Currently I have written two Post Lap Processes (process.h), both create json files one for capturing telemetry (Process_Lap) to be used with track_9.html and the other for captureing track data (Process_Track), which I use with track_map.html to create track data for track_9.html.  
+Currently I have written two Post Lap Processes (process.h), both create json files one for capturing telemetry (Process_Lap) to be used with track_9.html and the other for capturing track data (Process_Track), which I use with track_map.html to create track data for track_9.html.  
 
 I then pass one of these Process objects to Capture_Telemetry's constructor (capturetelemetry.h).
 
-You can dervie a new Process class that can then be used with Capture_Telemetery to create your own post lap processing.
+You can derive a new Process class that can then be used with Capture_Telemetery to create your own post lap processing.
 
 ## <a name="T-live_feed"></a>Roll Your Own Live Feed
 
@@ -85,7 +86,7 @@ If you just want to capture the data and process it yourself this is for you.
  13 };
 ```
 
-Decoder is loosely based on the interpreter pattern which decodes specific elements of a packet e.g.
+Decoder is loosely based on the interpreter pattern, which decodes specific elements of a packet e.g.
 
 ```
   8 class Decoder_F32: public Decoder {
@@ -103,7 +104,7 @@ Decoder is loosely based on the interpreter pattern which decodes specific eleme
 ``` 
 
 Decoder_F32 is a Decoder that decodes a Float 32bit element such as a "f32   sBestLapTime;"
-Position is the position of the current element in the packet and may get incremeneted to the next packet e.g. for f32 we would increment by 4 because 32/8 is 4, however if it was a bit wise operation say MS 3bit it would not increment the value because the next decoder may need the LS 3bit. Anyway this is done under the covers in the Decoder and the Decoder_Composite.
+Position is the position of the current element in the packet and may get incremented to the next packet e.g. for f32 we would increment by 4 because 32/8 is 4, however if it was a bit wise operation say MS 3bit it would not increment the value because the next decoder may need the LS 3bit. Anyway this is done under the covers in the Decoder and the Decoder_Composite.
 
 
 ### Decoder_Compiste
@@ -132,7 +133,7 @@ Decoder Note: I know just copying a package to a struct is QUICK and my decoder 
 
 ##### Summary
 
-In conjuction with the Transport_UDP class you can decode packetes using the Decoders and deriving from the Decoder_Composite 
+In conjunction with the Transport_UDP class you can decode packets using the Decoders and deriving from the Decoder_Composite 
 
 ### Request_Package
 
@@ -145,7 +146,7 @@ In conjuction with the Transport_UDP class you can decode packetes using the Dec
  16 };
 ```
 
-This is really a nothing class my thoughts were to us it as a Chain of Responsabilty pattern for different packages but did not work out that way. Anyway I think it still gives a bit of flexabilty at this point in the code but does nothing really.
+This is really a nothing class my thoughts were to us it as a Chain of Responsibility pattern for different packages but did not work out that way. Anyway I think it still gives a bit of flexibility at this point in the code but does nothing really.
 
 ### Request
 
@@ -160,13 +161,13 @@ This is really a nothing class my thoughts were to us it as a Chain of Responsab
  15 };
 ```
 
-Ok so now we can do something this is a Chain of Responsability Pattern, because the Project Cars 1 Format combines the state and the telemetry this pattern is used to tell where we are in the game.  For example the Request_Session_State_Race is where all the action happens so pass the decoded data straight to the request and you know you are recording actual telemetry.
+Ok so now we can do something this is a Chain of Responsibility Pattern, because the Project Cars 1 Format combines the state and the telemetry this pattern is used to tell where we are in the game.  For example the Request_Session_State_Race is where all the action happens so pass the decoded data straight to the request and you know you are recording actual telemetry.
 
-I like these classes because it has all different states like Pit Mode out and in etc, so I always wanted to do some analytics of the fuel consumption which could be done with these classes. I'm thinking this is not the case for Project Cars 2 Format because these two packets i.e. State and Telemetry Data are now seperate :-( 
+I like these classes because it has all different states like Pit Mode out and in etc, so I always wanted to do some analytics of the fuel consumption which could be done with these classes. I'm thinking this is not the case for Project Cars 2 Format because these two packets i.e. State and Telemetry Data are now separate :-( 
 
 ##### Summary
 
-You pass the next state to the previous state constructor like a chain, a chain of states and given the State you are in is what object will be responiable for that telemetry.
+You pass the next state to the previous state constructor like a chain, a chain of states and given the State you are in is what object will be responsible for that telemetry.
 
 ```
  11 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live     * live, Request_Package * request)
@@ -192,7 +193,7 @@ You pass the next state to the previous state constructor like a chain, a chain 
  21 };
 ```
 
-Record_Lap is a type for recording laps currently I have Record_Post_Lap record and Record_Live_Data, say if you wanted to do both in practice post lap record and live lap record you would derive a class from Record_lap and call it something like Record_Both and pass it two processes to its constructor one for post and one for live (see Proces and Live next) and possible have a Record_Post_Lap and a Record_Live_Data to do the implementation.
+Record_Lap is a type for recording laps currently I have Record_Post_Lap record and Record_Live_Data, say if you wanted to do both in practice post lap record and live lap record you would derive a class from Record_lap and call it something like Record_Both and pass it two processes to its constructor one for post and one for live (see Process and Live next) and possible have a Record_Post_Lap and a Record_Live_Data to do the implementation.
 
 Record_Post_Lap is a bit complex that is why it would be simpler to just derive from Process and pass it to Record_Post_Lap. 
 
@@ -215,7 +216,7 @@ Record_Lap does the grunt work, not the nice telemetry work, always leave this c
 
 The fun part this is where all the action happens, note that the Record_Post_Lap creates a thread to run this so you have a whole lap to get it done. Take the time to have a look at Process_lap where I create the json file.
 
-##### Summart
+##### Summary
 
 This is it this where all the awesome work is done
 
@@ -270,3 +271,12 @@ This is it this where all the awesome work is done
 * Edit main.cpp if necessary 
 * Run "make"
   * ```# make```
+
+
+## <a name="T-win"></a>Windows and \*nix
+
+For AIX, HPUX, Solaris and Linux you just need to edit the makefile to suite your compiler, Linux users it is nearly a straight copy because I use the gcc clang wrapper, so you just need to add fpic and the shared library flags. Note from memory I think either Solaris or HPUX has a different argument for one of the socket api's a void ptr or char, but I'm sure if you are using one of these boxes you know what you are doing anyway "man" ;-)
+
+Windows users wow I got BlastFire to do the windows socket stuff for me (did not test it so fingers crossed). How long does it take just to load up VS man I would have written a Transport_TCP in vim before VS was loaded. Any how I do like the VS IDE it is pretty good Microsoft do a good job here and the debugger is pretty good it has pros and cons with gdb, although I'm using lldb now :-( do love gdb.
+
+Anyway windows load up the src directory in VS I think it is file new create project or solution from existing code, but make sure you set shared dll something like that and you should be good to go to build (Google it). For the binaries in capture_lap_data I would assume you would do console app something like that and build from there.  Have not tried to build the exe's but couldn't be that hard.
