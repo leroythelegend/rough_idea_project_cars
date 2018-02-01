@@ -214,11 +214,13 @@ Record_Lap does the grunt work, not the nice telemetry work, always leave this c
  15 };
 ```
 
-The fun part this is where all the action happens, note that the Record_Post_Lap creates a thread to run this so you have a whole lap to get it done. Take the time to have a look at Process_lap where I create the json file.
+The fun part this is where all the action happens, note that the Record_Post_Lap creates a thread to run this so you have time to get it done. 
+
+Take the time to have a look at Process_lap where I create the json file.
 
 ##### Summary
 
-This is it this where all the awesome work is done
+This is it this is where all the awesome work is done
 
 ### Live
 
@@ -277,6 +279,6 @@ This is it this where all the awesome work is done
 
 For AIX, HPUX, Solaris and Linux you just need to edit the makefile to suite your compiler, Linux users it is nearly a straight copy because I use the gcc clang wrapper, so you just need to add fpic and the shared library flags. Note from memory I think either Solaris or HPUX has a different argument for one of the socket api's a void ptr or char, but I'm sure if you are using one of these boxes you know what you are doing anyway "man" ;-)
 
-Windows users wow I got BlastFire to do the windows socket stuff for me (did not test it so fingers crossed). How long does it take just to load up VS man I would have written a Transport_TCP in vim before VS was loaded. Any how I do like the VS IDE it is pretty good Microsoft do a good job here and the debugger is pretty good it has pros and cons with gdb, although I'm using lldb now :-( do love gdb.
+Windows users wow I got BlastFire to do the windows socket stuff for me (did not test it so fingers crossed). How long does it take just to load up VS man I would have written a Transport_TCP in vim before VS was loaded. Any how I do like the VS IDE it is pretty good Microsoft do a good job here and the debugger is pretty good as well, it has pros and cons with gdb, although I'm using lldb now, do love gdb.
 
 Anyway windows load up the src directory in VS I think it is file new create project or solution from existing code, but make sure you set shared dll something like that and you should be good to go to build (Google it). For the binaries in capture_lap_data I would assume you would do console app something like that and build from there.  Have not tried to build the exe's but couldn't be that hard.
