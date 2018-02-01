@@ -162,11 +162,11 @@ This is really a nothing class my thoughts were to us it as a Chain of Responsib
 
 Ok so now we can do something this is a Chain of Responsibility Pattern, because the Project Cars 1 Format combines the state and the telemetry this pattern is used to tell where we are in the game.  For example the Request_Session_State_Race is where all the action happens so pass the decoded data straight to the request and you know you are recording actual telemetry.
 
-I like these classes because it has all different states like Pit Mode out and in etc, so I always wanted to do some analytics of the fuel consumption which could be done with these classes. I'm thinking this is not the case for Project Cars 2 Format because these two packets i.e. State and Telemetry Data are now separate :-( 
+I like these classes because it has all different states like Pit Mode out and in etc, so I always wanted to do some analytics of the fuel consumption which could be done with these classes. 
 
 ##### Summary
 
-You pass the next state to the previous state constructor like a chain, a chain of states and given the State you are in is what object will be responsible for that telemetry.
+You pass the next state to the previous state constructor like a chain, a chain of states and given the State you are in is what object will be responsible for that telemetry. I'm researching the State Pattern at the mo for Progject Cars 2 Format because the game state is a seperate packet.
 
 ```
  11 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live     * live, Request_Package * request)
@@ -174,7 +174,7 @@ You pass the next state to the previous state constructor like a chain, a chain 
  13           recordlap_{process},
  14           recordlive_{live},
  15           practice_{&recordlap_},             <--- I want to record lap data in practice
- 16           qualy_{&recordlive_, &practice_},   <--- add practice to qualy (begining of chain) however record live or show live data
+ 16           qualy_{&recordlive_, &practice_},   <--- add practice to qualy however record live or show live data
  17           race_{&recordlive_, &qualy_} {}     <--- add qualy to race and get live feed
  18 
 
@@ -192,7 +192,7 @@ You pass the next state to the previous state constructor like a chain, a chain 
  21 };
 ```
 
-Record_Lap is a type for recording laps currently I have Record_Post_Lap record and Record_Live_Data, say if you wanted to do both in practice post lap record and live lap record you would derive a class from Record_lap and call it something like Record_Both and pass it two processes to its constructor one for post and one for live (see Process and Live next) and possible have a Record_Post_Lap and a Record_Live_Data to do the implementation.
+Record_Lap is a type for recording laps, currently I have Record_Post_Lap record and Record_Live_Data, say if you wanted to do both in practice post lap record and live lap record you would derive a class from Record_lap and call it something like Record_Both and pass it two processes to its constructor one for post and one for live (see Process and Live next) and possibly have a Record_Post_Lap and a Record_Live_Data to do the implementation within Record_Both.
 
 Record_Post_Lap is a bit complex that is why it would be simpler to just derive from Process and pass it to Record_Post_Lap. 
 
@@ -280,4 +280,4 @@ For AIX, HPUX, Solaris and Linux you just need to edit the makefile to suite you
 
 Windows users wow I got BlastFire to do the windows socket stuff for me (did not test it so fingers crossed). How long does it take just to load up VS man I would have written a Transport_TCP in vim before VS was loaded. Any how I do like the VS IDE it is pretty good Microsoft do a good job here and the debugger is pretty good as well, it has pros and cons with gdb, although I'm using lldb now, do love gdb.
 
-Anyway windows load up the src directory in VS I think it is file new create project or solution from existing code, but make sure you set shared dll something like that and you should be good to go to build (Google it). For the binaries in capture_lap_data I would assume you would do console app something like that and build from there.  Have not tried to build the exe's but couldn't be that hard.
+Anyway windows load up the src directory in VS I think it is file new create project or solution from existing code, but make sure you set shared dll something like that and you should be good to build (Google it). For the binaries in capture_lap_data I would assume you would do console app something like that and build from there.  Have not tried to build the exe's but couldn't be that hard.
