@@ -12,7 +12,7 @@ public:
 	Decoder_2Times_U8();
 	virtual ~Decoder_2Times_U8();
 
-	Vector_Float times2_U8() const;
+	Vector_UInt times2_U8() const;
 
 private:
 	Decoder_U8 first_;

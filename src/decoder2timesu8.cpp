@@ -12,8 +12,8 @@ Decoder_2Times_U8::~Decoder_2Times_U8() {
 
 }
 
-Vector_Float Decoder_2Times_U8::times2_U8() const {
-	Vector_Float value;
+Vector_UInt Decoder_2Times_U8::times2_U8() const {
+	Vector_UInt value;
 	value.push_back(first_.u8());
 	value.push_back(second_.u8());
 	return value;

@@ -6,6 +6,7 @@
 #include <thread>
 
 #include "decodertelemetrydata.h"
+#include "packet.h"
 #include "process.h"
 #include "live.h"
 
@@ -36,6 +37,22 @@ private:
 	Vector_Lap_Telemetry lap_data_;
 };
 
+class Record_Post_Lap_V2 : public Record_Lap
+{
+public:
+	using Vector_Lap_Telemetry = std::vector<Packet>;
+
+	Record_Post_Lap_V2(Process *);
+	virtual ~Record_Post_Lap_V2() {};
+
+	void record(Decoder *) override;
+
+private:
+	Process * process_;
+	Lap_Number lap_number_;
+	Vector_Lap_Telemetry lap_data_;
+};
+
 class Record_Live_Data : public Record_Lap
 {
 public:
@@ -47,6 +64,7 @@ public:
 private:
 	Live * live_;
 };
+
 
 
 }

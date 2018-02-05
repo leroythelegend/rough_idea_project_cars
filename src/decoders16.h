@@ -14,7 +14,7 @@ public:
 
 	void decode(const PCars_Data &, Position &) override;
 
-	int16_t s16() const;
+	int s16() const;
 
 private:
 	int16_t num_;

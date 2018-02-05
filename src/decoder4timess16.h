@@ -12,7 +12,7 @@ public:
 	Decoder_4Times_S16();
 	virtual ~Decoder_4Times_S16() {}
 
-	Vector_S16 times4_s16() const;
+	Vector_Int times4_s16() const;
 
 private:
 	Decoder_S16 first_;

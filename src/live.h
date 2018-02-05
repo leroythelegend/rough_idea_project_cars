@@ -19,6 +19,14 @@ public:
 	virtual void live(Decoder *) const;
 };
 
+class Live_Feed_V2 : public Live {
+public:
+	virtual ~Live_Feed_V2() {}
+
+	virtual void live(Decoder *) const;
+};
+
+
 }
 
 #endif

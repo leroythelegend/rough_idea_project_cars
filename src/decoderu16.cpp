@@ -18,7 +18,7 @@ void Decoder_U16::decode(const PCars_Data & data, Position & position) {
 	position += 2;
 }
 
-uint16_t Decoder_U16::u16() const {
+unsigned int Decoder_U16::u16() const {
 	return num_;
 }
 

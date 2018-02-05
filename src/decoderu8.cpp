@@ -17,7 +17,7 @@ void Decoder_U8::decode(const PCars_Data & data, Position & position) {
 	++position;
 }
 
-uint8_t Decoder_U8::u8() const {
+unsigned int Decoder_U8::u8() const {
 	return num_;
 }
 
