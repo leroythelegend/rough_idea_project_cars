@@ -3,6 +3,7 @@
 #include <utility>
 #include <iterator>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -101,6 +102,7 @@ void Process_Lap::process(const Lap_Data & lap_data) const
 	}
 
 	file << "]}\';" << endl;
+	cout << "Recording Finished " << lap_number << endl;
 }
 
 void Process_Lap::process(const Lap_Data_V2 & lap_data) const
@@ -195,6 +197,7 @@ void Process_Lap::process(const Lap_Data_V2 & lap_data) const
 	}
 
 	file << "]}\';" << endl;
+	cout << "Recording Finished " << lap_number << endl;
 }
 
 

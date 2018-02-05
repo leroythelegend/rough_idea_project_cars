@@ -252,16 +252,16 @@ Vector_UInt Packet_Telemetry_Data::tyre_layer_temp() const {
 	return tyre_layer_temp_.times4_u16();
 }
 
-Vector_Int Packet_Telemetry_Data::tyre_carcass_temp() const {
-	return tyre_carcass_temp_.times4_s16();
+Vector_UInt Packet_Telemetry_Data::tyre_carcass_temp() const {
+	return tyre_carcass_temp_.times4_u16();
 }
 
-Vector_Int Packet_Telemetry_Data::tyre_rim_temp() const {
-	return tyre_rim_temp_.times4_s16();
+Vector_UInt Packet_Telemetry_Data::tyre_rim_temp() const {
+	return tyre_rim_temp_.times4_u16();
 }
 
-Vector_Int Packet_Telemetry_Data::tyre_internal_air_temp() const {
-	return tyre_internal_air_temp_.times4_s16();
+Vector_UInt Packet_Telemetry_Data::tyre_internal_air_temp() const {
+	return tyre_internal_air_temp_.times4_u16();
 }
 
 Vector_UInt Packet_Telemetry_Data::tyre_temp_left() const {

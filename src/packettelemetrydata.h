@@ -74,9 +74,9 @@ public:
 	Vector_Int brake_temp_celsius() const;
 	Vector_UInt tyre_tread_temp() const;
 	Vector_UInt tyre_layer_temp() const;
-	Vector_Int tyre_carcass_temp() const;
-	Vector_Int tyre_rim_temp() const;
-	Vector_Int tyre_internal_air_temp() const;
+	Vector_UInt tyre_carcass_temp() const;
+	Vector_UInt tyre_rim_temp() const;
+	Vector_UInt tyre_internal_air_temp() const;
 	Vector_UInt tyre_temp_left() const;
 	Vector_UInt tyre_temp_center() const;
 	Vector_UInt tyre_temp_right() const;	
@@ -144,9 +144,9 @@ private:
 	Decoder_4Times_S16 brake_temp_celsius_;
 	Decoder_4Times_U16 tyre_tread_temp_;
 	Decoder_4Times_U16 tyre_layer_temp_;
-	Decoder_4Times_S16 tyre_carcass_temp_;
-	Decoder_4Times_S16 tyre_rim_temp_;
-	Decoder_4Times_S16 tyre_internal_air_temp_;
+	Decoder_4Times_U16 tyre_carcass_temp_;
+	Decoder_4Times_U16 tyre_rim_temp_;
+	Decoder_4Times_U16 tyre_internal_air_temp_;
 	Decoder_4Times_U16 tyre_temp_left_;
 	Decoder_4Times_U16 tyre_temp_center_;
 	Decoder_4Times_U16 tyre_temp_right_;	
