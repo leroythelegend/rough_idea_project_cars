@@ -10,8 +10,8 @@ Decoder_4Times_U8::Decoder_4Times_U8() {
 
 }
 
-Vector_U8 Decoder_4Times_U8::times4_u8() const {
-	Vector_U8 value;
+Vector_UInt Decoder_4Times_U8::times4_u8() const {
+	Vector_UInt value;
 	value.push_back(first_.u8());
 	value.push_back(second_.u8());
 	value.push_back(third_.u8());

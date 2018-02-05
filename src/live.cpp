@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "decodertelemetrydata.h"
+#include "packet.h"
 
 using namespace std;
 
@@ -16,6 +17,16 @@ void Live_Feed::live(Decoder * decoder) const
 		cout << "Brake " << tdecoder->brake() << endl;
 	}
 }
+
+void Live_Feed_V2::live(Decoder * decoder) const
+{
+	Packet * packet = dynamic_cast<Packet *>(decoder);
+
+	if (packet) {
+		cout << "Brake " << packet->telemetry_data().brake() << endl;
+	}
+}
+
 
 }
 

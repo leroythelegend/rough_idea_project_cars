@@ -107,7 +107,7 @@ Decoder_Telemetry_Data::Decoder_Telemetry_Data() {
 Decoder_Telemetry_Data::~Decoder_Telemetry_Data() {
 }
 
-uint16_t Decoder_Telemetry_Data::build_version() const {
+unsigned int Decoder_Telemetry_Data::build_version() const {
 	return buildversion_.u16();
 }
 
@@ -127,11 +127,11 @@ Game_State Decoder_Telemetry_Data::game_state() const {
 	return static_cast<Game_State>(sessionstate_gamestate_.ls3bits());
 }
 
-int8_t Decoder_Telemetry_Data::viewed_participant_index() const {
+int Decoder_Telemetry_Data::viewed_participant_index() const {
 	return viewedparticipantindex_.s8();
 }
 
-int8_t Decoder_Telemetry_Data::num_participants() const {
+int Decoder_Telemetry_Data::num_participants() const {
 	return numparticipants_.s8();
 }
 
@@ -155,7 +155,7 @@ Race_State Decoder_Telemetry_Data::race_state_flags() const {
 	return static_cast<Race_State>(racestateflags_.ls3bits());
 }
 
-uint8_t Decoder_Telemetry_Data::laps_in_event() const {
+unsigned int Decoder_Telemetry_Data::laps_in_event() const {
 	return lapsinevent_.u8();
 }
 
@@ -335,7 +335,7 @@ float Decoder_Telemetry_Data::boost_amount() const {
 	return static_cast<float>(boostamount_.u8());
 }
 
-int8_t Decoder_Telemetry_Data::enforced_pit_stop_lap() const {
+int Decoder_Telemetry_Data::enforced_pit_stop_lap() const {
 	return enforcedpitstoplap_.s8();
 }
 
@@ -376,23 +376,11 @@ Vector_Float Decoder_Telemetry_Data::extents_centre() const {
 }
 
 Vector_UInt Decoder_Telemetry_Data::tyre_flags() const {
-	Vector_U8 rvalue = tyreflags_.times4_u8();
-	Vector_UInt value;
-	value.push_back((rvalue.at(0) & 7));
-	value.push_back((rvalue.at(1) & 7));
-	value.push_back((rvalue.at(2) & 7));
-	value.push_back((rvalue.at(3) & 7));
-	return value;
+	return tyreflags_.times4_u8();
 }
 
 Vector_UInt Decoder_Telemetry_Data::terrain() const {
-	Vector_U8 rvalue = terrain_.times4_u8();
-	Vector_UInt value;
-	value.push_back((rvalue.at(0) & 63));
-	value.push_back((rvalue.at(1) & 63));
-	value.push_back((rvalue.at(2) & 63));
-	value.push_back((rvalue.at(3) & 63));
-	return value;
+	return terrain_.times4_u8();
 }
 
 Vector_Float Decoder_Telemetry_Data::tyre_y() const {
@@ -400,32 +388,19 @@ Vector_Float Decoder_Telemetry_Data::tyre_y() const {
 }
 
 Vector_Float Decoder_Telemetry_Data::tyre_rps() const {
-	Vector_Float tmp = tyrerps_.times4_float();
-	return tmp;
+	return tyrerps_.times4_float();
 }
 
 Vector_Float Decoder_Telemetry_Data::tyre_slip_speed() const {
 	return tyreslipspeed_.times4_float();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_temp() const {
-	Vector_U8 rvalue = tyretemp_.times4_u8();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_temp() const {
+	return tyretemp_.times4_u8();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_grip() const {
-	Vector_U8 rvalue = tyregrip_.times4_u8();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_grip() const {
+	return tyregrip_.times4_u8();
 }
 
 Vector_Float Decoder_Telemetry_Data::tyre_height_above_ground() const {
@@ -436,94 +411,40 @@ Vector_Float Decoder_Telemetry_Data::tyre_lateral_stiffness() const {
 	return tyrelateralstiffness_.times4_float();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_wear() const {
-	Vector_U8 rvalue = tyrewear_.times4_u8();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_wear() const {
+	return tyrewear_.times4_u8();
 }
 
-Vector_Float Decoder_Telemetry_Data::brake_damage() const {
-	Vector_U8 rvalue = brakedamage_.times4_u8();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::brake_damage() const {
+	return brakedamage_.times4_u8();
 }
 
-Vector_Float Decoder_Telemetry_Data::suspension_damage() const {
-	Vector_U8 rvalue = suspensiondamage_.times4_u8();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::suspension_damage() const {
+	return suspensiondamage_.times4_u8();
 }
 
-Vector_Float Decoder_Telemetry_Data::brake_temp_celsius() const {
-	Vector_S16 rvalue = braketempcelsius_.times4_s16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_Int Decoder_Telemetry_Data::brake_temp_celsius() const {
+	return braketempcelsius_.times4_s16();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_tread_temp() const {
-	Vector_U16 rvalue = tyretreadtemp_.times4_u16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_tread_temp() const {
+	return tyretreadtemp_.times4_u16();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_layer_temp() const {
-	Vector_U16 rvalue = tyrelayertemp_.times4_u16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_layer_temp() const {
+	return tyrelayertemp_.times4_u16();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_carcass_temp() const {
-	Vector_U16 rvalue = tyrecarcasstemp_.times4_u16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_carcass_temp() const {
+	return tyrecarcasstemp_.times4_u16();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_rim_temp() const {
-	Vector_U16 rvalue = tyrerimtemp_.times4_u16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_rim_temp() const {
+	return tyrerimtemp_.times4_u16();
 }
 
-Vector_Float Decoder_Telemetry_Data::tyre_internal_air_temp() const {
-	Vector_U16 rvalue = tyreinternalairtemp_.times4_u16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::tyre_internal_air_temp() const {
+	return tyreinternalairtemp_.times4_u16();
 }
 
 Vector_Float Decoder_Telemetry_Data::wheel_local_position_y() const {
@@ -542,14 +463,8 @@ Vector_Float Decoder_Telemetry_Data::suspension_velocity() const {
 	return suspensionvelocity_.times4_float();
 }
 
-Vector_Float Decoder_Telemetry_Data::air_pressure() const {
-	Vector_U16 rvalue = airpressure_.times4_u16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	value.push_back(rvalue.at(3));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::air_pressure() const {
+	return airpressure_.times4_u16();
 }
 
 float Decoder_Telemetry_Data::engine_speed() const {
@@ -600,11 +515,8 @@ unsigned int Decoder_Telemetry_Data::track_length() const {
 	return tracklength_.f32();
 }
 
-Vector_Float Decoder_Telemetry_Data::wings() const {
-	Vector_Float value;
-	value.push_back(wings_.times2_U8().at(0));
-	value.push_back(wings_.times2_U8().at(1));
-	return value;
+Vector_UInt Decoder_Telemetry_Data::wings() const {
+	return wings_.times2_U8();
 }
 
 Vector_Bool Decoder_Telemetry_Data::dpad() const {

@@ -17,12 +17,12 @@ public:
 	Decoder_Participant_Info();
 	virtual ~Decoder_Participant_Info();
 
-	Vector_Float world_position() const;
+	Vector_Int world_position() const;
 	unsigned int current_lap_distance() const;
 	bool is_active() const;
 	unsigned int race_position() const;
 	bool lap_invalidated() const;
-	uint8_t laps_completed() const;
+	unsigned int laps_completed() const;
 	unsigned int current_lap() const;
 	bool same_class() const;
 	unsigned int world_positionZ() const;

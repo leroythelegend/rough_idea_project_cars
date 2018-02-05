@@ -37,19 +37,19 @@ public:
 	Decoder_Telemetry_Data();
 	virtual ~Decoder_Telemetry_Data();
 
-	uint16_t build_version() const;
+	unsigned int build_version() const;
 	unsigned int sequence_number() const;
 	Packet_Type packet_type() const;
 	Session_State session_state() const;
 	Game_State game_state() const;
-	int8_t viewed_participant_index() const;
-	int8_t num_participants() const;
+	int viewed_participant_index() const;
+	int num_participants() const;
 	float unfiltered_throttle() const;
 	float unfiltered_brake() const;
 	float unfiltered_steering() const;
 	float unfiltered_clutch() const;
 	Race_State race_state_flags() const;
-	uint8_t laps_in_event() const;
+	unsigned int laps_in_event() const;
 	float best_lap_time() const;
 	float last_lap_time() const;
 	float current_time() const;
@@ -94,7 +94,7 @@ public:
 	int num_gears() const;
 	int gear() const;
 	float boost_amount() const;
-	int8_t enforced_pit_stop_lap() const;
+	int enforced_pit_stop_lap() const;
 	Crash_State crash_state() const;
 	float odometer_km() const;
 	Vector_Float orientation() const;
@@ -109,24 +109,24 @@ public:
 	Vector_Float tyre_y() const;
 	Vector_Float tyre_rps() const;
 	Vector_Float tyre_slip_speed() const;
-	Vector_Float tyre_temp() const;
-	Vector_Float tyre_grip() const;
+	Vector_UInt tyre_temp() const;
+	Vector_UInt tyre_grip() const;
 	Vector_Float tyre_height_above_ground() const;
 	Vector_Float tyre_lateral_stiffness() const;
-	Vector_Float tyre_wear() const;
-	Vector_Float brake_damage() const;
-	Vector_Float suspension_damage() const;
-	Vector_Float brake_temp_celsius() const;
-	Vector_Float tyre_tread_temp() const;
-	Vector_Float tyre_layer_temp() const;
-	Vector_Float tyre_carcass_temp() const;
-	Vector_Float tyre_rim_temp() const;
-	Vector_Float tyre_internal_air_temp() const;
+	Vector_UInt tyre_wear() const;
+	Vector_UInt brake_damage() const;
+	Vector_UInt suspension_damage() const;
+	Vector_Int brake_temp_celsius() const;
+	Vector_UInt tyre_tread_temp() const;
+	Vector_UInt tyre_layer_temp() const;
+	Vector_UInt tyre_carcass_temp() const;
+	Vector_UInt tyre_rim_temp() const;
+	Vector_UInt tyre_internal_air_temp() const;
 	Vector_Float wheel_local_position_y() const;
 	Vector_Float ride_height() const;
 	Vector_Float suspension_travel() const;
 	Vector_Float suspension_velocity() const;
-	Vector_Float air_pressure() const;
+	Vector_UInt air_pressure() const;
 	float engine_speed() const;
 	float engine_torque() const;
 	float aero_damage() const;
@@ -139,7 +139,7 @@ public:
 	float wind_direction_y() const;
 	Vector_Participant_Info participant_info() const;
 	unsigned int track_length() const;
-	Vector_Float wings() const;
+	Vector_UInt wings() const;
 	Vector_Bool dpad() const;
 
 private:

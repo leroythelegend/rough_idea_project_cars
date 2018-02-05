@@ -18,7 +18,7 @@ void Decoder_S8::decode(const PCars_Data & data, Position & position) {
 	++position;
 }
 
-int8_t Decoder_S8::s8() const {
+int Decoder_S8::s8() const {
 	return num_;
 }
 

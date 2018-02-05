@@ -16,13 +16,8 @@ Decoder_Participant_Info::Decoder_Participant_Info() {
 Decoder_Participant_Info::~Decoder_Participant_Info() {
 }
 
-Vector_Float Decoder_Participant_Info::world_position() const {
-	Vector_S16 rvalue = worldposition_.times3_s16();
-	Vector_Float value;
-	value.push_back(rvalue.at(0));
-	value.push_back(rvalue.at(1));
-	value.push_back(rvalue.at(2));
-	return value;
+Vector_Int Decoder_Participant_Info::world_position() const {
+	return worldposition_.times3_s16();
 }
 
 unsigned int Decoder_Participant_Info::current_lap_distance() const {
@@ -41,7 +36,7 @@ bool Decoder_Participant_Info::lap_invalidated() const {
 	return lapscompleted_.msb_bool();
 }
 
-uint8_t Decoder_Participant_Info::laps_completed() const {
+unsigned int Decoder_Participant_Info::laps_completed() const {
 	return lapscompleted_.ls7_bits();
 }
 

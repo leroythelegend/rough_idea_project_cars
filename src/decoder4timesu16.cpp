@@ -9,8 +9,8 @@ Decoder_4Times_U16::Decoder_4Times_U16() {
 	add(&forth_);
 }
 
-Vector_U16 Decoder_4Times_U16::times4_u16() const {
-	Vector_U16 value;
+Vector_UInt Decoder_4Times_U16::times4_u16() const {
+	Vector_UInt value;
 	value.push_back(first_.u16());
 	value.push_back(second_.u16());
 	value.push_back(third_.u16());
