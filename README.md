@@ -2,9 +2,14 @@
 
 ## Description
 
-A set of cpp classes for capturing Project Cars Version 1 UDP Format.
+A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Format.
 
 ## Contents
+### Version 2 UDP Format
+
+source has been merged, will update readme. requests have v2 appended and packet.h is the API for the packets.
+
+### Version 1 UDP Format
 * [Install Binaries](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
 * [Roll Your Own Live Feed](#T-live_feed)
