@@ -325,7 +325,8 @@ function draw_tele_graph() {
 				for (var k = 6; k < teles.length; k++) {
 					if (telemetery_buttons[t].checked === true) {
 						switch(k) { 
-						case 8:
+						case 8: // div 10
+							// engine speed
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -336,10 +337,10 @@ function draw_tele_graph() {
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
 								}
 							}
-							//draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
-							draw_line_data(line_data, line_position, BLACK);
+							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 9:
+						case 9: // plus 150
+						        // engine_torque
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -350,9 +351,11 @@ function draw_tele_graph() {
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
 								}
 							}
-							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							//draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
+							draw_line_data(line_data, line_position, 'BLACK');
 							break;
-						case 10:
+						case 10: // multi 300
+						         // fuel_level
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -365,7 +368,8 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 11:
+						case 11: // multi 10
+						         // gear
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -378,7 +382,8 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 12:
+						case 12: // top line 
+						         // max_rpm
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -391,7 +396,8 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 13:
+						case 13: // div max_rpm multi 300
+						         // rpm
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -404,7 +410,8 @@ function draw_tele_graph() {
 								}
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
-						case 14:
+						case 14: // no change
+						         // speed
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -420,12 +427,13 @@ function draw_tele_graph() {
 						case 15:
 						case 16:
 						case 17:
-						case 18:
+						case 18: // tyre_wear
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
 								var dist = telemetery[i].data[s].current_distance * 1;
+								//console.log((d[s][teles[k][0]] * 1));
 								if ((corner.start < dist) && (corner.finish > dist)) {
 									line_data.push(((d[s][teles[k][0]] * 1) / 100) * 300); 
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
@@ -436,29 +444,13 @@ function draw_tele_graph() {
 						case 19:
 						case 20:
 						case 21:
-						case 22:
+						case 22: // tyre_rps
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
 								var dist = telemetery[i].data[s].current_distance * 1;
-								if ((corner.start < dist) && (corner.finish > dist)) {
-									line_data.push(((d[s][teles[k][0]] * 1) / 10) * 300); 
-									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
-								}
-							}
-							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
-							break;
-						case 23:
-						case 24:
-						case 25:
-						case 26:
-							var d = Object(telemetery[i].data);
-							var line_data = []; 
-							var line_position = []; 
-							for (var s = 0; s < telemetery[i].data.length; ++s) {
-								var dist = telemetery[i].data[s].current_distance * 1;
-								//console.log((d[s][teles[k][0]] * 1));
+								// console.log((d[s][teles[k][0]] * 1));
 								if ((corner.start < dist) && (corner.finish > dist)) {
 									line_data.push((((d[s][teles[k][0]] * 1) / 400) * 300) + 150); 
 								//	console.log((((d[s][teles[k][0]] * 1) / 400) * 300) + 150); 
@@ -467,18 +459,19 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 27:
-						case 28:
-						case 29:
-						case 30: // tyre temp
+						case 23:
+						case 24:
+						case 25:
+						case 26: //tyre temp 
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
-								//console.log((d[s][teles[k][0]] * 1));
 								var dist = telemetery[i].data[s].current_distance * 1;
+								//console.log((d[s][teles[k][0]] * 1));
 								if ((corner.start < dist) && (corner.finish > dist)) {
-									line_data.push((((d[s][teles[k][0]] * 1) / 120) * 300)); 
+									line_data.push((((d[s][teles[k][0]] * 1) / 400) * 300) + 150); 
+									//console.log((((d[s][teles[k][0]] * 1) / 400) * 300) + 150); 
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
 								}
 							}
@@ -501,31 +494,43 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
+						case 27:
+						case 28:
+						case 29:
+						case 30: // tyre temp left
 						case 31:
 						case 32:
 						case 33:
-						case 34:
+						case 34: // tyre temp centre
 						case 35:
 						case 36:
 						case 37:
-						case 38:
+						case 38: // tyre temp right
 						case 39:
 						case 40:
 						case 41:
-						case 42:
-						case 51:
-						case 52:
-						case 53:
-						case 54:
-						case 67:
-						case 68:
-						case 69:
-						case 70:
+						case 42: // tyre tread temp
+						case 43:
+						case 44:
+						case 45:
+						case 46: // tyre rim temp
+						case 47:
+						case 48:
+						case 49:
+						case 50: // tyre layer temp
+                        case 55:
+                        case 56:
+                        case 57:
+                        case 58: // tyre carcass temp
+                        case 71:
+                        case 72:
+                        case 73:
+                        case 74: // brake temp
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
-								//console.log((d[s][teles[k][0]] * 1));
+								console.log((d[s][teles[k][0]] * 1));
 								var dist = telemetery[i].data[s].current_distance * 1;
 								if ((corner.start < dist) && (corner.finish > dist)) {
 									line_data.push((((d[s][teles[k][0]] * 1) / 800) * 300)); 
@@ -534,10 +539,10 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 43:
-						case 44:
-						case 45:
-						case 46:
+						case 51:
+						case 52:
+						case 53:
+						case 54:
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -554,7 +559,7 @@ function draw_tele_graph() {
 						case 59:
 						case 60:
 						case 61:
-						case 62:
+						case 62: // susp velocity
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -568,10 +573,10 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 55:
-						case 56:
-						case 57:
-						case 58:
+						case 63:
+						case 64:
+						case 65:
+						case 66: // susp travel
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -585,10 +590,10 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 63:
-						case 64:
-						case 65:
-						case 66:
+						case 67:
+						case 68:
+						case 69:
+						case 70: // ride height
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
@@ -603,6 +608,7 @@ function draw_tele_graph() {
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
 						default:
+							// brake, throttle
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
