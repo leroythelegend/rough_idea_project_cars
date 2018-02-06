@@ -9,6 +9,76 @@ A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Form
 
 source has been merged, will update readme. requests have v2 appended and packet.h is the API for the packets.
 
+* [Tutorial](#T-Tutorial)
+
+## <a name="T-Tutorial"></a>Tutorial
+
+* [Part 1](#T-Part1)  Running Demo Executable
+
+## <a name="T-Part1"></a>Part 1  Running Demo Executable (Javascript Developers)
+
+The demo exe writes to a json file during practice and can be viewed using my WIP track_9.html, however during qualy and racing the brake telemetry is printed to the terminal and not to a json file. 
+
+In part * [Part 2](#T-Part2) I will show you how to write your own live feed.
+
+Javascript developers can write their own web app to display the json file.
+
+### Prerequisites
+
+Project Cars 2 running on your console and UDP in options set to Format 2. 
+
+Note for the packet rate my PlayStation says higher the value more packets but I think this is back to front I found lower the value more the packets. Anyway experiment with these values to get the right setting for you.
+
+#### Tute
+
+I'm just going to use a terminal for the tutorials.
+
+* Download the Repo.
+* Open a Terminal
+* Copy the bin, lib and src directory to your working directory.
+```
+Your_User$ cp -r ~/Downloads/src ~/your_working_dir/
+Your_User$ cp -r ~/Downloads/bin ~/your_working_dir/
+Your_User$ cp -r ~/Downloads/lib ~/your_working_dir/
+```
+* Change Directory to ~/your_working_dir/bin
+```
+Your_User$ cd ~/your_working_dir/bin
+```
+* Change to capture_lap_data_v2
+```
+Your_User$ cd ./capture_lap_data_v2
+```
+* List the contents of the directory
+```
+Your_User$ ls
+total 97864
+-rw-r--r--  1 Your_User  staff    248031  3 Feb 18:37 DubaiAeroDromeClub_raceline_track.json
+-rw-r--r--  1 Your_User  staff  32518087  6 Feb 07:55 lap_data.json
+-rw-r--r--  1 Your_User  staff       214  6 Feb 08:12 main.cpp
+-rw-r--r--  1 Your_User  staff     22884  4 Feb 20:30 main.o
+-rwxr-xr-x  1 Your_User  staff       449  6 Feb 08:12 makefile
+-rw-r--r--  1 Your_User  staff  17027175  3 Feb 18:37 oulton_park_island.json
+-rwxr-xr-x  1 Your_User  staff     11180  6 Feb 08:12 pcars
+-rw-r--r--  1 Your_User  staff     29181  6 Feb 08:12 track_9.html
+-rw-r--r--  1 Your_User  staff    227530  3 Feb 18:37 zolder_raceline_track.json
+```
+* Add rough ideas pcars library to your library path
+```
+Your_User$ export DYLD_LIBRARY_PATH=../../lib
+```
+* Now run the executable and do some PRACTICE laps
+```
+Your_User$ ./pcars
+```
+** Outlap in practice is not recorded so you must do at least one full lap, note that if your lap is invalidated the recording will stop for that lap until the next lap. Once you get to make your own app you can change this. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. track_9.html is work in progress.
+
+## <a name="T-Part2"></a>Part 2 Roll Your Own Live feed
+
+### Prerequisites
+
+You need xcode and command line tools, go to apple developer for instructions on installing these for OSX.
+
 ### Version 1 UDP Format
 * [Install Binaries](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
@@ -286,3 +356,4 @@ For AIX, HPUX, Solaris and Linux you just need to edit the makefile to suite you
 Windows users wow I got BlastFire to do the windows socket stuff for me (did not test it so fingers crossed). How long does it take just to load up VS man I would have written a Transport_TCP in vim before VS was loaded. Any how I do like the VS IDE it is pretty good Microsoft do a good job here and the debugger is pretty good as well, it has pros and cons with gdb, although I'm using lldb now, do love gdb.
 
 Anyway windows load up the src directory in VS I think it is file new create project or solution from existing code, but make sure you set shared dll something like that and you should be good to build (Google it). For the binaries in capture_lap_data I would assume you would do console app something like that and build from there.  Have not tried to build the exe's but couldn't be that hard.
+
