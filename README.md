@@ -12,7 +12,7 @@ A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Form
 ## <a name="T-Tutorial"></a>Tutorial
 
 * [Part 1](#T-Part1)  Running Demo Executable
-* [Part 2](#T-Part2)  Roll Your Own Live Feed
+* [Part 2](#T-Part2)  Roll Your Own Live Feed (Coming Soon)
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
 
