@@ -7,8 +7,6 @@ A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Form
 ## Contents
 ### Version 2 UDP Format
 
-source has been merged, will update readme. requests have v2 appended and packet.h is the API for the packets.
-
 * [Tutorial](#T-Tutorial)
 
 ## <a name="T-Tutorial"></a>Tutorial
