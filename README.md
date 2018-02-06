@@ -30,6 +30,8 @@ Project Cars 2 running on your console and UDP in options set to "UDP Protocol V
 
 Note for the "UDP Frequency" my PlayStation says higher the value more packets but I think this is back to front I found lower the value more the packets. Anyway experiment with these values to get the right setting for you.
 
+(Found some issues with udp packets themself, some are different from the Format 1 behaviour. I'm trying to get help with this at the mo from the Project Cars Forum http://forum.projectcarsgame.com/showthread.php?57939-PS4-Patch-3-0-Discussion-thread&p=1471429&viewfull=1#post1471429)
+
 #### Tute
 
 I'm just going to use a terminal for the tutorials.
