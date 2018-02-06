@@ -7,14 +7,14 @@ A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Form
 ## Contents
 ### Version 2 UDP Format
 
-Found some issues with udp packets themself, some are different from the Format 1 behaviour. I'm trying to get help with this at the mo from the Project Cars Forum http://forum.projectcarsgame.com/showthread.php?57939-PS4-Patch-3-0-Discussion-thread&p=1471429&viewfull=1#post1471429 .  I'm still going through the packets and matching up what I'm seeing, can also see that the tyre temp and tyre wear for the front left, front right and back left but not back right are different. 
+Found some issues with udp packets, some are different from the Format 1 behaviour. I'm trying to get help with this at the mo from the Project Cars Forum http://forum.projectcarsgame.com/showthread.php?57939-PS4-Patch-3-0-Discussion-thread&p=1471429&viewfull=1#post1471429 .  I'm still going through the packets and matching up what I'm seeing, can also see that the tyre temp and tyre wear for the front left, front right and back left but not back right are different. 
 
 * [Tutorial](#T-Tutorial)
 
 ## <a name="T-Tutorial"></a>Tutorial
 
 * [Part 1](#T-Part1)  Running Demo Executable
-* [Part 2](#T-Part2)  Roll Your Own Live Feed (Coming Soon)
+* [Part 2](#T-Part2)  Roll Your Own Live Feed (WIP)
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
 
@@ -36,7 +36,7 @@ Note for the "UDP Frequency" my PlayStation says higher the value more packets b
 
 #### Tute
 
-I'm just going to use a terminal for the tutorials.
+I'm just going to use a terminal for the tutorial.
 
 * Download the Repo.
 * Open a Terminal
@@ -83,6 +83,65 @@ Outlap in practice is not recorded so you must do at least one full lap, note th
 
 You need xcode and command line tools, go to apple developer for instructions on installing these for OSX.
 
+#### Tute
+
+I'm just going to use a terminal for the tutorials.
+
+* Download the Repo.
+* Open a Terminal
+* Copy rough_idea_project_cars-master to your working directory. (if you don't have a working dir, from a terminal run "mkdir ~/your_working_dir").
+```
+Your_User$ cp -r ~/Downloads/rough_idea_project_cars-master ~/your_working_dir/
+```
+* Change Directory to ~/your_working_dir/rough_idea_project_cars-master/src
+```
+Your_User$ cd ~/your_working_dir/rough_idea_project_cars-master/src
+```
+* Open packet.h in an editor (I'm going to use vim if you don't know how to use vim I would suggest opening the file in xcode)
+```
+Your_User$ vi ./packet.h
+```
+* This is the object for all the "Project Cars 2" packets. This is the object that gets passed around the other objects e.g. Requests.
+```
+ 16 class Packet : public Decoder {
+ 17 public:
+ 18         virtual ~Packet() {}
+ 19 
+ 20         void decode(const PCars_Data &, Position &) override;
+ 21 
+ 22         const Packet_Game_State& game_state() const;
+ 23         const Packet_Telemetry_Data& telemetry_data() const;
+ 24         const Packet_Timing_Data& timing_data() const;
+ 25         const Packet_Race_Data& race_data() const;
+ 26         const Packet_Participants_Data& participants_data() const;
+ 27         const Packet_Participants_Data& participants_data_2() const;
+ 28         const Packet_Time_Stats_Data& time_stats_data() const;
+ 29         const Packet_Participants_Vehicle_Names_Data& vehicle_names() const;
+ 30         const Packet_Participants_Vehicle_Names_Data& vehicle_names_2() const;
+ 31 ...
+```
+* The one we are interested in for this tutorial is the Packet_Telemetry_Data
+* Now open live.cpp
+```
+Your_User$ vi ./live.cpp
+```
+```
+ 21 void Live_Feed_V2::live(Decoder * decoder) const
+ 22 {
+ 23         Packet * packet = dynamic_cast<Packet *>(decoder);
+ 24 
+ 25         if (packet) {
+ 26                 cout << "Brake " << packet->telemetry_data().brake() << endl;
+ 27         }
+ 28 }
+ ```
+ * Remove line
+ ```
+ 26                 cout << "Brake " << packet->telemetry_data().brake() << endl;
+ ```
+ 
+ * MORE TO COME
+ 
 ### Version 1 UDP Format
 * [Install Binaries](#T-Installation)
 * [Roll Your Own Post Lap](#T-post_lap)
