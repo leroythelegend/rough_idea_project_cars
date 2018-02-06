@@ -14,19 +14,21 @@ A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Form
 * [Part 1](#T-Part1)  Running Demo Executable
 * [Part 2](#T-Part2)  Roll Your Own Live Feed
 
-## <a name="T-Part1"></a>Part 1  Running Demo Executable (Javascript Developers)
+## <a name="T-Part1"></a>Part 1  Running Demo Executable
 
 The demo exe writes to a json file during practice and can be viewed using my WIP track_9.html, however during qualy and racing the brake telemetry is printed to the terminal and not to a json file. 
 
 In [Part 2](#T-Part2) I will show you how to write your own live feed.
 
+I only have three track files at the moment oulton park island, dubai club and zolder.
+
 Javascript developers can write their own web app to display the json file.
 
 ### Prerequisites
 
-Project Cars 2 running on your console and UDP in options set to Format 2. 
+Project Cars 2 running on your console and UDP in options set to "UDP Protocol Version" "Project CARS 2". 
 
-Note for the packet rate my PlayStation says higher the value more packets but I think this is back to front I found lower the value more the packets. Anyway experiment with these values to get the right setting for you.
+Note for the "UDP Frequency" my PlayStation says higher the value more packets but I think this is back to front I found lower the value more the packets. Anyway experiment with these values to get the right setting for you.
 
 #### Tute
 
@@ -34,15 +36,13 @@ I'm just going to use a terminal for the tutorials.
 
 * Download the Repo.
 * Open a Terminal
-* Copy the bin, lib and src directory to your working directory.
+* Copy rough_idea_project_cars-master to your working directory. (if you don't have a working dir, from a terminal run "mkdir ~/your_working_dir").
 ```
-Your_User$ cp -r ~/Downloads/src ~/your_working_dir/
-Your_User$ cp -r ~/Downloads/bin ~/your_working_dir/
-Your_User$ cp -r ~/Downloads/lib ~/your_working_dir/
+Your_User$ cp -r ~/Downloads/rough_idea_project_cars-master ~/your_working_dir/
 ```
-* Change Directory to ~/your_working_dir/bin
+* Change Directory to ~/your_working_dir/rough_idea_project_cars-master/bin
 ```
-Your_User$ cd ~/your_working_dir/bin
+Your_User$ cd ~/your_working_dir/rough_idea_project_cars-master/bin
 ```
 * Change to capture_lap_data_v2
 ```
@@ -53,9 +53,7 @@ Your_User$ cd ./capture_lap_data_v2
 Your_User$ ls
 total 97864
 -rw-r--r--  1 Your_User  staff    248031  3 Feb 18:37 DubaiAeroDromeClub_raceline_track.json
--rw-r--r--  1 Your_User  staff  32518087  6 Feb 07:55 lap_data.json
 -rw-r--r--  1 Your_User  staff       214  6 Feb 08:12 main.cpp
--rw-r--r--  1 Your_User  staff     22884  4 Feb 20:30 main.o
 -rwxr-xr-x  1 Your_User  staff       449  6 Feb 08:12 makefile
 -rw-r--r--  1 Your_User  staff  17027175  3 Feb 18:37 oulton_park_island.json
 -rwxr-xr-x  1 Your_User  staff     11180  6 Feb 08:12 pcars
@@ -66,11 +64,14 @@ total 97864
 ```
 Your_User$ export DYLD_LIBRARY_PATH=../../lib
 ```
-* Now run the executable and do some PRACTICE laps
+* Now run the executable and do some PRACTICE laps on Oulton Park Island (Still working on the javascript and I know this track works ish)
 ```
 Your_User$ ./pcars
 ```
-* Outlap in practice is not recorded so you must do at least one full lap, note that if your lap is invalidated the recording will stop for that lap until the next lap. Once you get to make your own app you can change this. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. track_9.html is work in progress.
+* May get a pop up asking to allow this app to read from a network port, press Allow.
+* To close the exe press "control-c" e.g. control button and the letter c at the sametime.
+
+Outlap in practice is not recorded so you must do at least one full lap, note that if your lap is invalidated the recording will stop for that lap until the next lap. Once you get to make your own app you can change this. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html (work in progress) in safari (browser).
 
 ## <a name="T-Part2"></a>Part 2 Roll Your Own Live feed
 
