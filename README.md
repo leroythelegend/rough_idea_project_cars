@@ -7,6 +7,8 @@ A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Form
 ## Contents
 ### Version 2 UDP Format
 
+Found some issues with udp packets themself, some are different from the Format 1 behaviour. I'm trying to get help with this at the mo from the Project Cars Forum http://forum.projectcarsgame.com/showthread.php?57939-PS4-Patch-3-0-Discussion-thread&p=1471429&viewfull=1#post1471429 .  I'm still going through the packets and matching up what I'm seeing, can also see that the tyre temp and tyre wear for the front left, front right and back left but not back right are different. 
+
 * [Tutorial](#T-Tutorial)
 
 ## <a name="T-Tutorial"></a>Tutorial
