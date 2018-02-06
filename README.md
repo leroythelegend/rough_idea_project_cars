@@ -19,7 +19,7 @@ source has been merged, will update readme. requests have v2 appended and packet
 
 The demo exe writes to a json file during practice and can be viewed using my WIP track_9.html, however during qualy and racing the brake telemetry is printed to the terminal and not to a json file. 
 
-In part * [Part 2](#T-Part2) I will show you how to write your own live feed.
+In [Part 2](#T-Part2) I will show you how to write your own live feed.
 
 Javascript developers can write their own web app to display the json file.
 
@@ -71,7 +71,7 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 ```
 Your_User$ ./pcars
 ```
-** Outlap in practice is not recorded so you must do at least one full lap, note that if your lap is invalidated the recording will stop for that lap until the next lap. Once you get to make your own app you can change this. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. track_9.html is work in progress.
+* Outlap in practice is not recorded so you must do at least one full lap, note that if your lap is invalidated the recording will stop for that lap until the next lap. Once you get to make your own app you can change this. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. track_9.html is work in progress.
 
 ## <a name="T-Part2"></a>Part 2 Roll Your Own Live feed
 
