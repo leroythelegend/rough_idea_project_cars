@@ -140,7 +140,7 @@ Your_User$ vi ./live.cpp
  26                 cout << "Brake " << packet->telemetry_data().brake() << endl;
  ```
  
- * MORE TO COME
+ * MORE TO COME (Unfortunatly the format 2 udp packets are not consitant enough, waiting to hear back from tech support)
  
 ### Version 1 UDP Format
 * [Install Binaries](#T-Installation)
