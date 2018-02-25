@@ -7,18 +7,17 @@ namespace pcars {
 Request_Pit_Mode_None::Request_Pit_Mode_None(Request * request)
 	: request_{request} {}
 
-bool Request_Pit_Mode_None::request(Decoder * decoder) {
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
+bool Request_Pit_Mode_None::request(Data * data) {
 
-	if (tdecoder) {
-		if (tdecoder->pit_mode() == Pit_Mode::PIT_MODE_NONE) {
-			return true;
-		}
-		else if (request_) {
-			return request_->request(decoder);
-		}
+	if (static_cast<Pit_Mode>(data->game_states()->pit_mode()) == Pit_Mode::PIT_MODE_NONE) {
+		return true;
 	}
-	return true;
+	else if (request_) {
+		return request_->request(data);
+	}
+	else {
+		return true;
+	}
 }
 
 }

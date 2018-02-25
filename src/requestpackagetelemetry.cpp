@@ -5,6 +5,7 @@
 
 #include "decodergeneric.h"
 #include "decodertelemetrydata.h"
+#include "dataformat1.h"
 
 namespace pcars {
 
@@ -29,10 +30,11 @@ bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 
 			Decoder_Telemetry_Data decoder;
 			decoder.decode(packet, pos);
+			Data_Format_1 data(&decoder);
 
 			// Build Version 1200 decoder.build_version();
 
-			return race_.request(&decoder);
+			return race_.request(&data);
 		}
 
 		if (request_) {

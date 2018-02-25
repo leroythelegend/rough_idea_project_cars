@@ -10,7 +10,7 @@ public:
 	Request_Race_State_Disqualified(Request * request = nullptr);
 	virtual ~Request_Race_State_Disqualified() {}
 
-	bool request(Decoder *);
+	bool request(Data *);
 
 private:
 	Request * request_;

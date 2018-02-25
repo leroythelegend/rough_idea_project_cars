@@ -117,6 +117,12 @@ void Record_Live_Data::record(Decoder * decoder)
 	live_->live(decoder);
 }
 
+void Record_Live_Data::record(Data * data)
+{
+	live_->live(data);
+}
+
+
 
 }
 

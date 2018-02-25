@@ -10,7 +10,7 @@ public:
 	Request_Pit_Mode_None(Request * request = nullptr);
 	virtual ~Request_Pit_Mode_None() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Request * request_;

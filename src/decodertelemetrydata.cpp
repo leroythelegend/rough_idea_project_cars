@@ -119,12 +119,12 @@ Packet_Type Decoder_Telemetry_Data::packet_type() const{
 	return static_cast<Packet_Type>(sequencenum_packettype_.ls2bits());
 }
 
-Session_State Decoder_Telemetry_Data::session_state() const {
-	return static_cast<Session_State>(sessionstate_gamestate_.ms3bits());
+unsigned int Decoder_Telemetry_Data::session_state() const {
+	return sessionstate_gamestate_.ms3bits();
 }
 
-Game_State Decoder_Telemetry_Data::game_state() const {
-	return static_cast<Game_State>(sessionstate_gamestate_.ls3bits());
+unsigned int Decoder_Telemetry_Data::game_state() const {
+	return sessionstate_gamestate_.ls3bits();
 }
 
 int Decoder_Telemetry_Data::viewed_participant_index() const {
@@ -151,8 +151,8 @@ float Decoder_Telemetry_Data::unfiltered_clutch() const {
 	return unfilteredclutch_.f1tof0();
 }
 
-Race_State Decoder_Telemetry_Data::race_state_flags() const {
-	return static_cast<Race_State>(racestateflags_.ls3bits());
+unsigned int Decoder_Telemetry_Data::race_state_flags() const {
+	return racestateflags_.ls3bits();
 }
 
 unsigned int Decoder_Telemetry_Data::laps_in_event() const {
@@ -243,8 +243,8 @@ float Decoder_Telemetry_Data::world_fastest_sector3_time() const {
 	return worldfastestsector3time_.f32();
 }
 
-Vector_Bool Decoder_Telemetry_Data::joy_pad() const {
-	return joypad_.mask_16bit();
+unsigned int Decoder_Telemetry_Data::joy_pad() const {
+	return joypad_.u16();
 }
 
 Flag_Reason Decoder_Telemetry_Data::flag_reason() const {
@@ -255,8 +255,8 @@ Flag_Colour Decoder_Telemetry_Data::flag_colour() const {
 	return static_cast<Flag_Colour>(highestflagreason_highestflagcolour_.ms2bits());
 }
 
-Pit_Mode Decoder_Telemetry_Data::pit_mode() const {
-	return static_cast<Pit_Mode>(pitschedule_pitmode_.ls3bits());
+unsigned int Decoder_Telemetry_Data::pit_mode() const {
+	return pitschedule_pitmode_.ls3bits();
 }
 
 Pit_Schedule Decoder_Telemetry_Data::pit_schedule() const {
@@ -283,8 +283,8 @@ float Decoder_Telemetry_Data::fuel_pressure_kpa() const {
 	return static_cast<float>(fuelpressurekpa_.u16());
 }
 
-Vector_Bool Decoder_Telemetry_Data::car_flags() const {
-	return carflags_.mask_8bit();
+unsigned int Decoder_Telemetry_Data::car_flags() const {
+	return carflags_.u8();
 }
 
 unsigned int Decoder_Telemetry_Data::fuel_capacity() const {
@@ -339,8 +339,8 @@ int Decoder_Telemetry_Data::enforced_pit_stop_lap() const {
 	return enforcedpitstoplap_.s8();
 }
 
-Crash_State Decoder_Telemetry_Data::crash_state() const {
-	return static_cast<Crash_State>(crashstate_.ls3bits());
+unsigned int Decoder_Telemetry_Data::crash_state() const {
+	return crashstate_.ls3bits();
 }
 
 float Decoder_Telemetry_Data::odometer_km() const {
@@ -519,8 +519,8 @@ Vector_UInt Decoder_Telemetry_Data::wings() const {
 	return wings_.times2_U8();
 }
 
-Vector_Bool Decoder_Telemetry_Data::dpad() const {
-	return dpad_.mask_8bit();
+unsigned int Decoder_Telemetry_Data::dpad() const {
+	return dpad_.u8();
 }
 
 }

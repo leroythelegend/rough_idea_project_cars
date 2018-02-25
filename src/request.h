@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "decoder.h"
+#include "data.h"
 
 namespace pcars {
 
@@ -11,7 +11,7 @@ class Request {
 public:
 	virtual ~Request() {}
 
-	virtual bool request(Decoder *) = 0;
+	virtual bool request(Data *) = 0;
 };
 
 }

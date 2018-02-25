@@ -10,7 +10,7 @@ public:
 	Request_Session_State_Time_Attack(Request * request = nullptr);
 	virtual ~Request_Session_State_Time_Attack() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Request * request_;

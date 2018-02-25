@@ -12,7 +12,7 @@ public:
 	Request_Session_State_Qualify(Record_Lap *, Request * request = nullptr);
 	virtual ~Request_Session_State_Qualify() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Request * request_;

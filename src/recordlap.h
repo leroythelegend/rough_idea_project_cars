@@ -7,6 +7,7 @@
 
 #include "decodertelemetrydata.h"
 #include "packet.h"
+#include "data.h"
 #include "process.h"
 #include "live.h"
 
@@ -19,6 +20,7 @@ public:
 	virtual ~Record_Lap() {};
 
 	virtual	void record(Decoder *) = 0;
+	virtual	void record(Data *) = 0;
 };
 
 class Record_Post_Lap : public Record_Lap
@@ -30,6 +32,7 @@ public:
 	virtual ~Record_Post_Lap() {};
 
 	void record(Decoder *) override;
+	void record(Data *) override {};
 
 private:
 	Process * process_;
@@ -46,6 +49,7 @@ public:
 	virtual ~Record_Post_Lap_V2() {};
 
 	void record(Decoder *) override;
+	void record(Data *) override {};
 
 private:
 	Process * process_;
@@ -60,6 +64,7 @@ public:
 	virtual ~Record_Live_Data() {};
 
 	void record(Decoder *) override;
+	void record(Data *) override;
 
 private:
 	Live * live_;

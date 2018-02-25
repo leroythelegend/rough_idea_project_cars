@@ -40,15 +40,15 @@ public:
 	unsigned int build_version() const;
 	unsigned int sequence_number() const;
 	Packet_Type packet_type() const;
-	Session_State session_state() const;
-	Game_State game_state() const;
+	unsigned int session_state() const;
+	unsigned int game_state() const;
 	int viewed_participant_index() const;
 	int num_participants() const;
 	float unfiltered_throttle() const;
 	float unfiltered_brake() const;
 	float unfiltered_steering() const;
 	float unfiltered_clutch() const;
-	Race_State race_state_flags() const;
+	unsigned int race_state_flags() const;
 	unsigned int laps_in_event() const;
 	float best_lap_time() const;
 	float last_lap_time() const;
@@ -71,17 +71,17 @@ public:
 	float world_fastest_sector1_time() const;
 	float world_fastest_sector2_time() const;
 	float world_fastest_sector3_time() const;
-	Vector_Bool joy_pad() const;
+	unsigned int joy_pad() const;
 	Flag_Reason flag_reason() const;
 	Flag_Colour flag_colour() const;
-	Pit_Mode pit_mode() const;
+	unsigned int pit_mode() const;
 	Pit_Schedule pit_schedule() const;
 	float oil_temp_celsius() const;
 	float oil_pressure_kpa() const;
 	float water_temp_celsius() const;
 	float water_pressure_kpa() const;
 	float fuel_pressure_kpa() const;
-	Vector_Bool car_flags() const;
+	unsigned int car_flags() const;
 	unsigned int fuel_capacity() const;
 	unsigned int brake() const;
 	unsigned int throttle() const;
@@ -95,7 +95,7 @@ public:
 	int gear() const;
 	float boost_amount() const;
 	int enforced_pit_stop_lap() const;
-	Crash_State crash_state() const;
+	unsigned int crash_state() const;
 	float odometer_km() const;
 	Vector_Float orientation() const;
 	Vector_Float local_velocity() const;
@@ -140,7 +140,7 @@ public:
 	Vector_Participant_Info participant_info() const;
 	unsigned int track_length() const;
 	Vector_UInt wings() const;
-	Vector_Bool dpad() const;
+	unsigned int dpad() const;
 
 private:
 	Decoder_U16 buildversion_;
@@ -175,7 +175,7 @@ private:
 	Decoder_F32 worldfastestsector1time_;
 	Decoder_F32 worldfastestsector2time_;
 	Decoder_F32 worldfastestsector3time_;
-	Decoder_16bit_Mask joypad_;
+	Decoder_U16 joypad_;
 	Decoder_2bit_3bit highestflagreason_highestflagcolour_;
 	Decoder_2bit_3bit pitschedule_pitmode_;
 	Decoder_S16 oiltempcelsius_;
@@ -183,7 +183,7 @@ private:
 	Decoder_S16 watertempcelsius_;
 	Decoder_U16 waterpressurekpa_;
 	Decoder_U16 fuelpressurekpa_;
-	Decoder_8bit_Mask carflags_;
+	Decoder_U8 carflags_;
 	Decoder_U8 fuelcapacity_;
 	Decoder_U8 brake_;
 	Decoder_U8 throttle_;
@@ -249,7 +249,7 @@ private:
 
 	Decoder_2Times_U8 wings_;
 
-	Decoder_8bit_Mask dpad_;
+	Decoder_U8 dpad_;
 };
 
 }

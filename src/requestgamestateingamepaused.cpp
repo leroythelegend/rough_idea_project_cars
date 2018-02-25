@@ -8,19 +8,17 @@ Request_Game_State_In_Game_Paused::Request_Game_State_In_Game_Paused(Request * r
 	: request_{request} {	
 }
 
-bool Request_Game_State_In_Game_Paused::request(Decoder * decoder) {
+bool Request_Game_State_In_Game_Paused::request(Data * data) {
 
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
-
-	if (tdecoder) {
-		if (tdecoder->game_state() == Game_State::GAME_INGAME_PAUSED) {
-			return true;
-		}
-		else if (request_) {
-			return request_->request(decoder);
-		}
+	if (static_cast<Game_State>(data->game_states()->game_state()) == Game_State::GAME_INGAME_PAUSED) {
+		return true;
 	}
-	return true;
+	else if (request_) {
+		return request_->request(data);
+	}
+	else {
+		return true;
+	}
 }
 
 }

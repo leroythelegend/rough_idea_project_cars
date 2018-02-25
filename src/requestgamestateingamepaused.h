@@ -10,7 +10,7 @@ public:
 	Request_Game_State_In_Game_Paused(Request * request = nullptr);
 	virtual ~Request_Game_State_In_Game_Paused() {}
 
-	virtual bool request(Decoder *);
+	virtual bool request(Data *);
 
 private:
 	Request * request_;

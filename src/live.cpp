@@ -27,6 +27,12 @@ void Live_Feed_V2::live(Decoder * decoder) const
 	}
 }
 
+void Live_Feed_V2::live(Data * data) const
+{
+	cout << "Brake " << data->car_states()->brake() << endl;
+}
+
+
 
 }
 

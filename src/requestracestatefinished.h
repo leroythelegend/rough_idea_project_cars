@@ -10,7 +10,7 @@ public:
 	Request_Race_State_Finished(Request * request);
 	virtual ~Request_Race_State_Finished() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Request * request_;

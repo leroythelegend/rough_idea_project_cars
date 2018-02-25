@@ -7,18 +7,17 @@ namespace pcars {
 Request_Session_State_Invalid::Request_Session_State_Invalid(Request * request)
 	: request_{request} {}
 
-bool Request_Session_State_Invalid::request(Decoder * decoder) {
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
+bool Request_Session_State_Invalid::request(Data * data) {
 
-	if (tdecoder) {
-		if (tdecoder->session_state() == Session_State::SESSION_INVALID) {
-			return true;
-		}
-		else if (request_) {
-			return request_->request(decoder);
-		}
+	if (static_cast<Session_State>(data->game_states()->session_state()) == Session_State::SESSION_INVALID) {
+		return true;
 	}
-	return true;
+	else if (request_) {
+		return request_->request(data);
+	}
+	else {
+		return true;
+	}
 }
 
 }

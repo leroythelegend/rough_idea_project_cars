@@ -12,7 +12,7 @@ public:
 	Request_Race_State_Retired_V2(Record_Lap *, Request * request = nullptr);
 	virtual ~Request_Race_State_Retired_V2() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Record_Lap * record_;

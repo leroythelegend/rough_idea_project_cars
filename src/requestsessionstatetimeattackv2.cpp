@@ -8,21 +8,17 @@ Request_Session_State_Time_Attack_V2::Request_Session_State_Time_Attack_V2(Recor
 	: request_{request},
 	  racing_{record} {}
 
-bool Request_Session_State_Time_Attack_V2::request(Decoder * decoder) {
+bool Request_Session_State_Time_Attack_V2::request(Data * data) {
 
-	Packet * packet = dynamic_cast<Packet *>(decoder);
-
-	if (packet) {
-
-		if (static_cast<Session_State>(packet->game_state().sessin_state()) == Session_State::SESSION_TIME_ATTACK) {
-			return racing_.request(decoder);
-		}
-
-		if (request_) {
-			return request_->request(decoder);
-		}
+	if (static_cast<Session_State>(data->game_states()->session_state()) == Session_State::SESSION_TIME_ATTACK) {
+		return racing_.request(data);
 	}
-	return true;
+	else if (request_) {
+		return request_->request(data);
+	}
+	else {
+		return true;
+	}
 }
 
 }

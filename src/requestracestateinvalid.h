@@ -10,7 +10,7 @@ public:
 	Request_Race_State_Invalid(Request * request = nullptr);
 	virtual ~Request_Race_State_Invalid() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Request * request_;

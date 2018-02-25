@@ -10,7 +10,7 @@ public:
 	Request_Game_State_In_Game_Restart_V2(Request *);
 	virtual ~Request_Game_State_In_Game_Restart_V2() {}
 
-	bool request(Decoder *) override;
+	bool request(Data *) override;
 
 private:
 	Request * request_;

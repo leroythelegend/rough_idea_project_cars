@@ -7,19 +7,17 @@ namespace pcars {
 Request_Game_State_Exit::Request_Game_State_Exit(Request * request)
 	: request_{request} {}
 
-bool Request_Game_State_Exit::request(Decoder * decoder) {
+bool Request_Game_State_Exit::request(Data * data) {
 
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
-
-	if (tdecoder) {
-		if (tdecoder->game_state() == Game_State::GAME_EXITED) {
-			return false;
-		}
-		else if (request_) {
-			return request_->request(decoder);
-		}
+	if (static_cast<Game_State>(data->game_states()->game_state()) == Game_State::GAME_EXITED) {
+		return false;
 	}
-	return true;
+	else if (request_) {
+		return request_->request(data);
+	}
+	else {
+		return true;
+	}
 }
 
 }
