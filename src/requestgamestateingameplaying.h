@@ -18,7 +18,7 @@ public:
 	Request_Game_State_In_Game_Playing(Request * request = nullptr);
 	virtual ~Request_Game_State_In_Game_Playing() {}
 
-	bool request(Data *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

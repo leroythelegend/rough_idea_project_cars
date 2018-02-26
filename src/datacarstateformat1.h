@@ -9,7 +9,7 @@ namespace pcars {
 
 class Data_Car_State_Format_1 : public Data_Car_State {
 public:
-	Data_Car_State_Format_1(Decoder_Telemetry_Data *);
+	Data_Car_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Car_State_Format_1() {}
 
 	unsigned int car_flags() const override;	
@@ -67,7 +67,7 @@ public:
 	Vector_Float full_position() const override;
 
 private:
-	Decoder_Telemetry_Data * telemetry_data_;
+	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;
 };
 
 }

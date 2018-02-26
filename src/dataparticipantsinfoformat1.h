@@ -11,7 +11,7 @@ public:
 	using Participant = unsigned int;
 	using Participants = unsigned int;
 
-	Data_Participants_Info_Format_1(Decoder_Telemetry_Data *);
+	Data_Participants_Info_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Participants_Info_Format_1() {}
 
 	Vector_Int world_position(const Participant) const override;
@@ -43,7 +43,7 @@ public:
 	Participants participants() const override;
 
 private:
-	Decoder_Telemetry_Data * telemetry_data_;
+	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;
 };
 
 }

@@ -11,7 +11,7 @@ class Request {
 public:
 	virtual ~Request() {}
 
-	virtual bool request(Data *) = 0;
+	virtual bool request(std::shared_ptr<Data>) = 0;
 };
 
 }

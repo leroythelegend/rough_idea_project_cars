@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Velocity_State_Format_1 : public Data_Velocity_State {
 public:
-	Data_Velocity_State_Format_1(Decoder_Telemetry_Data *);
+	Data_Velocity_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Velocity_State_Format_1() {}
 
 	Vector_Float orientation() const override;
@@ -20,7 +20,7 @@ public:
 	Vector_Float extents_centre() const override;
 
 private:
-	Decoder_Telemetry_Data * telemetry_data_;
+	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;
 };
 
 }

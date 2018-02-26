@@ -10,7 +10,7 @@ public:
 	Request_Pit_Mode_Driving_Into_Pits(Request * request = nullptr);
 	virtual ~Request_Pit_Mode_Driving_Into_Pits() {}
 
-	bool request(Data *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Damage_State_Format_1 : public Data_Damage_State {
 public:
-	Data_Damage_State_Format_1(Decoder_Telemetry_Data *);
+	Data_Damage_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Damage_State_Format_1() {}
 
 	Vector_UInt brake_damage() const override;
@@ -17,7 +17,7 @@ public:
 	unsigned int engine_damage() const override;
 
 private:
-	Decoder_Telemetry_Data * telemetry_data_;
+	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;
 };
 
 }

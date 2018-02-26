@@ -8,7 +8,7 @@ Request_Game_State_In_Game_Paused::Request_Game_State_In_Game_Paused(Request * r
 	: request_{request} {	
 }
 
-bool Request_Game_State_In_Game_Paused::request(Data * data) {
+bool Request_Game_State_In_Game_Paused::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Game_State>(data->game_states()->game_state()) == Game_State::GAME_INGAME_PAUSED) {
 		return true;

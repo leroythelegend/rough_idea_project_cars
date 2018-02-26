@@ -7,7 +7,7 @@ namespace pcars {
 Request_Game_State_Exit::Request_Game_State_Exit(Request * request)
 	: request_{request} {}
 
-bool Request_Game_State_Exit::request(Data * data) {
+bool Request_Game_State_Exit::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Game_State>(data->game_states()->game_state()) == Game_State::GAME_EXITED) {
 		return false;

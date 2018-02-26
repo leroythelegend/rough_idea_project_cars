@@ -12,7 +12,7 @@ public:
 	Request_Session_State_Test(Request * request = nullptr);
 	virtual ~Request_Session_State_Test() {}
 
-	bool request(Data *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

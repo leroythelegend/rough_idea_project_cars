@@ -2,7 +2,7 @@
 
 namespace pcars {
 
-Data_Velocity_State_Format_1::Data_Velocity_State_Format_1(Decoder_Telemetry_Data * telemetry_data)
+Data_Velocity_State_Format_1::Data_Velocity_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data> telemetry_data)
 	: telemetry_data_{telemetry_data} {}
 
 Vector_Float Data_Velocity_State_Format_1::orientation() const {

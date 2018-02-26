@@ -7,7 +7,7 @@ namespace pcars {
 Request_Race_State_DNF::Request_Race_State_DNF(Request * request)
 	: request_{request} {}
 
-bool Request_Race_State_DNF::request(Data * data) {
+bool Request_Race_State_DNF::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Race_State>(data->game_states()->race_state_flags()) == Race_State::RACESTATE_DNF) {
 		return true;

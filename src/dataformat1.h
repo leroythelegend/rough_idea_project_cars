@@ -4,13 +4,13 @@
 #include <memory>
 
 #include "data.h"
-#include "decoder.h"
+#include "decodertelemetrydata.h"
 
 namespace pcars {
 
 class Data_Format_1 : public Data {
 public:
-	Data_Format_1(Decoder *);
+	Data_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Format_1() {}
 
 	Data_Car_State * car_states() const override;	
@@ -27,18 +27,18 @@ public:
 	Data_Times * times() const override;
 
 private:
-	std::shared_ptr<Data_Car_State> car_state_;
-	std::shared_ptr<Data_Game_State> game_state_;
-	std::shared_ptr<Data_Input_State> input_state_;
-	std::shared_ptr<Data_Velocity_State> velocity_state_;
-	std::shared_ptr<Data_Damage_State> damage_state_;
-	std::shared_ptr<Data_Control_State> control_state_;
-	std::shared_ptr<Data_Track_State> track_state_;
-	std::shared_ptr<Data_Participants> participants_;
-	std::shared_ptr<Data_Participants_Info> participants_info_;
-	std::shared_ptr<Data_Participants_Stats> participants_stats_;
-	std::shared_ptr<Data_Split_Times> split_times_;
-	std::shared_ptr<Data_Times> times_;
+	std::unique_ptr<Data_Car_State> car_state_;
+	std::unique_ptr<Data_Game_State> game_state_;
+	std::unique_ptr<Data_Input_State> input_state_;
+	std::unique_ptr<Data_Velocity_State> velocity_state_;
+	std::unique_ptr<Data_Damage_State> damage_state_;
+	std::unique_ptr<Data_Control_State> control_state_;
+	std::unique_ptr<Data_Track_State> track_state_;
+	std::unique_ptr<Data_Participants> participants_;
+	std::unique_ptr<Data_Participants_Info> participants_info_;
+	std::unique_ptr<Data_Participants_Stats> participants_stats_;
+	std::unique_ptr<Data_Split_Times> split_times_;
+	std::unique_ptr<Data_Times> times_;
 };
 
 }

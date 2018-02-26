@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Input_State_Format_1 : public Data_Input_State {
 public:
-	Data_Input_State_Format_1(Decoder_Telemetry_Data *);
+	Data_Input_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Input_State_Format_1() {}
 
 	float unfiltered_throttle() const override;
@@ -17,7 +17,7 @@ public:
 	float unfiltered_clutch() const override;
 
 private:
-	Decoder_Telemetry_Data * telemetry_data_;
+	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;
 };
 
 }

@@ -7,7 +7,7 @@ namespace pcars {
 Request_Session_State_Formation_Lap::Request_Session_State_Formation_Lap(Request * request)
 	: request_{request} {}
 
-bool Request_Session_State_Formation_Lap::request(Data * data) {
+bool Request_Session_State_Formation_Lap::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Session_State>(data->game_states()->session_state()) == Session_State::SESSION_FORMATION_LAP) {
 		return true;

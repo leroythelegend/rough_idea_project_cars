@@ -13,7 +13,7 @@ public:
 	Request_Session_State_Practice(Record_Lap *, Request * request = nullptr);
 	virtual ~Request_Session_State_Practice() {}
 
-	bool request(Data *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

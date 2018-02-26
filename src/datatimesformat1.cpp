@@ -2,7 +2,7 @@
 
 namespace pcars {
 
-Data_Times_Format_1::Data_Times_Format_1(Decoder_Telemetry_Data * telemetry_data)
+Data_Times_Format_1::Data_Times_Format_1(std::shared_ptr<Decoder_Telemetry_Data> telemetry_data)
 	: telemetry_data_{telemetry_data} {}
 
 float Data_Times_Format_1::current_time() const {

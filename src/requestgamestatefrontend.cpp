@@ -8,7 +8,7 @@ Request_Game_State_Front_End::Request_Game_State_Front_End(Request * request)
 	: request_{request} {
 }
 
-bool Request_Game_State_Front_End::request(Data * data) {
+bool Request_Game_State_Front_End::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Game_State>(data->game_states()->game_state()) == Game_State::GAME_FRONT_END) {
 		return true;

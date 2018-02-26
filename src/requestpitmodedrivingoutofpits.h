@@ -10,7 +10,7 @@ public:
 	Request_Pit_Mode_Driving_Out_Of_Pits(Request * request = nullptr);
 	virtual ~Request_Pit_Mode_Driving_Out_Of_Pits() {}
 
-	bool request(Data *);
+	bool request(std::shared_ptr<Data>);
 
 private:
 	Request * request_;

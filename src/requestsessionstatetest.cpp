@@ -7,7 +7,7 @@ namespace pcars {
 Request_Session_State_Test::Request_Session_State_Test(Request * request)
 	: request_{request} {}
 
-bool Request_Session_State_Test::request(Data * data) {
+bool Request_Session_State_Test::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Session_State>(data->game_states()->session_state()) == Session_State::SESSION_TEST) {
 		return true;

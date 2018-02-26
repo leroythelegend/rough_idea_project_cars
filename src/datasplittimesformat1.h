@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Split_Times_Format_1 : public Data_Split_Times {
 public:
-	Data_Split_Times_Format_1(Decoder_Telemetry_Data *);
+	Data_Split_Times_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Split_Times_Format_1() {}
 
 	unsigned int participants_changed_timestamp() const override;
@@ -18,7 +18,7 @@ public:
 	float split_time() const override;
 
 public:
-	Decoder_Telemetry_Data * telemetry_data_;
+	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;
 };
 
 }

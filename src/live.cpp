@@ -27,7 +27,7 @@ void Live_Feed_V2::live(Decoder * decoder) const
 	}
 }
 
-void Live_Feed_V2::live(Data * data) const
+void Live_Feed_V2::live(std::shared_ptr<Data> data) const
 {
 	cout << "Brake " << data->car_states()->brake() << endl;
 }

@@ -10,7 +10,7 @@ public:
 	Request_Game_State_Front_End(Request *);
 	virtual ~Request_Game_State_Front_End() {}
 
-	bool request(Data *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

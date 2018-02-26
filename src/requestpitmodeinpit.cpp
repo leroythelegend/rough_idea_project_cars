@@ -7,7 +7,7 @@ namespace pcars {
 Request_Pit_Mode_In_Pit::Request_Pit_Mode_In_Pit(Request * request)
 	: request_{request} {}
 
-bool Request_Pit_Mode_In_Pit::request(Data * data) {
+bool Request_Pit_Mode_In_Pit::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Pit_Mode>(data->game_states()->pit_mode()) == Pit_Mode::PIT_MODE_IN_PIT) {
 		return true;

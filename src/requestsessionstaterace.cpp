@@ -8,7 +8,7 @@ Request_Session_State_Race::Request_Session_State_Race(Record_Lap * record, Requ
 	: request_{request},
 	  racing_{record} {}
 
-bool Request_Session_State_Race::request(Data * data) {
+bool Request_Session_State_Race::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Session_State>(data->game_states()->session_state()) == Session_State::SESSION_RACE) {
 		return racing_.request(data);

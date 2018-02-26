@@ -2,7 +2,7 @@
 
 namespace pcars {
 
-Data_Split_Times_Format_1::Data_Split_Times_Format_1(Decoder_Telemetry_Data * telemetry_data)
+Data_Split_Times_Format_1::Data_Split_Times_Format_1(std::shared_ptr<Decoder_Telemetry_Data> telemetry_data)
 	: telemetry_data_{telemetry_data} {}
 
 unsigned int Data_Split_Times_Format_1::participants_changed_timestamp() const {

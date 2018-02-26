@@ -18,7 +18,7 @@ std::mutex global_mutex_;
 class Thread_Args 
 {
 public:
-	Thread_Args(Process * process, Process::Lap_Data data)
+	Thread_Args(Process * process, Process::Lap_Data & data)
 		: process_(process),
 		  data_(data) {}
 	
@@ -37,7 +37,7 @@ public:
 	Process::Lap_Data_V2 data_;
 };
 
-void process_func(const Thread_Args args) {
+void process_func(const Thread_Args & args) {
 	unique_lock<mutex> lck(global_mutex_);
 	args.process_->process(args.data_);
 };
@@ -54,29 +54,51 @@ Record_Post_Lap::Record_Post_Lap(Process * process)
 {
 }
 
-void Record_Post_Lap::record(Decoder * decoder)
+void Record_Post_Lap::record(Decoder * )
 {
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
-	if (tdecoder) {
-		if (lap_number_ != static_cast<int>(tdecoder->participant_info().at(0).current_lap())) {
-			lap_number_ = tdecoder->participant_info().at(0).current_lap();
-			if (lap_data_.size()) {
+//	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
+//	if (tdecoder) {
+//		if (lap_number_ != static_cast<int>(tdecoder->participant_info().at(0).current_lap())) {
+//			lap_number_ = tdecoder->participant_info().at(0).current_lap();
+//			if (lap_data_.size()) {
+//
+//				thread t(process_func, Thread_Args(process_, lap_data_));
+//				t.detach();
+//
+//				lap_data_.clear();
+//				lap_data_.push_back(*tdecoder);
+//			}
+//			else {
+//					lap_data_.push_back(*tdecoder);
+//			}
+//		}
+//		else {
+//			lap_data_.push_back(*tdecoder);
+//		}
+//	}
+}
 
-				thread t(process_func, Thread_Args(process_, lap_data_));
-				t.detach();
+void Record_Post_Lap::record(std::shared_ptr<Data> data)
+{
+	if (lap_number_ != static_cast<int>(data->participants_info()->current_lap(0))) {
+		lap_number_ = data->participants_info()->current_lap(0);
+		if (lap_data_.size()) {
 
-				lap_data_.clear();
-				lap_data_.push_back(*tdecoder);
-			}
-			else {
-					lap_data_.push_back(*tdecoder);
-			}
+			thread t(process_func, Thread_Args(process_, lap_data_));
+			t.detach();
+
+			lap_data_.clear();
+			lap_data_.push_back(data);
 		}
 		else {
-			lap_data_.push_back(*tdecoder);
+			lap_data_.push_back(data);
 		}
 	}
+	else {
+		lap_data_.push_back(data);
+	}
 }
+
 
 Record_Post_Lap_V2::Record_Post_Lap_V2(Process * process)
 	: process_{process},
@@ -117,7 +139,7 @@ void Record_Live_Data::record(Decoder * decoder)
 	live_->live(decoder);
 }
 
-void Record_Live_Data::record(Data * data)
+void Record_Live_Data::record(std::shared_ptr<Data> data)
 {
 	live_->live(data);
 }

@@ -2,7 +2,7 @@
 
 namespace pcars {
 
-Data_Game_State_Format_1::Data_Game_State_Format_1(Decoder_Telemetry_Data * telemetry_data)
+Data_Game_State_Format_1::Data_Game_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data> telemetry_data)
 	: telemetry_data_{telemetry_data} {}
 
 unsigned int Data_Game_State_Format_1::session_state() const {

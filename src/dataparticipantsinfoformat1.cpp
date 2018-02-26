@@ -3,7 +3,7 @@
 namespace pcars {
 
 
-Data_Participants_Info_Format_1::Data_Participants_Info_Format_1(Decoder_Telemetry_Data * telemetry_data) 
+Data_Participants_Info_Format_1::Data_Participants_Info_Format_1(std::shared_ptr<Decoder_Telemetry_Data> telemetry_data) 
 	: telemetry_data_{telemetry_data} {}
 
 Vector_Int Data_Participants_Info_Format_1::world_position(const Participant participant) const {

@@ -16,29 +16,19 @@
 
 namespace pcars {
 
-Data_Format_1::Data_Format_1(Decoder * decoder)
-	: car_state_{nullptr} {
-
-	Decoder_Generic * gdecoder = dynamic_cast<Decoder_Generic *>(decoder);
-
-	if (gdecoder->packet_type() == Packet_Type::PACKET_TYPE_TELEMETRY) {
-		car_state_.reset(new Data_Car_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		game_state_.reset(new Data_Game_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		input_state_.reset(new Data_Input_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		velocity_state_.reset(new Data_Velocity_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		damage_state_.reset(new Data_Damage_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		control_state_.reset(new Data_Control_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		track_state_.reset(new Data_Track_State_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		participants_.reset(new Data_Participants_Format_1);	
-		participants_info_.reset(new Data_Participants_Info_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		participants_stats_.reset(new Data_Participants_Stats_Format_1);	
-		split_times_.reset(new Data_Split_Times_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-		times_.reset(new Data_Times_Format_1(dynamic_cast<Decoder_Telemetry_Data *>(decoder)));	
-	}
-	else {
-		throw 1;
-	}
-}
+Data_Format_1::Data_Format_1(std::shared_ptr<Decoder_Telemetry_Data> decoder)
+	: car_state_{std::make_unique<Data_Car_State_Format_1>(decoder)},
+	  game_state_{std::make_unique<Data_Game_State_Format_1>(decoder)},
+	  input_state_{std::make_unique<Data_Input_State_Format_1>(decoder)},
+	  velocity_state_{std::make_unique<Data_Velocity_State_Format_1>(decoder)},
+	  damage_state_{std::make_unique<Data_Damage_State_Format_1>(decoder)},
+	  control_state_{std::make_unique<Data_Control_State_Format_1>(decoder)},
+	  track_state_{std::make_unique<Data_Track_State_Format_1>(decoder)},
+	  participants_{std::make_unique<Data_Participants_Format_1>()}, 
+	  participants_info_{std::make_unique<Data_Participants_Info_Format_1>(decoder)},
+	  participants_stats_{std::make_unique<Data_Participants_Stats_Format_1>()},
+	  split_times_{std::make_unique<Data_Split_Times_Format_1>(decoder)},
+	  times_{std::make_unique<Data_Times_Format_1>(decoder)} {}
 
 Data_Car_State * Data_Format_1::car_states() const {
 	return car_state_.get();
@@ -88,9 +78,5 @@ Data_Times * Data_Format_1::times() const {
 	return times_.get();
 }
 
-
-
-
-
-
 }
+

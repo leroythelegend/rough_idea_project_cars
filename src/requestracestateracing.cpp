@@ -8,7 +8,7 @@ Request_Race_State_Racing::Request_Race_State_Racing(Record_Lap * record, Reques
 	: record_{record},
 	  request_{request} {}
 
-bool Request_Race_State_Racing::request(Data * data) {
+bool Request_Race_State_Racing::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Race_State>(data->game_states()->race_state_flags()) == Race_State::RACESTATE_RACING) {
 		record_->record(data);

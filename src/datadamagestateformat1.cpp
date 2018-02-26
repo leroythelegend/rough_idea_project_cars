@@ -2,7 +2,7 @@
 
 namespace pcars {
 
-Data_Damage_State_Format_1::Data_Damage_State_Format_1(Decoder_Telemetry_Data * telemetry_data)
+Data_Damage_State_Format_1::Data_Damage_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data> telemetry_data)
 	: telemetry_data_{telemetry_data} {}
 	
 Vector_UInt Data_Damage_State_Format_1::brake_damage() const {

@@ -42,15 +42,7 @@ enum class Packet_Type_V2 {
 	PACKET_PARTICIPANT_VEHICLE_NAMES = 8
 };
 
-enum class Game_State {
-	GAME_EXITED = 0,
-	GAME_FRONT_END,
-	GAME_INGAME_PLAYING,
-	GAME_INGAME_PAUSED,
-	GAME_MAX
-};
-
-enum class Game_State_V2
+enum class Game_State
 {
 	GAME_EXITED = 0,
 	GAME_FRONT_END,
@@ -135,18 +127,7 @@ enum class Pit_Schedule_V2
 	PIT_SCHEDULE_MAX
 };
 
-enum class Car_Flags {
-	CAR_HEADLIGHT = 0,
-	CAR_ENGINE_ACTIVE,
-	CAR_ENGINE_WARNING,
-	CAR_SPEED_LIMITER,
-	CAR_ABS,
-	CAR_HANDBRAKE,
-	CAR_STABILITY,
-	CAR_TRACTION_CONTROL
-};
-
-enum class Car_Flags_V2
+enum class Car_Flags
 {
 	CAR_HEADLIGHT         = (1<<0),
 	CAR_ENGINE_ACTIVE     = (1<<1),
@@ -154,6 +135,8 @@ enum class Car_Flags_V2
 	CAR_SPEED_LIMITER     = (1<<3),
 	CAR_ABS               = (1<<4),
 	CAR_HANDBRAKE         = (1<<5),
+	CAR_STABILITY         = (1<<6),
+	CAR_TRACTION_CONTROL  = (1<<7)
 };
 
 enum class Tyre_Flags

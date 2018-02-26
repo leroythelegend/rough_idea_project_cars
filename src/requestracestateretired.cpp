@@ -7,7 +7,7 @@ namespace pcars {
 Request_Race_State_Retired::Request_Race_State_Retired(Request * request)
 	: request_{request} {}
 
-bool Request_Race_State_Retired::request(Data * data) {
+bool Request_Race_State_Retired::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Race_State>(data->game_states()->race_state_flags()) == Race_State::RACESTATE_RETIRED) {
 		return true;

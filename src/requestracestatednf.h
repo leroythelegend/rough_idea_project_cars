@@ -10,7 +10,7 @@ public:
 	Request_Race_State_DNF(Request * request = nullptr);
 	virtual ~Request_Race_State_DNF() {}
 
-	bool request(Data *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

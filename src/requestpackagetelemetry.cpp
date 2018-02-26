@@ -14,6 +14,7 @@ Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * l
 	  recordlap_{process},
 	  recordlive_{live},
 	  practice_{&recordlap_},
+	  //practice_{&recordlive_},
 	  qualy_{&recordlive_, &practice_}, 
 	  race_{&recordlive_, &qualy_} {}
 
@@ -28,12 +29,12 @@ bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 
 		if (gdecoder.packet_type() == Packet_Type::PACKET_TYPE_TELEMETRY) {
 
-			Decoder_Telemetry_Data decoder;
-			decoder.decode(packet, pos);
+			std::shared_ptr<Decoder_Telemetry_Data> decoder = std::make_shared<Decoder_Telemetry_Data>();
+			decoder->decode(packet, pos);
 
-			Data_Format_1 data(&decoder);
+			std::shared_ptr<Data> data = std::make_shared<Data_Format_1>(decoder);
 
-			return race_.request(&data);
+			return race_.request(data);
 		}
 
 		if (request_) {
