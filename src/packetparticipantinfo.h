@@ -20,27 +20,27 @@ public:
 	Packet_Participant_Info();
 	virtual ~Packet_Participant_Info() {}
 
-	Vector_Int world_position();
-	Vector_Int orientation();
-	unsigned int current_lap_distance();
-	unsigned int race_position();
-	bool is_active();
-	unsigned int sector();
-	unsigned int flag_colour();
-	unsigned int flag_reason();
-	unsigned int pit_mode();
-	unsigned int pit_mode_schedule();
-	unsigned int car_index();
-	bool local_player();
-	bool remote_player();
-	bool human_player();
-	bool none_human_player();
-	unsigned int race_state();
-	bool invalid_lap();
-	unsigned int current_lap();
-	float current_time();
-	float current_sector_time();
-	unsigned int mp_participant_index();
+	Vector_Int world_position() const;
+	Vector_Int orientation() const;
+	unsigned int current_lap_distance() const;
+	unsigned int race_position() const;
+	bool is_active() const;
+	unsigned int sector() const;
+	unsigned int flag_colour() const;
+	unsigned int flag_reason() const;
+	unsigned int pit_mode() const;
+	unsigned int pit_mode_schedule() const;
+	unsigned int car_index() const;
+	bool local_player() const;
+	bool remote_player() const;
+	bool human_player() const;
+	bool none_human_player() const;
+	unsigned int race_state() const;
+	bool invalid_lap() const;
+	unsigned int current_lap() const;
+	float current_time() const;
+	float current_sector_time() const;
+	unsigned int mp_participant_index() const;
 
 private:
 	Decoder_3Times_S16 world_position_;
