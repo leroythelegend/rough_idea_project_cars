@@ -18,7 +18,6 @@ public:
 	virtual ~Process() {}
 
 	virtual void process(const Lap_Data lap_data) const = 0;
-	virtual void process(const Lap_Data_V2& lap_data) const = 0;
 };
 
 class Process_Lap : public Process {
@@ -27,7 +26,6 @@ public:
 	virtual ~Process_Lap() {}
 
 	void process(const Lap_Data lap_data) const override;
-	void process(const Lap_Data_V2& lap_data) const override;
 
 };
 
@@ -37,7 +35,6 @@ public:
 	virtual ~Process_Lap_V2() {}
 
 	void process(const Lap_Data lap_data) const override;
-	void process(const Lap_Data_V2&) const override {};
 
 };
 
@@ -48,7 +45,6 @@ public:
 	virtual ~Process_Track() {}
 
 	void process(const Lap_Data lap_data) const override;
-	void process(const Lap_Data_V2&) const override {};
 };
 
 

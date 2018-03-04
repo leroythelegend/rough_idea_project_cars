@@ -18,18 +18,8 @@ class Live_Feed : public Live {
 public:
 	virtual ~Live_Feed() {}
 
-	void live(Decoder *) const override;
-	void live(std::shared_ptr<Data>) const override {};
-};
-
-class Live_Feed_V2 : public Live {
-public:
-	virtual ~Live_Feed_V2() {}
-
-	void live(Decoder *) const override;
 	void live(std::shared_ptr<Data>) const override;
 };
-
 
 }
 
