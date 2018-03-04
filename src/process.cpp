@@ -212,27 +212,27 @@ Process_Track::Process_Track()
 	ofstream reset_file("track.json", ios::trunc);
 }
 
-void Process_Track::process(const Lap_Data) const
+void Process_Track::process(const Lap_Data lap_data) const
 {
-//	static unsigned int lap_number;
-//
-//	std::ofstream file("track.json", ios::app);
-//	file << "lap" << ++lap_number << " = \'{\"data\":[";
-//
-//	for (auto iter = lap_data.begin(); iter != lap_data.end(); iter++) {
-//		file << "{ " << "\"d\":" << "\"" << iter->participant_info().at(0).current_lap_distance() << "\","
-//		      	     << "\"sector\":" << "\"" << iter->participant_info().at(0).sector() << "\","
-//			     << "\"x\":" << "\"" << iter->participant_info().at(0).world_position().at(0) << "\","
-//			     << "\"z\":" << "\"" << iter->participant_info().at(0).world_position().at(2) << "\"";
-//		if (std::next(iter) != lap_data.end()) {
-//		        file << "},";	    
-//		}
-//		else {
-//			file <<	"}";
-//		}
-//	}
-//
-//	file << "]}\';" << endl;
+	static unsigned int lap_number;
+
+	std::ofstream file("track.json", ios::app);
+	file << "lap" << ++lap_number << " = \'{\"data\":[";
+
+	for (auto iter = lap_data.begin(); iter != lap_data.end(); iter++) {
+		file << "{ " << "\"d\":" << "\"" <<(*iter)->participants_info()->current_lap_distance(0) << "\","
+		      	     << "\"sector\":" << "\"" << (*iter)->participants_info()->sector(0) << "\","
+			     << "\"x\":" << "\"" << (*iter)->participants_info()->world_position(0).at(0) << "\","
+			     << "\"z\":" << "\"" << (*iter)->participants_info()->world_position(0).at(2) << "\"";
+		if (std::next(iter) != lap_data.end()) {
+		        file << "},";	    
+		}
+		else {
+			file <<	"}";
+		}
+	}
+
+	file << "]}\';" << endl;
 }
 
 
