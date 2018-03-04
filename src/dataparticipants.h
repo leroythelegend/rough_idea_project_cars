@@ -7,11 +7,14 @@ namespace pcars {
 
 class Data_Participants {
 public:
+	using Participant = unsigned int;
+	using Participants = unsigned int;
+
 	virtual ~Data_Participants() {}
 
-	virtual	Vector_String name() const = 0;
-	virtual	unsigned int nationality() const = 0;
-	virtual	unsigned int index() const = 0;
+	virtual	std::string name(Participant) const = 0;
+	virtual	unsigned int nationality(Participant) const = 0;
+	virtual	unsigned int index(Participant) const = 0;
 };
 
 }

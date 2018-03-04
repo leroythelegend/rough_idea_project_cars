@@ -4,27 +4,27 @@
 #include <memory>
 
 #include "data.h"
-#include "decoder.h"
+#include "packet.h"
 
 namespace pcars {
 
 class Data_Format_2 : public Data {
 public:
-	Data_Format_2(Decoder *) {}
+	Data_Format_2(std::shared_ptr<Packet>);
 	virtual ~Data_Format_2() {}
 
-	Data_Car_State * car_states() const override {return nullptr;};	
-	Data_Game_State * game_states() const override {return nullptr;};
-	Data_Input_State * input_states() const override {return nullptr;};
-	Data_Velocity_State * velocity_states() const override {return nullptr;};
-	Data_Damage_State * damage_states() const override {return nullptr;};
-	Data_Control_State * control_states() const override {return nullptr;};
-	Data_Track_State * track_states() const override {return nullptr;};
-	Data_Participants * participants() const override  {return nullptr;};
-	Data_Participants_Info * participants_info() const override  {return nullptr;};
-	Data_Participants_Stats * participants_stats() const override  {return nullptr;};
-	Data_Split_Times * split_times() const override  {return nullptr;};
-	Data_Times * times() const override  {return nullptr;};
+	Data_Car_State * car_states() const override;	
+	Data_Game_State * game_states() const override;
+	Data_Input_State * input_states() const override;
+	Data_Velocity_State * velocity_states() const override;
+	Data_Damage_State * damage_states() const override;
+	Data_Control_State * control_states() const override;
+	Data_Track_State * track_states() const override;
+	Data_Participants * participants() const override;
+	Data_Participants_Info * participants_info() const override;
+	Data_Participants_Stats * participants_stats() const override;
+	Data_Split_Times * split_times() const override;
+	Data_Times * times() const override;
 
 private:
 	std::shared_ptr<Data_Car_State> car_state_;

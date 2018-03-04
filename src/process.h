@@ -31,6 +31,17 @@ public:
 
 };
 
+class Process_Lap_V2 : public Process {
+public:
+	Process_Lap_V2();
+	virtual ~Process_Lap_V2() {}
+
+	void process(const Lap_Data lap_data) const override;
+	void process(const Lap_Data_V2&) const override {};
+
+};
+
+
 class Process_Track : public Process {
 public:
 	Process_Track();

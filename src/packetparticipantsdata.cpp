@@ -22,12 +22,12 @@ Vector_String Packet_Participants_Data::name() const {
 	return name_.times16_64Char();
 }
 
-unsigned int Packet_Participants_Data::nationality() const {
-	return nationality_.u32();
+Vector_UInt Packet_Participants_Data::nationality() const {
+	return nationality_.times16_u32();
 }
 
-unsigned int Packet_Participants_Data::index() const {
-	return index_.u16();
+Vector_UInt Packet_Participants_Data::index() const {
+	return index_.times16_u16();
 }
 
 }

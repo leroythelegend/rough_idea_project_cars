@@ -21,9 +21,9 @@ public:
 
 private:
 
-	Packet packet_;
+	std::shared_ptr<Packet> packet_;
 
-	Record_Post_Lap_V2 recordlap_;	
+	Record_Post_Lap  recordlap_;	
 	Record_Live_Data recordlive_;
 
 	Request_Session_State_Practice practice_;

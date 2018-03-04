@@ -21,8 +21,5 @@ unsigned int Data_Damage_State_Format_1::engine_damage() const {
 	return telemetry_data_->engine_damage();
 }
 
-
-
-
 }
 

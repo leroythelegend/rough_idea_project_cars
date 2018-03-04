@@ -4,16 +4,15 @@ namespace pcars {
 
 Data_Participants_Format_1::Data_Participants_Format_1() {}
 
-Vector_String Data_Participants_Format_1::name() const {
-	Vector_String str;
-	return str;
+std::string Data_Participants_Format_1::name(Participant) const {
+	return "";
 }
 
-unsigned int Data_Participants_Format_1::nationality() const {
+unsigned int Data_Participants_Format_1::nationality(Participant) const {
 	return 0;
 }
 
-unsigned int Data_Participants_Format_1::index() const {
+unsigned int Data_Participants_Format_1::index(Participant) const {
 	return 0;
 }
 
