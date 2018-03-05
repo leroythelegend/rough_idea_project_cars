@@ -9,7 +9,7 @@ namespace pcars {
 
 class Data_Car_State_Format_2 : public Data_Car_State {
 public:
-	Data_Car_State_Format_2(std::shared_ptr<Packet>);
+	Data_Car_State_Format_2(const Packet&);
 	virtual ~Data_Car_State_Format_2() {}
 
 	unsigned int car_flags() const override;	
@@ -67,7 +67,7 @@ public:
 	Vector_Float full_position() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

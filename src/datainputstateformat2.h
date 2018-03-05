@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Input_State_Format_2 : public Data_Input_State {
 public:
-	Data_Input_State_Format_2(std::shared_ptr<Packet>);
+	Data_Input_State_Format_2(const Packet&);
 	virtual ~Data_Input_State_Format_2() {}
 
 	float unfiltered_throttle() const override;
@@ -17,7 +17,7 @@ public:
 	float unfiltered_clutch() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

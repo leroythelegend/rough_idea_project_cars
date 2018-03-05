@@ -8,14 +8,14 @@ namespace pcars {
 
 class Data_Control_State_Format_2 : public Data_Control_State {
 public:
-	Data_Control_State_Format_2(std::shared_ptr<Packet>);
+	Data_Control_State_Format_2(const Packet&);
 	virtual ~Data_Control_State_Format_2() {}
 
 	unsigned int joy_pad_0() const override;
 	unsigned int d_pad() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

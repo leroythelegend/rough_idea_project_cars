@@ -11,7 +11,7 @@ public:
 	using Participant = unsigned int;
 	using Participants = unsigned int;
 
-	Data_Participants_Stats_Format_2(std::shared_ptr<Packet>);
+	Data_Participants_Stats_Format_2(const Packet&);
 	virtual ~Data_Participants_Stats_Format_2() {}
 
 	float fastest_lap_time(const Participant) const override;
@@ -27,7 +27,7 @@ public:
 	Participants participants() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

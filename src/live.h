@@ -10,7 +10,6 @@ class Live {
 public:
 	virtual ~Live() {}
 
-	virtual void live(Decoder *) const = 0;
 	virtual void live(std::shared_ptr<Data>) const = 0;
 };
 

@@ -1,4 +1,5 @@
 #include "decoderls7bits.h"
+#include <iostream>
 
 namespace pcars {
 

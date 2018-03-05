@@ -1,5 +1,5 @@
-#ifndef PCARS_DECODER_U16_H_
-#define PCARS_DECODER_U16_H_
+#ifndef PCARS_DECODER_U15_H_
+#define PCARS_DECODER_U15_H_
 
 #include <cstdint>
 
@@ -7,14 +7,14 @@
 
 namespace pcars {
 
-class Decoder_U16 : public Decoder {
+class Decoder_U15 : public Decoder {
 public:
-	Decoder_U16();
-	virtual ~Decoder_U16();
+	Decoder_U15();
+	virtual ~Decoder_U15();
 
 	void decode(const PCars_Data &, Position &) override;
 
-	unsigned int u16() const;
+	unsigned int u15() const;
 
 private:
 	uint16_t num_;

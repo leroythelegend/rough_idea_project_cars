@@ -58,7 +58,7 @@ unsigned int Packet_Participant_Info::pit_mode_schedule() const {
 }
 
 unsigned int Packet_Participant_Info::car_index() const {
-	return car_index_.ls7_bits();
+	return car_index_.u15();
 }
 
 bool Packet_Participant_Info::local_player() const {

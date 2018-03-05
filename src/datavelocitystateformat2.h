@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Velocity_State_Format_2 : public Data_Velocity_State {
 public:
-	Data_Velocity_State_Format_2(std::shared_ptr<Packet>);
+	Data_Velocity_State_Format_2(const Packet&);
 	virtual ~Data_Velocity_State_Format_2() {}
 
 	Vector_Float orientation() const override;
@@ -20,7 +20,7 @@ public:
 	Vector_Float extents_centre() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

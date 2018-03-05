@@ -16,7 +16,7 @@
 
 namespace pcars {
 
-Data_Format_2::Data_Format_2(std::shared_ptr<Packet> packet)
+Data_Format_2::Data_Format_2(const Packet packet)
 	: car_state_{std::make_unique<Data_Car_State_Format_2>(packet)},
 	  game_state_{std::make_unique<Data_Game_State_Format_2>(packet)},
 	  input_state_{std::make_unique<Data_Input_State_Format_2>(packet)},

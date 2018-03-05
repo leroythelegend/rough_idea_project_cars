@@ -21,7 +21,7 @@ public:
 
 private:
 
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 
 	Record_Post_Lap  recordlap_;	
 	Record_Live_Data recordlive_;

@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Damage_State_Format_2 : public Data_Damage_State {
 public:
-	Data_Damage_State_Format_2(std::shared_ptr<Packet>);
+	Data_Damage_State_Format_2(const Packet&);
 	virtual ~Data_Damage_State_Format_2() {}
 
 	Vector_UInt brake_damage() const override;
@@ -17,7 +17,7 @@ public:
 	unsigned int engine_damage() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

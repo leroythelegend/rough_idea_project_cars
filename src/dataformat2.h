@@ -10,7 +10,7 @@ namespace pcars {
 
 class Data_Format_2 : public Data {
 public:
-	Data_Format_2(std::shared_ptr<Packet>);
+	Data_Format_2(const Packet);
 	virtual ~Data_Format_2() {}
 
 	Data_Car_State * car_states() const override;	

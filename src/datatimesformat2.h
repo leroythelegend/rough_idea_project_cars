@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Times_Format_2 : public Data_Times {
 public:
-	Data_Times_Format_2(std::shared_ptr<Packet>);
+	Data_Times_Format_2(const Packet&);
 	virtual ~Data_Times_Format_2() {}
 
 	float current_time() const override;
@@ -20,7 +20,7 @@ public:
 	float fastest_sector3_time() const override;
 
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }

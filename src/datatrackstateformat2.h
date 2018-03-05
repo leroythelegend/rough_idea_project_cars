@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Track_State_Format_2 : public Data_Track_State {
 public:
-	Data_Track_State_Format_2(std::shared_ptr<Packet>);
+	Data_Track_State_Format_2(const Packet&);
 	virtual ~Data_Track_State_Format_2() {}
 
 	float world_fastest_lap_time() const override;
@@ -35,7 +35,7 @@ public:
 	int wind_direction_y() const override;
 
 private:
-	std::shared_ptr<Packet> packet_; 
+	Packet packet_; 
 
 };
 

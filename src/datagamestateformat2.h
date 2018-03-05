@@ -8,7 +8,7 @@ namespace pcars {
 
 class Data_Game_State_Format_2 : public Data_Game_State {
 public:
-	Data_Game_State_Format_2(std::shared_ptr<Packet>);
+	Data_Game_State_Format_2(const Packet&);
 	virtual ~Data_Game_State_Format_2() {}
 
 	unsigned int session_state() const override;
@@ -17,7 +17,7 @@ public:
 	unsigned int pit_mode() const override;
 	
 private:
-	std::shared_ptr<Packet> packet_;
+	Packet packet_;
 };
 
 }
