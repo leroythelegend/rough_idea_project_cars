@@ -38,8 +38,12 @@ unsigned int Packet_Participant_Info::race_position() const {
 	return race_position_.ls7_bits();
 }
 
+unsigned int Packet_Participant_Info::zx_position() const {
+	return sector_.ms4bits();
+}
+
 unsigned int Packet_Participant_Info::sector() const {
-	return sector_.u8();
+	return sector_.ls4bits();
 }
 
 unsigned int Packet_Participant_Info::flag_colour() const {

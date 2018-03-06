@@ -12,6 +12,7 @@
 #include "decoder3bit3bit.h"
 #include "decoderboolu8.h"
 #include "decoderboolu16.h"
+#include "decoder4bit4bit.h"
 
 namespace pcars {
 
@@ -26,6 +27,7 @@ public:
 	unsigned int current_lap_distance() const;
 	unsigned int race_position() const;
 	bool is_active() const;
+	unsigned int zx_position() const;
 	unsigned int sector() const;
 	unsigned int flag_colour() const;
 	unsigned int flag_reason() const;
@@ -48,7 +50,7 @@ private:
 	Decoder_3Times_S16 orientation_;
 	Decoder_U16 current_lap_distance_;
 	Decoder_Bool_U8 race_position_;
-	Decoder_U8 sector_;
+	Decoder_4bit_4bit sector_;
 	Decoder_3bit_3bit highest_flag_;
 	Decoder_3bit_3bit pit_mode_schedule_;
 	Decoder_Bool_U16 car_index_;

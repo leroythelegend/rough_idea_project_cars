@@ -15,7 +15,8 @@ void Decoder_64Char::decode(const PCars_Data & data, Position & position) {
 }
 
 std::string Decoder_64Char::char64() const {
-	return char64_;
+	std::string str = char64_;
+	return str.substr(0, str.find('\0'));
 }
 
 }

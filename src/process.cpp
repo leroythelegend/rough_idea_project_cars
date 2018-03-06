@@ -133,6 +133,14 @@ void Process_Lap_V2::process(const Lap_Data lap_data) const
 			     << "\"max_rpm\":" << "\"" << (*iter)->car_states()->max_rpm() << "\","
 			     << "\"rpm\":" << "\"" << (*iter)->car_states()->rpm() << "\","
 			     << "\"speed\":" << "\"" << (*iter)->car_states()->speed() << "\","
+			     << "\"tyre_air_temp_fl\":" << "\"" << (*iter)->car_states()->tyre_internal_air_temp().at(0) << "\","
+			     << "\"tyre_air_temp_fr\":" << "\"" << (*iter)->car_states()->tyre_internal_air_temp().at(1) << "\","
+			     << "\"tyre_air_temp_rl\":" << "\"" << (*iter)->car_states()->tyre_internal_air_temp().at(2) << "\","
+			     << "\"tyre_air_temp_rr\":" << "\"" << (*iter)->car_states()->tyre_internal_air_temp().at(3) << "\","
+			     << "\"wheel_y_fl\":" << "\"" << (*iter)->car_states()->wheel_local_position_y().at(0) << "\","
+			     << "\"wheel_y_fr\":" << "\"" << (*iter)->car_states()->wheel_local_position_y().at(1) << "\","
+			     << "\"wheel_y_rl\":" << "\"" << (*iter)->car_states()->wheel_local_position_y().at(2) << "\","
+			     << "\"wheel_y_rr\":" << "\"" << (*iter)->car_states()->wheel_local_position_y().at(3) << "\","
 			     << "\"tyre_wear_fl\":" << "\"" << (*iter)->car_states()->tyre_wear().at(0) << "\","
 			     << "\"tyre_wear_fr\":" << "\"" << (*iter)->car_states()->tyre_wear().at(1) << "\","
 			     << "\"tyre_wear_rl\":" << "\"" << (*iter)->car_states()->tyre_wear().at(2) << "\","
@@ -192,7 +200,8 @@ void Process_Lap_V2::process(const Lap_Data lap_data) const
 			     << "\"brake_temp_fl\":" << "\"" << (*iter)->car_states()->brake_temp_celsius().at(0) << "\","
 			     << "\"brake_temp_fr\":" << "\"" << (*iter)->car_states()->brake_temp_celsius().at(1) << "\","
 			     << "\"brake_temp_rl\":" << "\"" << (*iter)->car_states()->brake_temp_celsius().at(2) << "\","
-			     << "\"brake_temp_rr\":" << "\"" << (*iter)->car_states()->brake_temp_celsius().at(3) << "\"";
+			     << "\"brake_temp_rr\":" << "\"" << (*iter)->car_states()->brake_temp_celsius().at(3) << "\","
+			     << "\"track_name\":" << "\"" << (*iter)->track_states()->track_location() << "_" << (*iter)->track_states()->track_variation() << "\"";
 		if (std::next(iter) != lap_data.end()) {
 		        file << "},";	    
 		}
