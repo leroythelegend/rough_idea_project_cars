@@ -12,7 +12,7 @@ public:
 	Request_Race_State_Racing(Record_Lap *, Request * request = nullptr);
 	virtual ~Request_Race_State_Racing() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Record_Lap * record_;

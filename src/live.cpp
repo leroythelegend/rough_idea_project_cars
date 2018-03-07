@@ -9,23 +9,11 @@ using namespace std;
 
 namespace pcars {
 
-void Live_Feed::live(Decoder * decoder) const
+void Live_Feed::live(std::shared_ptr<Data> data) const
 {
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
-
-	if (tdecoder) {
-		cout << "Brake " << tdecoder->brake() << endl;
-	}
+	cout << "Brake " << data->car_states()->brake() << endl;
 }
 
-void Live_Feed_V2::live(Decoder * decoder) const
-{
-	Packet * packet = dynamic_cast<Packet *>(decoder);
-
-	if (packet) {
-		cout << "Brake " << packet->telemetry_data().brake() << endl;
-	}
-}
 
 
 }

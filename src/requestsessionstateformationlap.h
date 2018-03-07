@@ -10,7 +10,7 @@ public:
 	Request_Session_State_Formation_Lap(Request * request = nullptr);
 	virtual ~Request_Session_State_Formation_Lap() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

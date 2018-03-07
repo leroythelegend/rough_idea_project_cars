@@ -10,6 +10,8 @@
 #include "decoderu16.h"
 #include "decoderu32.h"
 #include "decoder16timeschar64.h"
+#include "decoder16timesu32.h"
+#include "decoder16timesu16.h"
 
 namespace pcars {
 
@@ -22,16 +24,16 @@ public:
 	Packet_Base packet_base() const;		
 	unsigned int participants_changed_timestamp() const;
 	Vector_String name() const;
-	unsigned int nationality() const;
-	unsigned int index() const;
+	Vector_UInt nationality() const;
+	Vector_UInt index() const;
 
 private:
 
 	Packet_Base packet_base_;		
 	Decoder_U32 participants_changed_timestamp_;
 	Decoder_16Times_64Char name_;
-	Decoder_U32 nationality_;
-	Decoder_U16 index_;
+	Decoder_16Times_U32 nationality_;
+	Decoder_16Times_U16 index_;
 
 };
 

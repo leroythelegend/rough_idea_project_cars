@@ -10,7 +10,7 @@ public:
 	Request_Session_State_Invalid(Request * request = nullptr);
 	virtual ~Request_Session_State_Invalid() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

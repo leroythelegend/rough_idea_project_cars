@@ -62,7 +62,7 @@ function load_json() {
 	}
 
 	// create specific track data
-	switch (telemetery[0].data[0].track_distance) {
+	switch (telemetery[0].data[1].track_name) {
 		case "2525":
 			track_name = "Dubai Aero Drome Club";
 			raceline = JSON.parse(dubaiclub_track_raceline);
@@ -78,7 +78,7 @@ function load_json() {
 		case "4146":
 			raceline = JSON.parse(zolder_track_raceline);
 			break;
-		case "3547.58":
+		case "Oulton_Park_Island":
 			track_name = "Oulton Park Island";
 			raceline = JSON.parse(oulton_park_island);
 			corners.push(new Corner(0, 194, [275], 356, 450, 0.6, 250, 265)); // 1st param higher the value move right 2nd param higher the value move higher

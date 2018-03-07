@@ -10,7 +10,7 @@ public:
 	Request_Race_State_Not_Started(Request * request = nullptr);
 	virtual ~Request_Race_State_Not_Started() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

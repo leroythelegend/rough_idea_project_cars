@@ -1,6 +1,6 @@
 CC       = g++
 #CFLAGS   = -g -m64 -std=c++11 -Wall -Wextra 
-CFLAGS   = -m64 -std=c++11 -Wall -Wextra 
+CFLAGS   = -m64 -std=c++14 -Wall -Wextra 
 INCLUDES = -I./
 #LFLAGS   = -g -m64 -shared -lpthread -Wl,-install_name,
 LFLAGS   = -m64 -shared -lpthread -Wl,-install_name,

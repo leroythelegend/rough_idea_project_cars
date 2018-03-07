@@ -10,7 +10,7 @@ public:
 	Request_Game_State_Exit(Request *);
 	virtual ~Request_Game_State_Exit() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

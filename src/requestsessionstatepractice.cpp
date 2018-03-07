@@ -8,21 +8,17 @@ Request_Session_State_Practice::Request_Session_State_Practice(Record_Lap * reco
 	: request_{request},
 	  racing_{record} {}
 
-bool Request_Session_State_Practice::request(Decoder * decoder) {
+bool Request_Session_State_Practice::request(std::shared_ptr<Data> data) {
 
-	Decoder_Telemetry_Data * tdecoder = dynamic_cast<Decoder_Telemetry_Data *>(decoder);
-
-	if (tdecoder) {
-
-		if (tdecoder->session_state() == Session_State::SESSION_PRACTICE) {
-			return racing_.request(decoder);
-		}
-
-		if (request_) {
-			return request_->request(decoder);
-		}
+	if (static_cast<Session_State>(data->game_states()->session_state()) == Session_State::SESSION_PRACTICE) {
+		return racing_.request(data);
 	}
-	return true;
+	else if (request_) {
+		return request_->request(data);
+	}
+	else {
+		return true;
+	}
 }
 
 }

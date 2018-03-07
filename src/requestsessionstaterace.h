@@ -13,7 +13,7 @@ public:
 	Request_Session_State_Race(Record_Lap *, Request * request = nullptr);
 	virtual ~Request_Session_State_Race() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

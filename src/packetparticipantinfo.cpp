@@ -18,55 +18,90 @@ Packet_Participant_Info::Packet_Participant_Info() {
 	add(&mp_participant_index_);
 }
 
-Vector_Int Packet_Participant_Info::world_position() {
+Vector_Int Packet_Participant_Info::world_position() const {
 	return world_position_.times3_s16();
 }
 
-Vector_Int Packet_Participant_Info::orientation() {
+Vector_Int Packet_Participant_Info::orientation() const {
 	return orientation_.times3_s16();
 }
 
-unsigned int Packet_Participant_Info::current_lap_distance() {
+unsigned int Packet_Participant_Info::current_lap_distance() const {
 	return current_lap_distance_.u16();
 }
 
-unsigned int Packet_Participant_Info::race_position() {
-	return race_position_.u8();
+bool Packet_Participant_Info::is_active() const {
+	return race_position_.msb_bool();
 }
 
-unsigned int Packet_Participant_Info::sector() {
-	return sector_.u8();
+unsigned int Packet_Participant_Info::race_position() const {
+	return race_position_.ls7_bits();
 }
 
-unsigned int Packet_Participant_Info::highest_flag() {
-	return highest_flag_.u8();
+unsigned int Packet_Participant_Info::zx_position() const {
+	return sector_.ms4bits();
 }
 
-unsigned int Packet_Participant_Info::pit_mode_schedule() {
-	return pit_mode_schedule_.u8();
+unsigned int Packet_Participant_Info::sector() const {
+	return sector_.ls4bits();
 }
 
-unsigned int Packet_Participant_Info::car_index() {
-	return car_index_.u16();
+unsigned int Packet_Participant_Info::flag_colour() const {
+	return highest_flag_.ms3bits();
 }
 
-unsigned int Packet_Participant_Info::race_state() {
-	return race_state_.u8();
+unsigned int Packet_Participant_Info::flag_reason() const {
+	return highest_flag_.ls3bits();
+}
+unsigned int Packet_Participant_Info::pit_mode() const {
+	return pit_mode_schedule_.ms3bits();
 }
 
-unsigned int Packet_Participant_Info::current_lap() {
+unsigned int Packet_Participant_Info::pit_mode_schedule() const {
+	return pit_mode_schedule_.ls3bits();
+}
+
+unsigned int Packet_Participant_Info::car_index() const {
+	return car_index_.u15();
+}
+
+bool Packet_Participant_Info::local_player() const {
+	return car_index_.msb_bool();
+}
+
+bool Packet_Participant_Info::remote_player() const {
+	return car_index_.msb_bool();
+}
+
+bool Packet_Participant_Info::human_player() const {
+	return car_index_.msb_bool();
+}
+
+bool Packet_Participant_Info::none_human_player() const {
+	return car_index_.msb_bool();
+}
+
+unsigned int Packet_Participant_Info::race_state() const {
+	return race_state_.ls7_bits();
+}
+
+bool Packet_Participant_Info::invalid_lap() const {
+	return car_index_.msb_bool();
+}
+
+unsigned int Packet_Participant_Info::current_lap() const {
 	return current_lap_.u8();
 }
 
-float Packet_Participant_Info::current_time() {
+float Packet_Participant_Info::current_time() const {
 	return current_time_.f32();
 }
 
-float Packet_Participant_Info::current_sector_time() {
+float Packet_Participant_Info::current_sector_time() const {
 	return current_sector_time_.f32();
 }
 
-unsigned int Packet_Participant_Info::mp_participant_index() {
+unsigned int Packet_Participant_Info::mp_participant_index() const {
 	return mp_participant_index_.u16();
 }
 

@@ -4,9 +4,9 @@
 #include "requestpackage.h"
 
 #include "packet.h"
-#include "requestsessionstatepracticev2.h"
-#include "requestsessionstateracev2.h"
-#include "requestsessionstatequalifyv2.h"
+#include "requestsessionstatepractice.h"
+#include "requestsessionstaterace.h"
+#include "requestsessionstatequalify.h"
 #include "recordlap.h"
 
 
@@ -23,12 +23,12 @@ private:
 
 	Packet packet_;
 
-	Record_Post_Lap_V2 recordlap_;	
+	Record_Post_Lap  recordlap_;	
 	Record_Live_Data recordlive_;
 
-	Request_Session_State_Practice_V2 practice_;
-	Request_Session_State_Qualify_V2 qualy_;
-	Request_Session_State_Race_V2 race_;
+	Request_Session_State_Practice practice_;
+	Request_Session_State_Qualify qualy_;
+	Request_Session_State_Race race_;
 };
 
 }

@@ -10,7 +10,7 @@ public:
 	Request_Race_State_Retired(Request * request = nullptr);
 	virtual ~Request_Race_State_Retired() {}
 
-	bool request(Decoder *);
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;

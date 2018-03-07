@@ -10,7 +10,7 @@ public:
 	Request_Pit_Mode_In_Garage(Request * request = nullptr);
 	virtual ~Request_Pit_Mode_In_Garage() {}
 
-	bool request(Decoder *) override;
+	bool request(std::shared_ptr<Data>) override;
 
 private:
 	Request * request_;
