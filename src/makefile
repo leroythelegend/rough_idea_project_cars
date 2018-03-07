@@ -1,9 +1,9 @@
 CC       = g++
 #CFLAGS   = -g -m64 -std=c++11 -Wall -Wextra 
-CFLAGS   = -m64 -ggdb -std=c++14 -Wall -Wextra 
+CFLAGS   = -m64 -std=c++14 -Wall -Wextra 
 INCLUDES = -I./
 #LFLAGS   = -g -m64 -shared -lpthread -Wl,-install_name,
-LFLAGS   = -m64 -ggdb  -shared -lpthread -Wl,-install_name,
+LFLAGS   = -m64 -shared -lpthread -Wl,-install_name,
 SRCS     = $(wildcard *.cpp)
 OBJDIR   = ../obj
 OBJS     = $(patsubst %.cpp, $(OBJDIR)/%.o, $(SRCS))
