@@ -178,5 +178,5 @@ Your_User$ vi ./live.cpp
   14         cout << "Brake " << data->car_states()->brake() << endl;
  ```
  
- * To Be Continued, have go to some programming for money instead.
+ * To Be Continued, have to go do some programming for money instead. :-(
  
