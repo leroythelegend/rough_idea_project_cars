@@ -74,7 +74,7 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 ```
 Your_User$ ./pcars
 ```
-* May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the lap runnning because this leaves the port open)
+* May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the app runnning because this leaves the port open)
 * To close the exe press "control-c" e.g. control button and the letter c at the sametime.
 
 Outlap in practice is not recorded so you must do at least one full lap. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html in safari or firefox (browser).
