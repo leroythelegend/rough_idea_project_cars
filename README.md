@@ -2,29 +2,22 @@
 
 ## Description
 
-A set of cpp classes for capturing Project Cars Version 1 and Version 2 UDP Telemetry.
+A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Telemetry.
 
 ## Contents
 
-* [Tutorial](#T-Tutorial)
+* [Version 1 Tutorial](#T-Tutorial)
 
 ## <a name="T-Tutorial"></a>Tutorial
 
-### Version 1 UDP Format
+### <a name="T-Tutorial"></a> Version 1 UDP Format
 
 * [Part 1](#T-Part1)  Running Demo Executable
-* [Part 2](#T-Part2)  Roll Your Own Live Feed (WIP)
-
-* [Tutorial](#T-Tutorial)
-
-## <a name="T-Tutorial"></a>Tutorial
-
-* [Part 1](#T-Part1)  Running Demo Executable
-* [Part 2](#T-Part2)  Roll Your Own Live Feed (WIP)
+* [Part 2](#T-Part2)  Roll Your Own Live Feed
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
 
-The demo exe writes to a json file during practice and can be viewed using my WIP track_9.html, however during qualy and racing the brake telemetry is printed to the terminal and not to a json file. See the next [tutorial](#T-Part2) on capturing live feeds.
+The demo application writes the post lap telemetry to a json file during practice and can be viewed using track_9.html.
 
 Javascript developers can write their own web app to display the json file.
 
