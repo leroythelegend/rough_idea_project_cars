@@ -49,7 +49,7 @@ Your_User$ cd ./capture_lap_data
 ```
 * List the contents of the directory
 ```
-Your_User$ ls
+Your_User$ ls -l
 total 97864
 -rw-r--r--  1 Your_User  staff    248031  3 Feb 18:37 DubaiAeroDromeClub_raceline_track.json
 -rw-r--r--  1 Your_User  staff       214  6 Feb 08:12 main.cpp
@@ -155,6 +155,18 @@ Your_User$ vi ./datacarstateformat1.h
  37         Vector_Float tyre_y() const override;
 ...
 ```
+* Open the implementation file datacarstateformat1.cpp. NOTE there are some hard coded values these are only for the Format 2 Pakcets. You can see in this snippet that the tyre_temp_left is a Format 2 only data where tyre_internal_air_temp is for Format 1.
+```
+147 
+148 Vector_UInt Data_Car_State_Format_1::tyre_internal_air_temp() const {
+149         return telemetry_data_->tyre_internal_air_temp();
+150 }
+151 
+152 Vector_UInt Data_Car_State_Format_1::tyre_temp_left() const {
+153         Vector_UInt vu;
+154         return vu;
+155 }
+```
 * Now open live.cpp
 ```
 Your_User$ vi ./live.cpp
@@ -165,8 +177,8 @@ Your_User$ vi ./live.cpp
  14         cout << "Brake " << data->car_states()->brake() << endl;
  15 }
 ```
- * Ok so what I'm going to demonstrate is how you can capture the tyre temp and tread temp during qualifing, so you you know when your tyres are up to temp for that one hot lap.
- * We want to delete this line BUT before we do that lets explain what each part is. "data" is a Data type we saw a Data type class before Data_Format_1 which is a pointer to a memory address so to we need to use the -> to access its members.  "car_states()" is a function that returns a pointer to a "Data_Car_State" type in this case it is a "Data_Car_State_Format_1" and finally brake which returns an unsigned int with a value between (0-255) 255 being hard on the brakes 0 being no brake. You can get the Project Cars Definitions from here https://www.projectcarsgame.com/project-cars-2-api/ 
+ * Ok so what I'm going to demonstrate is how you can capture the tyre temp and tread temp during qualifing, so you know when your tyres are up to temp for that one hot lap.
+ * Delete this line.
  ```
   14         cout << "Brake " << data->car_states()->brake() << endl;
  ```
