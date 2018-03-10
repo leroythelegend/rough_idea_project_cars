@@ -33,7 +33,7 @@ Note for the "UDP Frequency" my PlayStation says higher the value more packets b
 
 The demo runs in a terminal so I'm just going to use a terminal for the tutorial.
 
-* Download the Repo.
+* "Download Zip" of the Repo.
 * Open a Terminal
 * Copy rough_idea_project_cars-master to your working directory. (if you don't have a working dir, from a terminal run "mkdir ~/your_working_dir").
 ```
@@ -67,8 +67,8 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 ```
 Your_User$ ./pcars
 ```
-* May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the app runnning because this leaves the port open)
-* To close the exe press "control-c" e.g. control button and the letter c at the sametime.
+* May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the app runnning because this leaves the port open, to close the exe press "control-c" e.g. control button and the letter c at the sametime).
+* Do some practice laps.
 
 Outlap in practice is not recorded so you must do at least one full lap. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html in safari or firefox (browser).
 
