@@ -178,10 +178,6 @@ Your_User$ vi ./live.cpp
  15 }
 ```
  * Ok so what I'm going to demonstrate is how you can capture the tyre temp and tread temp during qualifing, so you know when your tyres are up to temp for that one hot lap.
- * Delete this line.
- ```
-  14         cout << "Brake " << data->car_states()->brake() << endl;
- ```
  
  * To Be Continued, have to go do some programming for money instead. :-(
  
