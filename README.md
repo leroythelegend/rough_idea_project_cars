@@ -19,7 +19,7 @@ A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Tel
 
 The demo application writes the post lap telemetry to a json file during practice and can be viewed using track_9.html.
 
-Javascript developers can write their own web app to display the json file.
+JavaScript developers can write their own web app to display the json file.
 
 I only have three track files at the moment oulton park island, dubai club and zolder.
 
@@ -67,12 +67,12 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 ```
 Your_User$ ./pcars
 ```
-* May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the app runnning because this leaves the port open, to close the exe press "control-c" e.g. control button and the letter c at the sametime).
+* May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the app running because this leaves the port open, to close the exe press "control-c" e.g. control button and the letter c at the same time).
 * Do some practice laps.
 
-Outlap in practice is not recorded so you must do at least one full lap. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html in safari or firefox (browser).
+Out lap in practice is not recorded so you must do at least one full lap. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html in safari or Firefox (browser).
 
-* Create your own display using javascript to read the lap_data.json file.
+* Create your own display using JavaScript to read the lap_data.json file.
 
 ## <a name="T-Part2"></a>Part 2 Roll Your Own Live feed
 
@@ -80,7 +80,7 @@ Outlap in practice is not recorded so you must do at least one full lap. Recordi
 
 You need command line tools, go to apple developer for instructions on installing these for OSX. 
 
-You will need some VI skills here to follow the tute, VI is just an editor so you can follow along in any editor (except word) or just use xcode to edit the files and use the terminal to build the applicaiton or if you are an xcode guru you know what to do ;-) .
+You will need some VI skills here to follow the tute, VI is just an editor so you can follow along in any editor (except word) or just use xcode to edit the files and use the terminal to build the application or if you are an xcode guru you know what to do ;-) .
 
 WARNING if you change a header file (.h file) you should run "make clean" and "make" from in the src directory. 
 
@@ -157,7 +157,7 @@ Your_User$ vi ./datacarstateformat1.h
  37         Vector_Float tyre_y() const override;
 ...
 ```
-* Open the implementation file datacarstateformat1.cpp. NOTE there are some hard coded values these are only for the Format 2 Pakcets. You can see in this snippet that the tyre_temp_left is a Format 2 only data where tyre_internal_air_temp is for Format 1.
+* Open the implementation file datacarstateformat1.cpp. NOTE there are some hard coded values these are only for the Format 2 Packets. You can see in this snippet that the tyre_temp_left is a Format 2 only data where tyre_internal_air_temp is for Format 1.
 ```
 147 
 148 Vector_UInt Data_Car_State_Format_1::tyre_internal_air_temp() const {
@@ -173,7 +173,7 @@ Your_User$ vi ./datacarstateformat1.h
 ```
 Your_User$ vi ./live.h
 ```
-* Ok so what I'm going to demonstrate is how you can capture the tyre temp and tread temp during qualifing, so you know when your tyres are up to temp for that one hot lap.
+* Ok so what I'm going to demonstrate is how you can capture the tyre temp and tread temp during qualifying, so you know when your tyres are up to temp for that one hot lap.
 * Add the include vector with rest of the live.h includes. 
 ```
 4 #include <vector>
@@ -382,7 +382,7 @@ g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetry.cpp  -o ../obj/captu
 g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/capturetelemetryv2.o
 ...
 ```
-* Now we need to add the class to the capture_lap_data. Change direcotry to rough_idea_project_cars-master/bin/capture_lap_data
+* Now we need to add the class to the capture_lap_data. Change directory to rough_idea_project_cars-master/bin/capture_lap_data
 ```
 Your_User$ ~/your_working_dir/rough_idea_project_cars-master/bin/capture_lap_data
 ```
@@ -412,7 +412,7 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 Your_User$ ./pcars
 Started
 ```
-* You may have noticed that the out lap does not show the tyre state, which is not realy what we want. We want to see the tyre state coming into the first lap. The API controls the state of the app using the Chain of Responsiblity Design Pattern which allows a request to run down a chain and find its response. The set of request classes implement this responsablity open requestsessionstatequalify.h. First we need to include the requestracestatenotstarted.h header file to the qualy header file. So cd back to the src directory.
+* You may have noticed that the out lap does not show the tyre state, which is not realy what we want. We want to see the tyre state coming into the first lap. The API controls the state of the app using the Chain of Responsibility Design Pattern which allows a request to run down a chain and find its response. The set of request classes implement this responsibility open requestsessionstatequalify.h. First we need to include the requestracestatenotstarted.h header file to the qualy header file. So cd back to the src directory.
 ```
 #include "requestracestatenotstarted.h"
 ```
@@ -435,14 +435,14 @@ Started
  25         Request_Session_State_Qualify& operator=(const Request_Session_State_Qualify&) = delete;
  26 };
 ```
-* Now open the implementation file requestsessionstatequalify.cpp and add the not started object to the request chain in the constructors intialisation list. 
+* Now open the implementation file requestsessionstatequalify.cpp and add the not started object to the request chain in the constructors initialisation list. 
 ```
   7 Request_Session_State_Qualify::Request_Session_State_Qualify(Record_Lap * record, Request * request)
   8         : request_{request},
   9           notstarted_{record},
  10           racing_{record,&notstarted_} {}
 ```
-* What is happening is the chain first checks not start and if we are in a not started state we will run the recording from there else we move down the chain to racing and see if we are racing.  This class allows us to collect data at all different applicaiton states.
+* What is happening is the chain first checks not start and if we are in a not started state we will run the recording from there else we move down the chain to racing and see if we are racing.  This class allows us to collect data at all different application states.
 * Make clean and Make again
 ```
 Your_User$ make clean
@@ -456,3 +456,4 @@ g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/cap
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
 * To Be Continued, have to go do some programming for money instead. :-(
  
+
