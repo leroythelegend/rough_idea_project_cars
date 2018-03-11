@@ -9,7 +9,7 @@ using namespace std;
 
 namespace pcars {
 
-void Live_Feed::live(std::shared_ptr<Data> data) const
+void Live_Feed::live(std::shared_ptr<Data> data)
 {
 	cout << "Brake " << data->car_states()->brake() << endl;
 }

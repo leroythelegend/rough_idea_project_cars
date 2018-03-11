@@ -10,14 +10,14 @@ class Live {
 public:
 	virtual ~Live() {}
 
-	virtual void live(std::shared_ptr<Data>) const = 0;
+	virtual void live(std::shared_ptr<Data>) = 0;
 };
 
 class Live_Feed : public Live {
 public:
 	virtual ~Live_Feed() {}
 
-	void live(std::shared_ptr<Data>) const override;
+	void live(std::shared_ptr<Data>) override;
 };
 
 }
