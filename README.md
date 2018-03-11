@@ -72,6 +72,8 @@ Your_User$ ./pcars
 
 Out lap in practice is not recorded so you must do at least one full lap. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html in safari or Firefox (browser).
 
+![alt text](https://github.com/leroythelegend/rough_idea_project_cars/blob/master/img/track_9.png)
+
 * Create your own display using JavaScript to read the lap_data.json file.
 
 ## <a name="T-Part2"></a>Part 2 Roll Your Own Live feed
