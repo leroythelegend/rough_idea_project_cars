@@ -226,6 +226,16 @@ Your_User$ vi ./live.h
 ```
 * Add this to the implementation live.cpp between the pcars namespace. (This could be done better but for this tute I think it is fine)
 ```
+ 62 
+ 63 Live_Temp::Live_Temp()
+ 64         : min_tyre_temp_{70},
+ 65           max_tyre_temp_{80},
+ 66           max_tread_temp_{360},
+ 67           temp_{TEMP::UNKNOWN, TEMP::UNKNOWN, TEMP::UNKNOWN, TEMP::UNKNOWN},
+ 68           tread_{TREAD::UNKNOWN, TREAD::UNKNOWN, TREAD::UNKNOWN, TREAD::UNKNOWN}
+ 69 {
+ 70 }
+ 71 
  72 void Live_Temp::live(std::shared_ptr<Data> data)
  73 {
  74 
