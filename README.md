@@ -14,6 +14,7 @@ A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Tel
 
 * [Part 1](#T-Part1)  Running Demo Executable
 * [Part 2](#T-Part2)  Roll Your Own Live Feed
+* [Part 3](#T-Part3)  Roll Your Post Lap Process (WIP)
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
 
@@ -108,70 +109,70 @@ Your_User$ vi ./dataformat1.h
 ```
 * This is the object for all the "Project Cars 2 and 1" Data Packets.
 ```
- 11 class Data_Format_1 : public Data {
- 12 public:
- 13         Data_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
- 14         virtual ~Data_Format_1() {}
- 15 
- 16         Data_Car_State * car_states() const override;
- 17         Data_Game_State * game_states() const override;
- 18         Data_Input_State * input_states() const override;
- 19         Data_Velocity_State * velocity_states() const override;
- 20         Data_Damage_State * damage_states() const override;
- 21         Data_Control_State * control_states() const override;
- 22         Data_Track_State * track_states() const override;
- 23         Data_Participants * participants() const override;
- 24         Data_Participants_Info * participants_info() const override;
- 25         Data_Participants_Stats * participants_stats() const override;
- 26         Data_Split_Times * split_times() const override;
- 27         Data_Times * times() const override;
+class Data_Format_1 : public Data {
+public:
+         Data_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
+         virtual ~Data_Format_1() {}
+ 
+         Data_Car_State * car_states() const override;
+         Data_Game_State * game_states() const override;
+         Data_Input_State * input_states() const override;
+         Data_Velocity_State * velocity_states() const override;
+         Data_Damage_State * damage_states() const override;
+         Data_Control_State * control_states() const override;
+         Data_Track_State * track_states() const override;
+         Data_Participants * participants() const override;
+         Data_Participants_Info * participants_info() const override;
+         Data_Participants_Stats * participants_stats() const override;
+         Data_Split_Times * split_times() const override;
+         Data_Times * times() const override;
 ```
 * Now for this tutorial we will be using the Data_Car_State. Open datacarstateformat1.h
 ```
 Your_User$ vi ./datacarstateformat1.h
 ```
 ```
- 10 class Data_Car_State_Format_1 : public Data_Car_State {
- 11 public:
- 12         Data_Car_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
- 13         virtual ~Data_Car_State_Format_1() {}
- 14 
- 15         unsigned int car_flags() const override;
- 16         int oil_temp_celsius() const override;
- 17         unsigned int oil_pressure_kpa() const override;
- 18         int water_temp_celsius() const override;
- 19         unsigned int water_pressure_kpa() const override;
- 20         unsigned int fuel_pressure_kpa() const override;
- 21         unsigned int fuel_capacity() const override;
- 22         unsigned int brake() const override;
- 23         unsigned int throttle() const override;
- 24         unsigned int clutch() const override;
- 25         float fuel_level() const override;
- 26         float speed() const override;
- 27         unsigned int rpm() const override;
- 28         unsigned int max_rpm() const override;
- 29         int steering() const override;
- 30         unsigned int gears() const override;
- 31         unsigned int gear() const override;
- 32         unsigned int boost_amount() const override;
- 33         unsigned int crash_state() const override;
- 34         float odometer_km() const override;
- 35         Vector_UInt tyre_flags() const override;
- 36         Vector_UInt terrain() const override;
- 37         Vector_Float tyre_y() const override;
+class Data_Car_State_Format_1 : public Data_Car_State {
+public:
+        Data_Car_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
+        virtual ~Data_Car_State_Format_1() {}
+
+        unsigned int car_flags() const override;
+        int oil_temp_celsius() const override;
+        unsigned int oil_pressure_kpa() const override;
+        int water_temp_celsius() const override;
+        unsigned int water_pressure_kpa() const override;
+        unsigned int fuel_pressure_kpa() const override;
+        unsigned int fuel_capacity() const override;
+        unsigned int brake() const override;
+        unsigned int throttle() const override;
+        unsigned int clutch() const override;
+        float fuel_level() const override;
+        float speed() const override;
+        unsigned int rpm() const override;
+        unsigned int max_rpm() const override;
+        int steering() const override;
+        unsigned int gears() const override;
+        unsigned int gear() const override;
+        unsigned int boost_amount() const override;
+        unsigned int crash_state() const override;
+        float odometer_km() const override;
+        Vector_UInt tyre_flags() const override;
+        Vector_UInt terrain() const override;
+        Vector_Float tyre_y() const override;
 ...
 ```
 * Open the implementation file datacarstateformat1.cpp. NOTE there are some hard coded values these are only for the Format 2 Packets. You can see in this snippet that the tyre_temp_left is a Format 2 only data where tyre_internal_air_temp is for Format 1.
 ```
-147 
-148 Vector_UInt Data_Car_State_Format_1::tyre_internal_air_temp() const {
-149         return telemetry_data_->tyre_internal_air_temp();
-150 }
-151 
-152 Vector_UInt Data_Car_State_Format_1::tyre_temp_left() const {
-153         Vector_UInt vu;
-154         return vu;
-155 }
+ 
+ Vector_UInt Data_Car_State_Format_1::tyre_internal_air_temp() const {
+         return telemetry_data_->tyre_internal_air_temp();
+ }
+ 
+ Vector_UInt Data_Car_State_Format_1::tyre_temp_left() const {
+         Vector_UInt vu;
+         return vu;
+ }
 ```
 * Now open live.h
 ```
@@ -184,208 +185,208 @@ Your_User$ vi ./live.h
 ```
 * We want to derive a new Live_Temp class from the Live type, add this code to live.h between the pcars namespace.
 ```
- 45 class Live_Temp : public Live {
- 46 public:
- 47         enum class TEMP {
- 48                 COLD = 0,
- 49                 GOOD,
- 50                 HOT,
- 51                 UNKNOWN
- 52         };
- 53 
- 54         enum class TREAD {
- 55                 GOOD = 0,
- 56                 HOT,
- 57                 UNKNOWN
- 58         };
- 59 
- 60         using Temp = unsigned int;
- 61         using Temp_Vec = std::vector<TEMP>;
- 62         using Tread_Vec = std::vector<TREAD>;
- 63 
- 64         Live_Temp();
- 65         virtual ~Live_Temp() {}
- 66 
- 67         void live(std::shared_ptr<Data>) override;
- 68 private:
- 69         Temp min_tyre_temp_;
- 70         Temp max_tyre_temp_;
- 71         Temp max_tread_temp_;
- 72 
- 73         Temp_Vec temp_;
- 74         Tread_Vec tread_;
- 75 
- 76         std::string fl_temp;
- 77         std::string fr_temp;
- 78         std::string rl_temp;
- 79         std::string rr_temp;
- 80 
- 81         std::string fl_tread;
- 82         std::string fr_tread;
- 83         std::string rl_tread;
- 84         std::string rr_tread;
- 85 };
+ class Live_Temp : public Live {
+ public:
+         enum class TEMP {
+                 COLD = 0,
+                 GOOD,
+                 HOT,
+                 UNKNOWN
+         };
+ 
+         enum class TREAD {
+                 GOOD = 0,
+                 HOT,
+                 UNKNOWN
+         };
+ 
+         using Temp = unsigned int;
+         using Temp_Vec = std::vector<TEMP>;
+         using Tread_Vec = std::vector<TREAD>;
+ 
+         Live_Temp();
+         virtual ~Live_Temp() {}
+ 
+         void live(std::shared_ptr<Data>) override;
+ private:
+         Temp min_tyre_temp_;
+         Temp max_tyre_temp_;
+         Temp max_tread_temp_;
+ 
+         Temp_Vec temp_;
+         Tread_Vec tread_;
+ 
+         std::string fl_temp;
+         std::string fr_temp;
+         std::string rl_temp;
+         std::string rr_temp;
+ 
+         std::string fl_tread;
+         std::string fr_tread;
+         std::string rl_tread;
+         std::string rr_tread;
+  };
 ```
 * Add this to the implementation live.cpp between the pcars namespace. (This could be done better but for this tute I think it is fine)
 ```
- 62 
- 63 Live_Temp::Live_Temp()
- 64         : min_tyre_temp_{70},
- 65           max_tyre_temp_{80},
- 66           max_tread_temp_{360},
- 67           temp_{TEMP::UNKNOWN, TEMP::UNKNOWN, TEMP::UNKNOWN, TEMP::UNKNOWN},
- 68           tread_{TREAD::UNKNOWN, TREAD::UNKNOWN, TREAD::UNKNOWN, TREAD::UNKNOWN}
- 69 {
- 70 }
- 71 
- 72 void Live_Temp::live(std::shared_ptr<Data> data)
- 73 {
- 74 
- 75         bool changed = false;
- 76 
- 77         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(0) &&
- 78             temp_.at(0) != TEMP::COLD) {
- 79                 temp_.at(0) = TEMP::COLD;
- 80                 changed = true;
- 81                 fl_temp = "FL COLD ";
- 82         }
- 83         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(0) &&
- 84             temp_.at(0) != TEMP::HOT) {
- 85                 temp_.at(0) = TEMP::HOT;
- 86                 changed = true;
- 87                 fl_temp = "FL HOT ";
- 88         }
- 89         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(0) &&
- 90             max_tyre_temp_ > data->car_states()->tyre_temp().at(0) &&
- 91             temp_.at(0) != TEMP::GOOD) {
- 92                 temp_.at(0) = TEMP::GOOD;
- 93                 changed = true;
- 94                 fl_temp = "FL GO-GO ";
- 95         }
- 96 
- 97         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(1) &&
- 98             temp_.at(1) != TEMP::COLD) {
- 99                 temp_.at(1) = TEMP::COLD;
-100                 changed = true;
-101                 fr_temp = "FR COLD ";
-102         }
-103         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(1) &&
-104             temp_.at(1) != TEMP::HOT) {
-105                 temp_.at(1) = TEMP::HOT;
-106                 changed = true;
-107                 fr_temp = "FR HOT ";
-108         }
-109         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(1) &&
-110             max_tyre_temp_ > data->car_states()->tyre_temp().at(1) &&
-111             temp_.at(1) != TEMP::GOOD) {
-112                 temp_.at(1) = TEMP::GOOD;
-113                 changed = true;
-114                 fr_temp = "FR GO-GO ";
-115         }
-116 
-117         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(2) &&
-118             temp_.at(2) != TEMP::COLD) {
-119                 temp_.at(2) = TEMP::COLD;
-120                 changed = true;
-121                 rl_temp = "RL COLD ";
-122         }
-123         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(2) &&
-124             temp_.at(2) != TEMP::HOT) {
-125                 temp_.at(2) = TEMP::HOT;
-126                 changed = true;
-127                 rl_temp = "RL HOT ";
-128         }
-129         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(2) &&
-130             max_tyre_temp_ > data->car_states()->tyre_temp().at(2) &&
-131             temp_.at(2) != TEMP::GOOD) {
-132                 temp_.at(2) = TEMP::GOOD;
-133                 changed = true;
-134                 rl_temp = "RL GO-GO ";
-135         }
-136 
-137         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(3) &&
-138             temp_.at(3) != TEMP::COLD) {
-139                 temp_.at(3) = TEMP::COLD;
-140                 changed = true;
-141                 rr_temp = "RR COLD ";
-142         }
-143         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(3) &&
-144             temp_.at(3) != TEMP::HOT) {
-145                 temp_.at(3) = TEMP::HOT;
-146                 changed = true;
-147                 rr_temp = "RR HOT ";
-148         }
-149         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(3) &&
-150             max_tyre_temp_ > data->car_states()->tyre_temp().at(3) &&
-151             temp_.at(3) != TEMP::GOOD) {
-152                 temp_.at(3) = TEMP::GOOD;
-153                 changed = true;
-154                 rr_temp = "RR GO-GO ";
-155         }
-156 
-157 
-158         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(0) &&
-159             tread_.at(0) != TREAD::GOOD) {
-160                 tread_.at(0) = TREAD::GOOD;
-161                 changed = true;
-162                 fl_tread = "FL GOOD ";
-163         }
-164         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(0) &&
-165             tread_.at(0) != TREAD::HOT) {
-166                 tread_.at(0) = TREAD::HOT;
-167                 changed = true;
-168                 fl_tread = "FL HOT ";
-169         }
-170 
-171         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(1) &&
-172             tread_.at(1) != TREAD::GOOD) {
-173                 tread_.at(1) = TREAD::GOOD;
-174                 changed = true;
-175                 fr_tread = "FR GOOD ";
-176         }
-177         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(1) &&
-178             tread_.at(1) != TREAD::HOT) {
-179                 tread_.at(1) = TREAD::HOT;
-180                 changed = true;
-181                 fr_tread = "FR HOT ";
-182         }
-183 
-184         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(2) &&
-185             tread_.at(2) != TREAD::GOOD) {
-186                 tread_.at(2) = TREAD::GOOD;
-187                 changed = true;
-188                 rl_tread = "FL GOOD ";
-189         }
-190         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(2) &&
-191             tread_.at(2) != TREAD::HOT) {
-192                 tread_.at(2) = TREAD::HOT;
-193                 changed = true;
-194                 rl_tread = "RL HOT ";
-195         }
-196 
-197         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(3) &&
-198             tread_.at(3) != TREAD::GOOD) {
-199                 tread_.at(3) = TREAD::GOOD;
-200                 changed = true;
-201                 rr_tread = "RR GOOD ";
-202         }
-203         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(3) &&
-204             tread_.at(3) != TREAD::HOT) {
-205                 tread_.at(3) = TREAD::HOT;
-206                 changed = true;
-207                 rr_tread = "RR HOT ";
-208         }
-209 
-210         if (changed) {
-211                 cout << "TYRE TEMP" << endl;
-212                 cout << fl_temp << fr_temp << rl_temp << rr_temp << endl;
-213                 cout << "TYRE TREAD TEMP" << endl;
-214                 cout << fl_tread << fr_tread << rl_tread << rr_tread;
-215                 for (int i = 0; i < 20; ++i) {
-216                         cout << endl;
-217                 }
-218         }
-219 }
+ 
+ Live_Temp::Live_Temp()
+         : min_tyre_temp_{70},
+           max_tyre_temp_{80},
+           max_tread_temp_{360},
+           temp_{TEMP::UNKNOWN, TEMP::UNKNOWN, TEMP::UNKNOWN, TEMP::UNKNOWN},
+           tread_{TREAD::UNKNOWN, TREAD::UNKNOWN, TREAD::UNKNOWN, TREAD::UNKNOWN}
+ {
+ }
+ 
+ void Live_Temp::live(std::shared_ptr<Data> data)
+ {
+ 
+          bool changed = false;
+  
+          if (min_tyre_temp_ > data->car_states()->tyre_temp().at(0) &&
+              temp_.at(0) != TEMP::COLD) {
+                  temp_.at(0) = TEMP::COLD;
+                  changed = true;
+                  fl_temp = "FL COLD ";
+          }
+          if (max_tyre_temp_ < data->car_states()->tyre_temp().at(0) &&
+              temp_.at(0) != TEMP::HOT) {
+                  temp_.at(0) = TEMP::HOT;
+                  changed = true;
+                  fl_temp = "FL HOT ";
+          }
+          if (min_tyre_temp_ < data->car_states()->tyre_temp().at(0) &&
+              max_tyre_temp_ > data->car_states()->tyre_temp().at(0) &&
+             temp_.at(0) != TEMP::GOOD) {
+                 temp_.at(0) = TEMP::GOOD;
+                 changed = true;
+                 fl_temp = "FL GO-GO ";
+         }
+ 
+         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(1) &&
+             temp_.at(1) != TEMP::COLD) {
+                 temp_.at(1) = TEMP::COLD;
+                 changed = true;
+                 fr_temp = "FR COLD ";
+         }
+         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(1) &&
+             temp_.at(1) != TEMP::HOT) {
+                 temp_.at(1) = TEMP::HOT;
+                 changed = true;
+                 fr_temp = "FR HOT ";
+         }
+         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(1) &&
+             max_tyre_temp_ > data->car_states()->tyre_temp().at(1) &&
+             temp_.at(1) != TEMP::GOOD) {
+                 temp_.at(1) = TEMP::GOOD;
+                 changed = true;
+                 fr_temp = "FR GO-GO ";
+         }
+ 
+         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(2) &&
+             temp_.at(2) != TEMP::COLD) {
+                 temp_.at(2) = TEMP::COLD;
+                 changed = true;
+                 rl_temp = "RL COLD ";
+         }
+         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(2) &&
+             temp_.at(2) != TEMP::HOT) {
+                 temp_.at(2) = TEMP::HOT;
+                 changed = true;
+                 rl_temp = "RL HOT ";
+         }
+         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(2) &&
+             max_tyre_temp_ > data->car_states()->tyre_temp().at(2) &&
+             temp_.at(2) != TEMP::GOOD) {
+                 temp_.at(2) = TEMP::GOOD;
+                 changed = true;
+                 rl_temp = "RL GO-GO ";
+         }
+ 
+         if (min_tyre_temp_ > data->car_states()->tyre_temp().at(3) &&
+             temp_.at(3) != TEMP::COLD) {
+                 temp_.at(3) = TEMP::COLD;
+                 changed = true;
+                 rr_temp = "RR COLD ";
+         }
+         if (max_tyre_temp_ < data->car_states()->tyre_temp().at(3) &&
+             temp_.at(3) != TEMP::HOT) {
+                 temp_.at(3) = TEMP::HOT;
+                 changed = true;
+                 rr_temp = "RR HOT ";
+         }
+         if (min_tyre_temp_ < data->car_states()->tyre_temp().at(3) &&
+             max_tyre_temp_ > data->car_states()->tyre_temp().at(3) &&
+             temp_.at(3) != TEMP::GOOD) {
+                 temp_.at(3) = TEMP::GOOD;
+                 changed = true;
+                 rr_temp = "RR GO-GO ";
+         }
+ 
+ 
+         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(0) &&
+             tread_.at(0) != TREAD::GOOD) {
+                 tread_.at(0) = TREAD::GOOD;
+                 changed = true;
+                 fl_tread = "FL GOOD ";
+         }
+         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(0) &&
+             tread_.at(0) != TREAD::HOT) {
+                 tread_.at(0) = TREAD::HOT;
+                 changed = true;
+                 fl_tread = "FL HOT ";
+         }
+ 
+         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(1) &&
+             tread_.at(1) != TREAD::GOOD) {
+                 tread_.at(1) = TREAD::GOOD;
+                 changed = true;
+                 fr_tread = "FR GOOD ";
+         }
+         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(1) &&
+             tread_.at(1) != TREAD::HOT) {
+                 tread_.at(1) = TREAD::HOT;
+                 changed = true;
+                 fr_tread = "FR HOT ";
+         }
+ 
+         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(2) &&
+             tread_.at(2) != TREAD::GOOD) {
+                 tread_.at(2) = TREAD::GOOD;
+                 changed = true;
+                 rl_tread = "FL GOOD ";
+         }
+         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(2) &&
+             tread_.at(2) != TREAD::HOT) {
+                 tread_.at(2) = TREAD::HOT;
+                 changed = true;
+                 rl_tread = "RL HOT ";
+         }
+ 
+         if (max_tread_temp_ > data->car_states()->tyre_tread_temp().at(3) &&
+             tread_.at(3) != TREAD::GOOD) {
+                 tread_.at(3) = TREAD::GOOD;
+                 changed = true;
+                 rr_tread = "RR GOOD ";
+         }
+         if (max_tread_temp_ < data->car_states()->tyre_tread_temp().at(3) &&
+             tread_.at(3) != TREAD::HOT) {
+                 tread_.at(3) = TREAD::HOT;
+                 changed = true;
+                 rr_tread = "RR HOT ";
+         }
+ 
+         if (changed) {
+                 cout << "TYRE TEMP" << endl;
+                 cout << fl_temp << fr_temp << rl_temp << rr_temp << endl;
+                 cout << "TYRE TREAD TEMP" << endl;
+                 cout << fl_tread << fr_tread << rl_tread << rr_tread;
+                 for (int i = 0; i < 20; ++i) {
+                         cout << endl;
+                 }
+         }
+ }
 ```
 * in the src directory run make clean then make
 ```
@@ -402,16 +403,16 @@ Your_User$ ~/your_working_dir/rough_idea_project_cars-master/bin/capture_lap_dat
 ```
 * Open main.cpp and change Live_Feed to Live_Temp
 ```
-  5 int main() {
-  6 
-  7         pcars::Process_Lap process;
-  8         //pcars::Live_Feed live;
-  9         pcars::Live_Temp live;
- 10         pcars::Capture_Telemetry telemetry(&process, &live);
- 11 
- 12         return 0;
- 13 
- 14 }
+  int main() {
+  
+          pcars::Process_Lap process;
+          //pcars::Live_Feed live;
+          pcars::Live_Temp live;
+          pcars::Capture_Telemetry telemetry(&process, &live);
+  
+          return 0;
+  
+  }
 ```
 * Run make
 ```
@@ -433,29 +434,29 @@ Started
 ```
 * Now add a not started member to the qualy class.
 ```
- 11 class Request_Session_State_Qualify : public Request {
- 12 public:
- 13         Request_Session_State_Qualify(Record_Lap *, Request * request = nullptr);
- 14         virtual ~Request_Session_State_Qualify() {}
- 15 
- 16         bool request(std::shared_ptr<Data>) override;
- 17 
- 18 private:
- 19         Request * request_;
- 20 
- 21         Request_Race_State_Not_Started notstarted_; <------- HERE
- 22         Request_Race_State_Racing racing_;
- 23 
- 24         Request_Session_State_Qualify(const Request_Session_State_Qualify&) = delete;
- 25         Request_Session_State_Qualify& operator=(const Request_Session_State_Qualify&) = delete;
- 26 };
+  class Request_Session_State_Qualify : public Request {
+  public:
+          Request_Session_State_Qualify(Record_Lap *, Request * request = nullptr);
+          virtual ~Request_Session_State_Qualify() {}
+  
+          bool request(std::shared_ptr<Data>) override;
+  
+  private:
+          Request * request_;
+  
+          Request_Race_State_Not_Started notstarted_; <------- HERE
+          Request_Race_State_Racing racing_;
+  
+          Request_Session_State_Qualify(const Request_Session_State_Qualify&) = delete;
+          Request_Session_State_Qualify& operator=(const Request_Session_State_Qualify&) = delete;
+  };
 ```
 * Now open the implementation file requestsessionstatequalify.cpp and add the not started object to the request chain in the constructors initialisation list. 
 ```
-  7 Request_Session_State_Qualify::Request_Session_State_Qualify(Record_Lap * record, Request * request)
-  8         : request_{request},
-  9           notstarted_{record},
- 10           racing_{record,&notstarted_} {}
+   Request_Session_State_Qualify::Request_Session_State_Qualify(Record_Lap * record, Request * request)
+           : request_{request},
+             notstarted_{record},
+            racing_{record,&notstarted_} {}
 ```
 * What is happening is the chain first checks not start and if we are in a not started state we will run the recording from there else we move down the chain to racing and see if we are racing.  This class allows us to collect data at all different application states.
 * Make clean and Make again
@@ -471,4 +472,13 @@ g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/cap
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
 * To Be Continued, next will be a tute on the post lap process.
  
+## <a name="T-Part3"></a>Part 2 Roll Your Own Post Lap Process
+
+### Prerequisites
+
+Have done tute 1 and 2. 
+
+### Tute
+
+* I'm going to assume that you have done tute 1 and 2 and skip a lot of the basics and just get straight into adding a new process.
 
