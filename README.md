@@ -80,7 +80,7 @@ Out lap in practice is not recorded so you must do at least one full lap. Record
 
 ### Prerequisites
 
-Go the first tute.
+Do the first tute.
 
 You need command line tools, go to apple developer for instructions on installing these for OSX. 
 
