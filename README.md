@@ -425,6 +425,7 @@ Your_User$ ./pcars
 Started
 ```
 * You may have noticed that the out lap does not show the tyre state, which is not realy what we want. We want to see the tyre state coming into the first lap. The API controls the state of the app using the Chain of Responsibility Design Pattern which allows a request to run down a chain and find its response. The set of request classes implement this responsibility open requestsessionstatequalify.h. First we need to include the requestracestatenotstarted.h header file to the qualy header file. So cd back to the src directory.
+* Open requestsessionstatequalify.h and add the the include file for the requestracestatenotstarted.h.
 ```
 #include "requestracestatenotstarted.h"
 ```
@@ -440,7 +441,7 @@ Started
  18 private:
  19         Request * request_;
  20 
- 21         Request_Race_State_Not_Started notstarted_;
+ 21         Request_Race_State_Not_Started notstarted_; <------- HERE
  22         Request_Race_State_Racing racing_;
  23 
  24         Request_Session_State_Qualify(const Request_Session_State_Qualify&) = delete;
@@ -464,8 +465,8 @@ g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetry.cpp  -o ../obj/captu
 g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/capturetelemetryv2.o
 ...
 ```
-* Go back to the bin directory and start pcars and do some laps you don't need to rebuild i.e. make pcars again it will pick up the changes from the shared library.  
+* Go back to the bin directory and start pcars and do some laps you don't need to rebuild, pcars will pick up the changes from the shared library.  
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
-* To Be Continued, have to go do some programming for money instead. :-(
+* To Be Continued, next will be a tute on the post lap process.
  
 
