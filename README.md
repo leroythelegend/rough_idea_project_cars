@@ -472,7 +472,7 @@ g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/cap
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
 * To Be Continued, next will be a tute on the post lap process.
  
-## <a name="T-Part3"></a>Part 2 Roll Your Own Post Lap Process
+## <a name="T-Part3"></a>Part 3 Roll Your Own Post Lap Process
 
 ### Prerequisites
 
@@ -480,5 +480,32 @@ Have done tute 1 and 2.
 
 ### Tute
 
-* I'm going to assume that you have done tute 1 and 2 and skip a lot of the basics and just get straight into adding a new process.
+* I'm going to assume that you have done tute 1 and 2 and skip a lot of the basics and just get straight into adding a new process because this is very similar to extending the live class.
+* Open process.h from the src direcotr in your editor. We want to use the Process_Track instead of the Process_Lap. 
+```
+class Process_Track : public Process {
+public:
+        Process_Track();
+        virtual ~Process_Track() {}
 
+        void process(const Lap_Data lap_data) const override;
+};
+```
+* We don't need to build this as I have already implemented this class, you can take a look at the implementation in process.cpp. I use this class to create my track data for track_9.html. (I need to do a lot of work to improve my JavaScript, I have no excuse I'm bad at sequential programming and cannot get my head around using JavaScript in an OO context).
+* Go to the bin/capture_track_data and open the main.cpp, I have replaced Process_Lap with Process_Track.
+```
+#include "capturetelemetry.h"
+#include "process.h"
+#include "live.h"
+
+int main() {
+
+        pcars::Process_Track track; <------ HERE
+        pcars::Live_Feed live;
+        pcars::Capture_Telemetry telemetry(&track, &live);
+
+        return 0;
+
+}
+```
+* Set up your Library Path as in the previous tutes and run pcars. When I capture a lap I have the race line switched on and I do 1 lap on the outside, one on the inside and one on the race line.  Then I open this up in track_map.html and zoom into the track by changing the JavaScript and then record all the start, turn-in, apexes, exit and finish distances for each corner and some zoom to see the corners and the track and add this data to track_9.html. Finally do a lap using the capture_lap_data exe breaking on the turn-in, apexes and exit to fine tune track_9.html. It is a lot of work and needs to be improved hence this is why I only have 3 tracks.
