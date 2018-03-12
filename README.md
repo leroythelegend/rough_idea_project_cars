@@ -80,6 +80,8 @@ Out lap in practice is not recorded so you must do at least one full lap. Record
 
 ### Prerequisites
 
+Go the first tute.
+
 You need command line tools, go to apple developer for instructions on installing these for OSX. 
 
 You will need some VI skills here to follow the tute, VI is just an editor so you can follow along in any editor (except word) or just use xcode to edit the files and use the terminal to build the application or if you are an xcode guru you know what to do ;-) .
