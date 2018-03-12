@@ -509,3 +509,5 @@ int main() {
 }
 ```
 * Set up your Library Path as in the previous tutes and run pcars. When I capture a lap I have the race line switched on and I do 1 lap on the outside, one on the inside and one on the race line.  Then I open this up in track_map.html and zoom into the track by changing the JavaScript and then record all the start, turn-in, apexes, exit and finish distances for each corner and some zoom to see the corners and the track and add this data to track_9.html. Finally do a lap using the capture_lap_data exe breaking on the turn-in, apexes and exit to fine tune track_9.html. It is a lot of work and needs to be improved hence this is why I only have 3 tracks.
+
+Next I'll add a tute on using the recordlap class which we can extend to do both live and post lap at the sametime in a particular session state e.g. race and/or qualy
