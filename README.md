@@ -470,7 +470,6 @@ g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/cap
 ```
 * Go back to the bin directory and start pcars and do some laps you don't need to rebuild, pcars will pick up the changes from the shared library.  
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
-* To Be Continued, next will be a tute on the post lap process.
  
 ## <a name="T-Part3"></a>Part 3 Roll Your Own Post Lap Process
 
