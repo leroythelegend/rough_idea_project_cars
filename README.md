@@ -481,7 +481,7 @@ Have done tute 1 and 2.
 ### Tute
 
 * I'm going to assume that you have done tute 1 and 2 and skip a lot of the basics and just get straight into adding a new process because this is very similar to extending the live class.
-* Open process.h from the src direcotr in your editor. We want to use the Process_Track instead of the Process_Lap. 
+* Open process.h from the src directory in your editor. We want to use the Process_Track instead of the Process_Lap. 
 ```
 class Process_Track : public Process {
 public:
@@ -491,7 +491,7 @@ public:
         void process(const Lap_Data lap_data) const override;
 };
 ```
-* We don't need to build this as I have already implemented this class, you can take a look at the implementation in process.cpp. I use this class to create my track data for track_9.html. (I need to do a lot of work to improve my JavaScript, I have no excuse I'm bad at sequential programming and cannot get my head around using JavaScript in an OO context).
+* We don't need to build this as I have already implemented this class, you can take a look at the implementation in process.cpp. I use this class to create my track data for track_9.html. (I need to do a lot of work to improve my JavaScript, I have no excuse I'm bad at sequential programming and cannot get my head around using JavaScript).
 * Go to the bin/capture_track_data and open the main.cpp, I have replaced Process_Lap with Process_Track.
 ```
 #include "capturetelemetry.h"
