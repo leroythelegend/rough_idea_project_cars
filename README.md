@@ -427,48 +427,6 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 Your_User$ ./pcars
 Started
 ```
-* You may have noticed that the out lap does not show the tyre state, which is not realy what we want. We want to see the tyre state coming into the first lap. The API controls the state of the app using the Chain of Responsibility Design Pattern which allows a request to run down a chain and find its response. The set of request classes implement this responsibility open requestsessionstatequalify.h. First we need to include the requestracestatenotstarted.h header file to the qualy header file. So cd back to the src directory.
-* Open requestsessionstatequalify.h and add the the include file for the requestracestatenotstarted.h.
-```
-#include "requestracestatenotstarted.h"
-```
-* Now add a not started member to the qualy class.
-```
-  class Request_Session_State_Qualify : public Request {
-  public:
-          Request_Session_State_Qualify(Record_Lap *, Request * request = nullptr);
-          virtual ~Request_Session_State_Qualify() {}
-  
-          bool request(std::shared_ptr<Data>) override;
-  
-  private:
-          Request * request_;
-  
-          Request_Race_State_Not_Started notstarted_; <------- HERE
-          Request_Race_State_Racing racing_;
-  
-          Request_Session_State_Qualify(const Request_Session_State_Qualify&) = delete;
-          Request_Session_State_Qualify& operator=(const Request_Session_State_Qualify&) = delete;
-  };
-```
-* Now open the implementation file requestsessionstatequalify.cpp and add the not started object to the request chain in the constructors initialisation list. 
-```
-   Request_Session_State_Qualify::Request_Session_State_Qualify(Record_Lap * record, Request * request)
-           : request_{request},
-             notstarted_{record},
-            racing_{record,&notstarted_} {}
-```
-* What is happening is the chain first checks not start and if we are in a not started state we will run the recording from there else we move down the chain to racing and see if we are racing.  This class allows us to collect data at all different application states.
-* Make clean and Make again
-```
-Your_User$ make clean
-rm -f ../obj/*.o *~ ../lib/librough_idea_pcars.dylib
-Your_User$ make
-g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetry.cpp  -o ../obj/capturetelemetry.o
-g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/capturetelemetryv2.o
-...
-```
-* Go back to the bin directory and start pcars and do some laps you don't need to rebuild, pcars will pick up the changes from the shared library.  
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
  
 ## <a name="T-Part3"></a>Part 3 Roll Your Own Post Lap Process
