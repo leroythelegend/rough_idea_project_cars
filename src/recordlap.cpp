@@ -84,20 +84,30 @@ Record_Session::Record_Session(Process_Session * process)
 
 void Record_Session::record(std::shared_ptr<Data> data)
 {
-	if (lap_number_ != static_cast<int>(data->participants_info()->current_lap(0))) {
-		lap_number_ = data->participants_info()->current_lap(0);
-		if (lap_data_.size()) {
-			// process_->capture(lap_data);
-			cout << "End of lap catured data" << endl;
-			lap_data_.clear();
-			lap_data_.push_back(data);
+	if (static_cast<Pit_Mode>(data->game_states()->pit_mode()) == Pit_Mode::PIT_MODE_IN_GARAGE) {
+		lap_data_.clear();
+	}
+	if (-1 != data->times()->current_time()) {
+		if (lap_number_ != static_cast<int>(data->participants_info()->current_lap(0))) {
+			lap_number_ = data->participants_info()->current_lap(0);
+			if (lap_data_.size()) {
+
+				process_->capture(lap_data);
+				cout << "End of lap catured data" << endl;
+
+				lap_data_.clear();
+				lap_data_.push_back(data);
+			}
+			else {
+				lap_data_.push_back(data);
+			}
 		}
 		else {
 			lap_data_.push_back(data);
 		}
 	}
 	else {
-		lap_data_.push_back(data);
+		lap_number_ = -1;
 	}
 }
 
@@ -106,7 +116,7 @@ Record_Session_Result::Record_Session_Result(Process_Session * process)
 
 void Record_Session_Result::record(std::shared_ptr<Data>)
 {
-	// process_->process_session();
+	process_->process_session();
 	cout << "In Pits" << endl;
 }
 
