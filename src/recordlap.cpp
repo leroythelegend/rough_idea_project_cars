@@ -77,6 +77,39 @@ void Record_Live_Data::record(std::shared_ptr<Data> data)
 {
 	live_->live(data);
 }
+	using Vector_Lap_Data = std::vector<std::shared_ptr<Data> >;
+
+Record_Session::Record_Session(Process_Session * process)
+	: process_{process} {}
+
+void Record_Session::record(std::shared_ptr<Data> data)
+{
+	if (lap_number_ != static_cast<int>(data->participants_info()->current_lap(0))) {
+		lap_number_ = data->participants_info()->current_lap(0);
+		if (lap_data_.size()) {
+			// process_->capture(lap_data);
+			cout << "End of lap catured data" << endl;
+			lap_data_.clear();
+			lap_data_.push_back(data);
+		}
+		else {
+			lap_data_.push_back(data);
+		}
+	}
+	else {
+		lap_data_.push_back(data);
+	}
+}
+
+Record_Session_Result::Record_Session_Result(Process_Session * process)
+	: process_{process} {}
+
+void Record_Session_Result::record(std::shared_ptr<Data>)
+{
+	// process_->process_session();
+	cout << "In Pits" << endl;
+}
+
 
 }
 
