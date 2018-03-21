@@ -1,7 +1,5 @@
 #include "requestracestateracing.h"
 
-#include "decodertelemetrydata.h"
-
 namespace pcars {
 
 Request_Race_State_Racing::Request_Race_State_Racing(Record_Lap * record, Request * request)
@@ -11,15 +9,17 @@ Request_Race_State_Racing::Request_Race_State_Racing(Record_Lap * record, Reques
 bool Request_Race_State_Racing::request(std::shared_ptr<Data> data) {
 
 	if (static_cast<Race_State>(data->game_states()->race_state_flags()) == Race_State::RACESTATE_RACING) {
-		record_->record(data);
-		return true;
+		if (record_) {
+			record_->record(data);
+		}
+		else if (request_) {
+			return request_->request(data);
+		}
+		else {
+			return true;
+		}
 	}
-	else if (request_) {
-		return request_->request(data);
-	}
-	else {
-		return true;
-	}
+	return true;
 }
 
 }

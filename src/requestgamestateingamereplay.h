@@ -3,16 +3,19 @@
 
 #include "request.h"
 
+#include "recordlap.h"
+
 namespace pcars {
 
 class Request_Game_State_In_Game_Replay : public Request {
 public:
-	Request_Game_State_In_Game_Replay(Request *);
+	Request_Game_State_In_Game_Replay(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Game_State_In_Game_Replay() {}
 
 	bool request(std::shared_ptr<Data>) override;
 
 private:
+	Record_Lap * record_;
 	Request * request_;
 };
 

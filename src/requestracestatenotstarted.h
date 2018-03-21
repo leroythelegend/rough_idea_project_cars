@@ -9,7 +9,7 @@ namespace pcars {
 
 class Request_Race_State_Not_Started : public Request {
 public:
-	Request_Race_State_Not_Started(Record_Lap *, Request * request = nullptr);
+	Request_Race_State_Not_Started(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Race_State_Not_Started() {}
 
 	bool request(std::shared_ptr<Data>) override;

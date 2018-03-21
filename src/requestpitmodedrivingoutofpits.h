@@ -3,16 +3,19 @@
 
 #include "request.h"
 
+#include "recordlap.h"
+
 namespace pcars {
 
 class Request_Pit_Mode_Driving_Out_Of_Pits : public Request {
 public:
-	Request_Pit_Mode_Driving_Out_Of_Pits(Request * request = nullptr);
+	Request_Pit_Mode_Driving_Out_Of_Pits(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Pit_Mode_Driving_Out_Of_Pits() {}
 
 	bool request(std::shared_ptr<Data>);
 
 private:
+	Record_Lap * record_;
 	Request * request_;
 
 	Request_Pit_Mode_Driving_Out_Of_Pits(const Request_Pit_Mode_Driving_Out_Of_Pits&) = delete;

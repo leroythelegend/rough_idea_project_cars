@@ -3,16 +3,19 @@
 
 #include "request.h"
 
+#include "recordlap.h"
+
 namespace pcars {
 
 class Request_Session_State_Time_Attack : public Request {
 public:
-	Request_Session_State_Time_Attack(Request * request = nullptr);
+	Request_Session_State_Time_Attack(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Session_State_Time_Attack() {}
 
 	bool request(std::shared_ptr<Data>) override;
 
 private:
+	Record_Lap * record_;
 	Request * request_;
 
 	Request_Session_State_Time_Attack(const Request_Session_State_Time_Attack&) = delete;

@@ -3,21 +3,20 @@
 
 #include "request.h"
 
-#include "requestracestateracing.h"
+#include "recordlap.h"
 
 namespace pcars {
 
 class Request_Session_State_Qualify : public Request {
 public:
-	Request_Session_State_Qualify(Record_Lap *, Request * request = nullptr);
+	Request_Session_State_Qualify(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Session_State_Qualify() {}
 
 	bool request(std::shared_ptr<Data>) override;
 
 private:
+	Record_Lap * record_;
 	Request * request_;
-
-	Request_Race_State_Racing racing_;
 
 	Request_Session_State_Qualify(const Request_Session_State_Qualify&) = delete;
 	Request_Session_State_Qualify& operator=(const Request_Session_State_Qualify&) = delete;
