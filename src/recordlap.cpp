@@ -34,29 +34,38 @@ void process_func(const Thread_Args & args) {
 
 Record_Post_Lap::Record_Post_Lap(Process * process)
 	: process_{process},
-	  lap_number_{-1}
+	  lap_number_{-1},
+	  restart_{false}
 {
 }
 
 
 void Record_Post_Lap::record(std::shared_ptr<Data> data)
 {
-	if (lap_number_ != static_cast<int>(data->participants_info()->current_lap(0))) {
-		lap_number_ = data->participants_info()->current_lap(0);
-		if (lap_data_.size()) {
+	if (static_cast<Pit_Mode>(data->game_states()->pit_mode()) == Pit_Mode::PIT_MODE_IN_GARAGE) {
+		lap_data_.clear();
+	}
+	if (-1 != data->times()->current_time()) {
+		if (lap_number_ != static_cast<int>(data->participants_info()->current_lap(0))) {
+			lap_number_ = data->participants_info()->current_lap(0);
+			if (lap_data_.size()) {
 
-			thread t(process_func, Thread_Args(process_, lap_data_));
-			t.detach();
+				thread t(process_func, Thread_Args(process_, lap_data_));
+				t.detach();
 
-			lap_data_.clear();
-			lap_data_.push_back(data);
+				lap_data_.clear();
+				lap_data_.push_back(data);
+			}
+			else {
+				lap_data_.push_back(data);
+			}
 		}
 		else {
 			lap_data_.push_back(data);
 		}
 	}
 	else {
-		lap_data_.push_back(data);
+		lap_number_ = -1;
 	}
 }
 

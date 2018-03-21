@@ -3,16 +3,19 @@
 
 #include "request.h"
 
+#include "recordlap.h"
+
 namespace pcars {
 
 class Request_Session_State_Invalid : public Request {
 public:
-	Request_Session_State_Invalid(Request * request = nullptr);
+	Request_Session_State_Invalid(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Session_State_Invalid() {}
 
 	bool request(std::shared_ptr<Data>) override;
 
 private:
+	Record_Lap * record_;
 	Request * request_;
 
 	Request_Session_State_Invalid(const Request_Session_State_Invalid&) = delete;

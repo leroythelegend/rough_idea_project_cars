@@ -7,16 +7,19 @@
 #include "decodertelemetrydata.h"
 #include "dataformat1.h"
 
+using namespace std;
+
 namespace pcars {
 
-Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live, Request_Package * request)
-	: request_{request},
-	  recordlap_{process},
-	  recordlive_{live},
-	  practice_{&recordlap_},
-	  //practice_{&recordlive_},
-	  qualy_{&recordlive_, &practice_}, 
-	  race_{&recordlive_, &qualy_} {}
+Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live)
+	: post_lap_{process},
+	  live_{live},
+	  race_racing_{&live_},
+	  race_{nullptr, &race_racing_},
+	  qualy_racing_{&live_},
+	  qualy_{nullptr, &qualy_racing_},
+	  practice_racing_{&post_lap_},
+	  practice_{nullptr, &practice_racing_} {}
 
 bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 
@@ -34,11 +37,11 @@ bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 
 			std::shared_ptr<Data> data = std::make_shared<Data_Format_1>(decoder);
 
-			return race_.request(data);
-		}
+			race_.request(data);
+			qualy_.request(data);	
+			practice_.request(data);
 
-		if (request_) {
-			return request_->request(packet);
+			return true;
 		}
 	}
 	catch (const std::out_of_range& oor) {

@@ -6,25 +6,28 @@
 #include "requestsessionstatepractice.h"
 #include "requestsessionstatequalify.h"
 #include "requestsessionstaterace.h"
+#include "requestracestateracing.h"
 
 namespace pcars {
 
 class Request_Package_Telemetry : public Request_Package {
 public:
-	Request_Package_Telemetry(Process *, Live *, Request_Package * request = NULL);
+	Request_Package_Telemetry(Process *, Live *);
 	virtual ~Request_Package_Telemetry() {}
 
 	bool request(const PCars_Data &) override;
 
 private:
-	Request_Package * request_;
+	Record_Post_Lap post_lap_;	
+	Record_Live_Data live_;
 
-	Record_Post_Lap recordlap_;	
-	Record_Live_Data recordlive_;
-
-	Request_Session_State_Practice practice_;
+	Request_Race_State_Racing race_racing_;
+	Request_Session_State_Race race_;
+	Request_Race_State_Racing qualy_racing_;
 	Request_Session_State_Qualify  qualy_;
-	Request_Session_State_Race     race_;
+	Request_Race_State_Racing practice_racing_;
+	Request_Session_State_Practice practice_;
+
 };
 
 }

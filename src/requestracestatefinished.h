@@ -3,16 +3,19 @@
 
 #include "request.h"
 
+#include "recordlap.h"
+
 namespace pcars {
 
 class Request_Race_State_Finished : public Request {
 public:
-	Request_Race_State_Finished(Request * request);
+	Request_Race_State_Finished(Record_Lap * = nullptr, Request * = nullptr);
 	virtual ~Request_Race_State_Finished() {}
 
 	bool request(std::shared_ptr<Data>) override;
 
 private:
+	Record_Lap * record_;
 	Request * request_;
 
 	Request_Race_State_Finished(const Request_Race_State_Finished&) = delete;
