@@ -477,8 +477,8 @@ Started
  17           race_racing_{&live_},
  18           race_{nullptr, &race_racing_},
  19           // qualy_racing_{&live_},  <--- remove
- 20           // qualy_{nullptr, &qualy_racing_}, <--- add the recording and remove the racing request
- 21           qualy_{&live_},
+ 20           // qualy_{nullptr, &qualy_racing_},
+ 21           qualy_{&live_},   <--- add the recording and remove the racing request
  22           practice_racing_{&post_lap_},
  23           practice_{nullptr, &practice_racing_} {}
 ```
