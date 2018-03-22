@@ -13,7 +13,7 @@ A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Tel
 ### <a name="T-Tutorial"></a> Version 1 UDP Format
 
 * [Part 1](#T-Part1)  Running Demo Executable
-* [Part 2](#T-Part2)  Roll Your Own Live Feed
+* [Part 2](#T-Part2)  Roll Your Own Live Feed (WIP)
 * [Part 3](#T-Part3)  Roll Your Post Lap Process (WIP)
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
@@ -427,6 +427,63 @@ Your_User$ export DYLD_LIBRARY_PATH=../../lib
 Your_User$ ./pcars
 Started
 ```
+* May have noticed that the first out-lap did not show the live feed which is not ideal because you may only have one hot lap and need to know what the tyre temps are.
+* Open requestpackagetelemetry.hpp
+```
+ 13 class Request_Package_Telemetry : public Request_Package {
+ 14 public:
+ 15         Request_Package_Telemetry(Process *, Live *);
+ 16         virtual ~Request_Package_Telemetry() {}
+ 17 
+ 18         bool request(const PCars_Data &) override;
+ 19 
+ 20 private:
+ 21         Record_Post_Lap post_lap_;
+ 22         Record_Live_Data live_;
+ 23 
+ 24         Request_Race_State_Racing race_racing_;
+ 25         Request_Session_State_Race race_;
+ 26         Request_Race_State_Racing qualy_racing_;
+ 27         Request_Session_State_Qualify  qualy_;
+ 28         Request_Race_State_Racing practice_racing_;
+ 29         Request_Session_State_Practice practice_;
+ 30 
+ 31 };
+```
+* The request classes are how you say what state you want to start recording. All these requests use the "race state racing" which is not triggered until the first out-lap is finished.
+* Open requestpackagetelemetry.cpp
+```
+ 14 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live)
+ 15         : post_lap_{process},
+ 16           live_{live},
+ 17           race_racing_{&live_},
+ 18           race_{nullptr, &race_racing_},
+ 19           qualy_racing_{&live_},
+ 20           qualy_{nullptr, &qualy_racing_},
+ 21           practice_racing_{&post_lap_},
+ 22           practice_{nullptr, &practice_racing_} {}
+ ```
+* In the initialisation list I create the requests, by adding the record e.g. "live_" to the "qualy_racing_" and note "qualy_" has a nullptr as the first argument I'm saying "If in qualy and racing run live feed".
+```
+ 40                         race_.request(data);
+ 41                         qualy_.request(data);
+ 42                         practice_.request(data);
+```
+* Here you can see each request being run. To record while always in qualy we need to not bother with checking the qualy racing state and move the recording to qualy e.g.
+```
+ 14 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live)
+ 15         : post_lap_{process},
+ 16           live_{live},
+ 17           race_racing_{&live_},
+ 18           race_{nullptr, &race_racing_},
+ 19           // qualy_racing_{&live_},  <--- remove
+ 20           // qualy_{nullptr, &qualy_racing_}, <--- add the recording and remove the racing request
+ 21           qualy_{&live_},
+ 22           practice_racing_{&post_lap_},
+ 23           practice_{nullptr, &practice_racing_} {}
+```
+* Rebuild the application and restart the application and you will see the tyre temp in the first outlap.
+
 * My idea of the live type was so that GUI developers can use the live feed to create their own unique pcars displays.
  
 ## <a name="T-Part3"></a>Part 3 Roll Your Own Post Lap Process
