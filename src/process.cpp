@@ -238,6 +238,35 @@ void Process_Track::process(const Lap_Data lap_data) const
 	file << "]}\';" << endl;
 }
 
+Process_Decision_Tree::Process_Decision_Tree()
+{
+	// Decision > On_Road
+	std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
+	decisions_.push_back(on_road);
+	// Decision > On_Road > Top_Gear
+	std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
+	decisions_.at(0)->if_true(top_gear);
+	// Decision > On_Road > Top_Gear > MAX_RPM
+	std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
+	top_gear->if_true(max_rpm);
+
+	// Results
+	results_.push_back(max_rpm);
+}
+
+void Process_Decision_Tree::process(const Lap_Data lap_data) const
+{
+	cout << "Started Processing" << endl;
+	for (auto& d_it : decisions_) {
+		for (auto& it : lap_data) {
+			d_it->evaluate(it);
+		}
+	}
+	for (auto& it : results_) {
+		it->result();
+	}
+	cout << "Finished Processing" << endl;
+}
 
 }
 

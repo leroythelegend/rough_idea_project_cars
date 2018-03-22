@@ -50,6 +50,36 @@ private:
 	Live * live_;
 };
 
+class Record_Session : public Record_Lap
+{
+public:
+	using Vector_Lap_Data = std::vector<std::shared_ptr<Data> >;
+
+	Record_Session(Process_Session *);
+	virtual ~Record_Session() {};
+
+	void record(std::shared_ptr<Data>) override;
+
+private:
+	Process_Session * process_;
+	Lap_Number lap_number_;
+	Vector_Lap_Data lap_data_;
+};
+
+
+class Record_Session_Result : public Record_Lap
+{
+public:
+	Record_Session_Result(Process_Session *);
+	virtual ~Record_Session_Result() {};
+
+	void record(std::shared_ptr<Data>) override;
+
+private:
+	Process_Session * process_;
+};
+
+
 }
 
 #endif

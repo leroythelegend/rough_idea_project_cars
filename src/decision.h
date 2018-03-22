@@ -1,0 +1,105 @@
+#ifndef PCARS_DECISION_H_ 
+#define PCARS_DECISION_H_ 
+
+#include <vector>
+#include <memory>
+
+#include "data.h"
+
+namespace pcars {
+
+class Decision {
+public:
+	using Decision_Shared_Ptr = std::shared_ptr<Decision>;
+	using Data_Shared_Ptr = std::shared_ptr<Data>;
+
+	virtual ~Decision() {}
+
+	virtual void evaluate(const Data_Shared_Ptr &) = 0;
+
+	virtual void if_true(Decision_Shared_Ptr) = 0;
+	virtual void if_false(Decision_Shared_Ptr) = 0;
+};
+
+class Absolute : public Decision {
+public:
+	using True_Decisions = std::vector<Decision_Shared_Ptr>;
+	using False_Decisions = std::vector<Decision_Shared_Ptr>;
+
+	virtual ~Absolute() {}
+
+	void if_true(Decision_Shared_Ptr) override;
+	void if_false(Decision_Shared_Ptr) override;
+
+protected:
+	True_Decisions true_;
+	False_Decisions false_;
+};
+
+class Absolute_On_Road : public Absolute {
+public:
+	virtual ~Absolute_On_Road() {}
+
+	void evaluate(const Data_Shared_Ptr &) override;
+};
+
+class Absolute_Top_Gear : public Absolute {
+public:
+	virtual ~Absolute_Top_Gear() {}
+
+	void evaluate(const Data_Shared_Ptr &) override;
+};
+
+class Conclusion {
+public:
+	using Result_OutCome = std::string;
+	virtual ~Conclusion() {}
+
+	virtual void conclude(const Result_OutCome&) const = 0;
+};
+
+class Conclusion_Cout : public Conclusion {
+public:
+	using Outcome = std::string;
+
+	Conclusion_Cout(const Outcome &);
+	virtual ~Conclusion_Cout() {}
+
+	void conclude(const Result_OutCome&) const override;
+
+private:
+	Outcome outcome_;
+};
+
+
+class Result {
+public:
+	virtual ~Result() {}
+
+	virtual void result() = 0;
+};
+
+class Decision_MAX_RPM : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+
+	Decision_MAX_RPM(Conclusion_Ptr);
+	virtual ~Decision_MAX_RPM() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &) override;
+
+private:
+	bool result_;
+	Conclusion_Ptr conclusion_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+}
+
+
+#endif
+
