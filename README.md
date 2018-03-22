@@ -537,9 +537,7 @@ Take a look at decision.h and decision.cpp
 
 So I derive two classes from Absolute, Absolute_On_Road and Absolute_Top_Gear then create a multi inheritance class from Decision and Result, Decision_MAX_RPM and finally I pass my Conclusion type Conclusion_Cout to Decision_MAX_RPM as well. The flow should go like this 
 
-Are all four tyres on the road? ---> True: Are we in top Gear? --> True: Did the RPMS reach Max RPMS? --> Print conclusion and True
-                                |                             |                                      |
-                                ---> False: do nothing        ---> False: do nothing                 --> Print conclusion and False
+Are all four tyres on the road? ---> True: Are we in top Gear? --> True: Did the RPMS reach Max RPMS? --> Print conclusion and True else False.
 
 Conclusion is encapsulated in the final decision so this can change for different output i.e. json or to a file.
 
