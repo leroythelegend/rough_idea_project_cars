@@ -15,6 +15,7 @@ A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Tel
 * [Part 1](#T-Part1)  Running Demo Executable
 * [Part 2](#T-Part2)  Roll Your Own Live Feed (WIP)
 * [Part 3](#T-Part3)  Roll Your Post Lap Process (WIP)
+* [Part 3](#T-Part4)  Roll Your Decision Tree (WIP)
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
 
@@ -524,4 +525,61 @@ int main() {
 ```
 * Set up your Library Path as in the previous tutes and run pcars. When I capture a lap I have the race line switched on and I do 1 lap on the outside, one on the inside and one on the race line.  Then I open this up in track_map.html and zoom into the track by changing the JavaScript and then record all the start, turn-in, apexes, exit and finish distances for each corner and some zoom to see the corners and the track and add this data to track_9.html. Finally do a lap using the capture_lap_data exe breaking on the turn-in, apexes and exit to fine tune track_9.html. It is a lot of work and needs to be improved hence this is why I only have 3 tracks.
 
-Next I'll add a tute on using the recordlap class which we can extend to do both live and post lap at the sametime in a particular session state e.g. race and/or qualy
+## <a name="T-Part4"></a>Part 4  Running Decision Tree
+
+This is still work in progress I'm not even sure the design is going to work, anyway I will just add a description.
+
+The idea is that you think of some setup question you might have for example "Does the top gear hit the rev limiter" and build up the decision tree with this question. If I have this right there will be one decision tree answering multiple questions.
+
+Ok so first think, given these absolutes what desiscion can i conclude. Using the previous example "the car absolutly must be on the road, absolutly must be in top gear and was the max rpm's reached? if true max rpms hit else false not hit" 
+
+Take a look at decision.h and decision.cpp
+
+So I derive two classes from Absolute, Absolute_On_Road and Absolute_Top_Gear then create a multi inheritance class from Decision and Result, Decision_MAX_RPM and finally I pass my Conclusion type Conclusion_Cout to Decision_MAX_RPM as well. The flow should go like this 
+
+Are all four tyres on the road? ---> True: Are we in top Gear? --> True: Did the RPMS reach Max RPMS? --> Print conclusion and True
+                                |                             |                                      |
+                                ---> False: do nothing        ---> False: do nothing                 --> Print conclusion and False
+
+Conclusion is encapsulated in the final decision so this can change for different output i.e. json or to a file.
+
+Creating the decision tree, wow I actually wrote some comments.
+
+```
+ 60 class Process_Decision_Tree : public Process_Session {
+ 61 public:
+ 62         using Decisions = std::vector<std::shared_ptr<Decision> >; 
+ 63         using Results = std::vector<std::shared_ptr<Result> >; 
+ 64 
+ 65         Process_Decision_Tree();
+ 66         virtual ~Process_Decision_Tree() {}
+ 67 
+ 68         void capture_session(const Lap_Data&) override;
+ 69         void process_session() override;
+ 70 
+ 71 private:
+ 72         Decisions decisions_;
+ 73         Results results_;
+ 74 
+ 75         Lap_Data lap_data_;
+ 76 };
+ 
+240 
+241 Process_Decision_Tree::Process_Decision_Tree()
+242 {
+243         // Decision > On_Road
+244         std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
+245         decisions_.push_back(on_road);
+246         // Decision > On_Road > Top_Gear
+247         std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
+248         decisions_.at(0)->if_true(top_gear);
+249         // Decision > On_Road > Top_Gear > MAX_RPM
+250         std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
+251         top_gear->if_true(max_rpm);
+252 
+253         // Results
+254         results_.push_back(max_rpm);
+255 }
+256 
+```
+
