@@ -56,19 +56,33 @@ public:
 	virtual ~Conclusion() {}
 
 	virtual void conclude(const Result_OutCome&) const = 0;
+	virtual void conclude(const Result_OutCome&, 
+	                      const Result_OutCome&,
+			      const Result_OutCome&,
+			      const Result_OutCome&) const = 0;
 };
 
 class Conclusion_Cout : public Conclusion {
 public:
 	using Outcome = std::string;
 
-	Conclusion_Cout(const Outcome &);
+	Conclusion_Cout(const Outcome&);
+	Conclusion_Cout(const Outcome&,
+                        const Outcome&,
+		        const Outcome&,
+		        const Outcome&);
 	virtual ~Conclusion_Cout() {}
 
 	void conclude(const Result_OutCome&) const override;
-
+	void conclude(const Result_OutCome&, 
+                      const Result_OutCome&,
+		      const Result_OutCome&,
+		      const Result_OutCome&) const override;
 private:
-	Outcome outcome_;
+	Outcome outcome1_;
+	Outcome outcome2_;
+	Outcome outcome3_;
+	Outcome outcome4_;
 };
 
 
@@ -97,6 +111,30 @@ private:
 	void if_true(Decision_Shared_Ptr) override {};
 	void if_false(Decision_Shared_Ptr) override {};
 };
+
+class Decision_MAX_Tyre_Temp : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+
+	Decision_MAX_Tyre_Temp(Conclusion_Ptr);
+	virtual ~Decision_MAX_Tyre_Temp() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	unsigned int fl_temp_;
+	unsigned int fr_temp_;
+	unsigned int rl_temp_;
+	unsigned int rr_temp_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
 
 }
 

@@ -34,8 +34,7 @@ void process_func(const Thread_Args & args) {
 
 Record_Post_Lap::Record_Post_Lap(Process * process)
 	: process_{process},
-	  lap_number_{-1},
-	  restart_{false}
+	  lap_number_{-1}
 {
 }
 
@@ -92,7 +91,7 @@ void Record_Session::record(std::shared_ptr<Data> data)
 			lap_number_ = data->participants_info()->current_lap(0);
 			if (lap_data_.size()) {
 
-				process_->capture(lap_data);
+				process_->capture_session(lap_data_);
 				cout << "End of lap catured data" << endl;
 
 				lap_data_.clear();
@@ -117,7 +116,6 @@ Record_Session_Result::Record_Session_Result(Process_Session * process)
 void Record_Session_Result::record(std::shared_ptr<Data>)
 {
 	process_->process_session();
-	cout << "In Pits" << endl;
 }
 
 

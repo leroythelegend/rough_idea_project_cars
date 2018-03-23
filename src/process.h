@@ -53,11 +53,11 @@ public:
 
 	virtual ~Process_Session() {}
 
-	virtual void capture_session(const Lap_Data) = 0;
+	virtual void capture_session(const Lap_Data&) = 0;
 	virtual void process_session() = 0;
 };
 
-class Process_Decision_Tree : public Process {
+class Process_Decision_Tree : public Process_Session {
 public:
 	using Decisions = std::vector<std::shared_ptr<Decision> >; 
 	using Results = std::vector<std::shared_ptr<Result> >; 
@@ -65,11 +65,14 @@ public:
 	Process_Decision_Tree();
 	virtual ~Process_Decision_Tree() {}
 
-	void process(const Lap_Data) const override;
+	void capture_session(const Lap_Data&) override;
+	void process_session() override;
 
 private:
 	Decisions decisions_;
 	Results results_;
+
+	Lap_Data lap_data_;
 };
 
 
