@@ -90,9 +90,8 @@ void Decision_MAX_RPM::result()
 	if (result_) {
 		conclusion_->conclude("TRUE");
 	}
-	else {
-		conclusion_->conclude("FASLE");
-	}
+
+	result_ = false;
 }
 
 void Decision_MAX_RPM::evaluate(const Data_Shared_Ptr & data)
@@ -117,6 +116,11 @@ void Decision_MAX_Tyre_Temp::result()
 	conclusion_->conclude(to_string(fr_temp_));
 	conclusion_->conclude(to_string(rl_temp_));
 	conclusion_->conclude(to_string(rr_temp_));
+
+	fl_temp_ = 0;
+	fr_temp_ = 0;
+	rl_temp_ = 0;
+	rr_temp_ = 0;
 }
 
 void Decision_MAX_Tyre_Temp::evaluate(const Data_Shared_Ptr & data)
