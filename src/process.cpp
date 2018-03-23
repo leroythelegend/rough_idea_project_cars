@@ -241,8 +241,14 @@ void Process_Track::process(const Lap_Data lap_data) const
 Process_Decision_Tree::Process_Decision_Tree()
 {
 	// Decision > On_Road
+	// Decision > Tyre_Temp
 	std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
+	std::shared_ptr<Decision_MAX_Tyre_Temp> tyre_temp =  std::make_shared<Decision_MAX_Tyre_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Tyre Temp ",
+	  "FR MAX Tyre Temp ",
+	  "RL MAX Tyre Temp ",
+	  "RR MAX Tyre Temp "));
 	decisions_.push_back(on_road);
+	decisions_.push_back(tyre_temp);
 	// Decision > On_Road > Top_Gear
 	std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
 	decisions_.at(0)->if_true(top_gear);
@@ -252,20 +258,28 @@ Process_Decision_Tree::Process_Decision_Tree()
 
 	// Results
 	results_.push_back(max_rpm);
+	results_.push_back(tyre_temp);
 }
 
-void Process_Decision_Tree::process(const Lap_Data lap_data) const
+void Process_Decision_Tree::capture_session(const Lap_Data& lap_data) {
+	lap_data_ = lap_data;
+}
+
+void Process_Decision_Tree::process_session()
 {
-	cout << "Started Processing" << endl;
-	for (auto& d_it : decisions_) {
-		for (auto& it : lap_data) {
-			d_it->evaluate(it);
+	if (lap_data_.size()) {
+		cout << "Started Processing" << endl;
+		for (auto& d_it : decisions_) {
+			for (auto& it : lap_data_) {
+				d_it->evaluate(it);
+			}
 		}
+		for (auto& it : results_) {
+			it->result();
+		}
+		cout << "Finished Processing" << endl;
+		lap_data_.clear();
 	}
-	for (auto& it : results_) {
-		it->result();
-	}
-	cout << "Finished Processing" << endl;
 }
 
 }
