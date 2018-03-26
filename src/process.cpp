@@ -249,15 +249,19 @@ Process_Decision_Tree::Process_Decision_Tree()
 	  "RR MAX Tyre Temp "));
 	decisions_.push_back(on_road);
 	decisions_.push_back(tyre_temp);
-	// Decision > On_Road > Top_Gear
+	// Decision > On_Road T Top_Gear
 	std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
 	decisions_.at(0)->if_true(top_gear);
-	// Decision > On_Road > Top_Gear > MAX_RPM
+	// Decision > On_Road T Top_Gear T MAX_RPM
+	// Decision > On_Road T Top_Gear T RPM_GT_80
 	std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
+	std::shared_ptr<Decision_RPM_GT_80_Percent> rpm_gt_80 = std::make_shared<Decision_RPM_GT_80_Percent>(std::make_shared<Conclusion_Cout>("Top gear rpm greater than 80% "));
 	top_gear->if_true(max_rpm);
+	top_gear->if_true(rpm_gt_80);
 
 	// Results
 	results_.push_back(max_rpm);
+	results_.push_back(rpm_gt_80);
 	results_.push_back(tyre_temp);
 }
 
