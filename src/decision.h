@@ -50,6 +50,13 @@ public:
 	void evaluate(const Data_Shared_Ptr &) override;
 };
 
+class Absolute_Steering_Straight : public Absolute {
+public:
+	virtual ~Absolute_Steering_Straight() {}
+
+	void evaluate(const Data_Shared_Ptr &) override;
+};
+
 class Conclusion {
 public:
 	using Result_OutCome = std::string;
@@ -111,6 +118,26 @@ private:
 	void if_true(Decision_Shared_Ptr) override {};
 	void if_false(Decision_Shared_Ptr) override {};
 };
+
+class Decision_RPM_GT_80_Percent : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+
+	Decision_RPM_GT_80_Percent(Conclusion_Ptr);
+	virtual ~Decision_RPM_GT_80_Percent() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &) override;
+
+private:
+	bool result_;
+	Conclusion_Ptr conclusion_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
 
 class Decision_MAX_Tyre_Temp : public Decision, public Result {
 public:

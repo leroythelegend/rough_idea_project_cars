@@ -47,6 +47,20 @@ void Absolute_Top_Gear::evaluate(const Data_Shared_Ptr & data)
 	}
 }
 
+void Absolute_Steering_Straight::evaluate(const Data_Shared_Ptr & data)
+{
+	if (data->car_states()->steering() == 0) {
+		for(auto& it : true_) {
+			it->evaluate(data);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data);
+		}
+	}
+}
+
 Conclusion_Cout::Conclusion_Cout(const Outcome & outcome)
 	: outcome1_{outcome}
 {
@@ -100,6 +114,29 @@ void Decision_MAX_RPM::evaluate(const Data_Shared_Ptr & data)
 		result_ = true;
 	}
 }
+
+Decision_RPM_GT_80_Percent::Decision_RPM_GT_80_Percent(Conclusion_Ptr conclusion)
+	: result_{false},
+	  conclusion_{conclusion}
+{
+}
+
+void Decision_RPM_GT_80_Percent::result()
+{
+	if (result_) {
+		conclusion_->conclude("TRUE");
+	}
+
+	result_ = false;
+}
+
+void Decision_RPM_GT_80_Percent::evaluate(const Data_Shared_Ptr & data)
+{
+	if (data->car_states()->rpm() > (data->car_states()->max_rpm() * 0.80)) {
+		result_ = true;
+	}
+}
+
 
 Decision_MAX_Tyre_Temp::Decision_MAX_Tyre_Temp(Conclusion_Ptr conclusion)
 	: conclusion_{conclusion},
