@@ -406,10 +406,11 @@ Your_User$ ~/your_working_dir/rough_idea_project_cars-master/bin/capture_lap_dat
 ```
   int main() {
   
+          pcars::Process_Decision_Tree decision_tree;
           pcars::Process_Lap process;
           //pcars::Live_Feed live;
           pcars::Live_Temp live;
-          pcars::Capture_Telemetry telemetry(&process, &live);
+          pcars::Capture_Telemetry telemetry(&process, &live, &decision_tree);
   
           return 0;
   
@@ -431,57 +432,79 @@ Started
 * May have noticed that the first out-lap did not show the live feed which is not ideal because you may only have one hot lap and need to know what the tyre temps are.
 * Open requestpackagetelemetry.hpp
 ```
- 13 class Request_Package_Telemetry : public Request_Package {
- 14 public:
- 15         Request_Package_Telemetry(Process *, Live *);
- 16         virtual ~Request_Package_Telemetry() {}
- 17 
- 18         bool request(const PCars_Data &) override;
- 19 
- 20 private:
- 21         Record_Post_Lap post_lap_;
- 22         Record_Live_Data live_;
- 23 
- 24         Request_Race_State_Racing race_racing_;
- 25         Request_Session_State_Race race_;
- 26         Request_Race_State_Racing qualy_racing_;
- 27         Request_Session_State_Qualify  qualy_;
- 28         Request_Race_State_Racing practice_racing_;
- 29         Request_Session_State_Practice practice_;
- 30 
- 31 };
+ 14 class Request_Package_Telemetry : public Request_Package {
+ 15 public:
+ 16         Request_Package_Telemetry(Process *, Live *, Process_Session *);
+ 17         virtual ~Request_Package_Telemetry() {}
+ 18 
+ 19         bool request(const PCars_Data &) override;
+ 20 
+ 21 private:
+ 22         Record_Post_Lap post_lap_;
+ 23         Record_Live_Data live_;
+ 24 
+ 25         Record_Session session_;
+ 26         Record_Session_Result session_result_;
+ 27 
+ 28         Request_Race_State_Racing race_racing_;
+ 29         Request_Session_State_Race race_;
+ 30         Request_Race_State_Racing qualy_racing_;
+ 31         Request_Session_State_Qualify  qualy_;
+ 32         Request_Race_State_Racing practice_racing_;
+ 33         Request_Session_State_Practice practice_;
+ 34 
+ 35         Request_Race_State_Racing practice_capture_decision_;
+ 36         Request_Session_State_Practice pracitice_decision_;
+ 37 
+ 38         Request_Pit_Mode_In_Garage pracitice_decision_result_;
+ 39         Request_Session_State_Practice pracitice_result_;
+ 40 };
 ```
 * The request classes are how you say what state you want to start recording. All these requests use the "race state racing" which is not triggered until the first out-lap is finished.
 * Open requestpackagetelemetry.cpp
 ```
- 14 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live)
+ 14 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live, Process_Session * session)
  15         : post_lap_{process},
  16           live_{live},
- 17           race_racing_{&live_},
- 18           race_{nullptr, &race_racing_},
- 19           qualy_racing_{&live_},
- 20           qualy_{nullptr, &qualy_racing_},
- 21           practice_racing_{&post_lap_},
- 22           practice_{nullptr, &practice_racing_} {}
+ 17           session_{session},
+ 18           session_result_{session},
+ 19           race_racing_{&live_},
+ 20           race_{nullptr, &race_racing_},
+ 21           qualy_racing_{&live_},
+ 22           qualy_{nullptr, &qualy_racing_},
+ 23           practice_racing_{&post_lap_},
+ 24           practice_{nullptr, &practice_racing_},
+ 25           practice_capture_decision_{&session_},
+ 26           pracitice_decision_{nullptr,&practice_capture_decision_},
+ 27           pracitice_decision_result_{&session_result_},
+ 28           pracitice_result_{nullptr, &pracitice_decision_result_} {}
  ```
 * In the initialisation list I create the requests, by adding the record e.g. "live_" to the "qualy_racing_" and note "qualy_" has a nullptr as the first argument I'm saying "If in qualy and racing run live feed".
 ```
- 40                         race_.request(data);
- 41                         qualy_.request(data);
- 42                         practice_.request(data);
+ 46                         race_.request(data);
+ 47                         qualy_.request(data);
+ 48                         practice_.request(data);
+ 49                         pracitice_decision_.request(data);
+ 50                         pracitice_result_.request(data);
 ```
 * Here you can see each request being run. To record while always in qualy we need to not bother with checking the qualy racing state and move the recording to qualy e.g.
 ```
- 14 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live)
+ 14 Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * live, Process_Session * session)
  15         : post_lap_{process},
  16           live_{live},
- 17           race_racing_{&live_},
- 18           race_{nullptr, &race_racing_},
- 19           // qualy_racing_{&live_},  <--- remove
- 20           // qualy_{nullptr, &qualy_racing_},
- 21           qualy_{&live_},   <--- add the recording and remove the racing request
- 22           practice_racing_{&post_lap_},
- 23           practice_{nullptr, &practice_racing_} {}
+ 17           session_{session},
+ 18           session_result_{session},
+ 19           race_racing_{&live_},
+ 20           race_{nullptr, &race_racing_},
+ 21           //qualy_racing_{&live_},  <--- remove
+ 22           //qualy_{nullptr, &qualy_racing_}, <---- replace with below
+ 23           qualy_{&live_},   <--- add the recording and remove the racing request
+ 24           practice_racing_{&post_lap_},
+ 25           practice_{nullptr, &practice_racing_},
+ 26           practice_capture_decision_{&session_},
+ 27           pracitice_decision_{nullptr,&practice_capture_decision_},
+ 28           pracitice_decision_result_{&session_result_},
+ 29           pracitice_result_{nullptr, &pracitice_decision_result_} {}
 ```
 * Rebuild the application and restart the application and you will see the tyre temp in the first outlap.
 
@@ -525,9 +548,9 @@ int main() {
 ```
 * Set up your Library Path as in the previous tutes and run pcars. When I capture a lap I have the race line switched on and I do 1 lap on the outside, one on the inside and one on the race line.  Then I open this up in track_map.html and zoom into the track by changing the JavaScript and then record all the start, turn-in, apexes, exit and finish distances for each corner and some zoom to see the corners and the track and add this data to track_9.html. Finally do a lap using the capture_lap_data exe breaking on the turn-in, apexes and exit to fine tune track_9.html. It is a lot of work and needs to be improved hence this is why I only have 3 tracks.
 
-## <a name="T-Part4"></a>Part 4  Running Decision Tree
+## <a name="T-Part4"></a>Part 4  Roll Your Own Decision Tree
 
-This is still work in progress I'm not even sure the design is going to work, anyway I will just add a description.
+This is still work in progress so far so good working as expected added some more absolutes and decisions.
 
 The idea is that you think of some setup question you might have for example "Does the top gear hit the rev limiter" and build up the decision tree with this question. If I have this right there will be one decision tree answering multiple questions.
 
@@ -562,22 +585,31 @@ Creating the decision tree, wow I actually wrote some comments.
  75         Lap_Data lap_data_;
  76 };
  
-240 
 241 Process_Decision_Tree::Process_Decision_Tree()
 242 {
 243         // Decision > On_Road
-244         std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
-245         decisions_.push_back(on_road);
-246         // Decision > On_Road > Top_Gear
-247         std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
-248         decisions_.at(0)->if_true(top_gear);
-249         // Decision > On_Road > Top_Gear > MAX_RPM
-250         std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
-251         top_gear->if_true(max_rpm);
-252 
-253         // Results
-254         results_.push_back(max_rpm);
-255 }
-256 
+244         // Decision > Tyre_Temp
+245         std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();
+246         std::shared_ptr<Decision_MAX_Tyre_Temp> tyre_temp =  std::make_shared<Decision_MAX_Tyre_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Tyre Temp ",
+247           "FR MAX Tyre Temp ",
+248           "RL MAX Tyre Temp ",
+249           "RR MAX Tyre Temp "));
+250         decisions_.push_back(on_road);
+251         decisions_.push_back(tyre_temp);
+252         // Decision > On_Road T Top_Gear
+253         std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();
+254         decisions_.at(0)->if_true(top_gear);
+255         // Decision > On_Road T Top_Gear T MAX_RPM
+256         // Decision > On_Road T Top_Gear T RPM_GT_80
+257         std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
+258         std::shared_ptr<Decision_RPM_GT_80_Percent> rpm_gt_80 = std::make_shared<Decision_RPM_GT_80_Percent>(std::make_shared<Conclusion_Cout>("Top gear rpm greater than 80% "));
+259         top_gear->if_true(max_rpm);
+260         top_gear->if_true(rpm_gt_80);
+261 
+262         // Results
+263         results_.push_back(max_rpm);
+264         results_.push_back(rpm_gt_80);
+265         results_.push_back(tyre_temp);
+266 }
 ```
 
