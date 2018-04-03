@@ -22,6 +22,8 @@ Request_Package_Telemetry::Request_Package_Telemetry(Process * process, Live * l
 	  qualy_{nullptr, &qualy_racing_},
 	  practice_racing_{&post_lap_},
 	  practice_{nullptr, &practice_racing_},
+	  practice_racing_live_{&live_},
+	  practice_live_{nullptr, &practice_racing_live_},
 	  practice_capture_decision_{&session_},
 	  pracitice_decision_{nullptr,&practice_capture_decision_}, 
 	  pracitice_decision_result_{&session_result_},
@@ -46,6 +48,7 @@ bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 			race_.request(data);
 			qualy_.request(data);	
 			practice_.request(data);
+			//practice_live_.request(data);
 			pracitice_decision_.request(data);
 			pracitice_result_.request(data);
 

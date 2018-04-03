@@ -50,6 +50,7 @@ class Process_Session
 {
 public:
 	using Lap_Data = std::vector<std::shared_ptr<Data> >;
+	using Laps_Data = std::vector<Lap_Data>;
 
 	virtual ~Process_Session() {}
 
@@ -72,7 +73,7 @@ private:
 	Decisions decisions_;
 	Results results_;
 
-	Lap_Data lap_data_;
+	Laps_Data laps_data_;
 };
 
 
