@@ -240,18 +240,27 @@ void Process_Track::process(const Lap_Data lap_data) const
 
 Process_Decision_Tree::Process_Decision_Tree()
 {
+	// Decision > tyres2_on_road
 	// Decision > On_Road
 	// Decision > Tyre_Temp
+	std::shared_ptr<Decision> tyres2_on_road = std::make_shared<Absolute_2_Tyres_On_Road>();  
 	std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
 	std::shared_ptr<Decision_MAX_Tyre_Temp> tyre_temp =  std::make_shared<Decision_MAX_Tyre_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Tyre Temp ",
 	  "FR MAX Tyre Temp ",
 	  "RL MAX Tyre Temp ",
 	  "RR MAX Tyre Temp "));
+	decisions_.push_back(tyres2_on_road);
 	decisions_.push_back(on_road);
 	decisions_.push_back(tyre_temp);
+	// Decision > tyres2_on_road T full_throttle
 	// Decision > On_Road T Top_Gear
+	std::shared_ptr<Decision> full_throttle = std::make_shared<Absolute_Full_Throttle>();  
 	std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
-	decisions_.at(0)->if_true(top_gear);
+	tyres2_on_road->if_true(full_throttle);
+	on_road->if_true(top_gear);
+	// Decision > tyres2_on_road T full_throttle T percent_full_throttle
+	std::shared_ptr<Decision_Percent_Per_Lap> percent_full_throttle = std::make_shared<Decision_Percent_Per_Lap>(std::make_shared<Conclusion_Cout>("Percent full throttle per lap "));
+	full_throttle->if_true(percent_full_throttle);
 	// Decision > On_Road T Top_Gear T MAX_RPM
 	// Decision > On_Road T Top_Gear T RPM_GT_80
 	std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
@@ -260,29 +269,35 @@ Process_Decision_Tree::Process_Decision_Tree()
 	top_gear->if_true(rpm_gt_80);
 
 	// Results
+	results_.push_back(percent_full_throttle);
 	results_.push_back(max_rpm);
 	results_.push_back(rpm_gt_80);
 	results_.push_back(tyre_temp);
 }
 
 void Process_Decision_Tree::capture_session(const Lap_Data& lap_data) {
-	lap_data_ = lap_data;
+	laps_data_.push_back(lap_data);
 }
 
 void Process_Decision_Tree::process_session()
 {
-	if (lap_data_.size()) {
+	if (laps_data_.size()) {
 		cout << "Started Processing" << endl;
-		for (auto& d_it : decisions_) {
-			for (auto& it : lap_data_) {
-				d_it->evaluate(it);
+		unsigned int lap_number = 0;
+		for (auto& lap_it : laps_data_) {
+			++lap_number;
+			cout << "Evaluate Lap " << lap_number << endl;
+			for (auto& d_it : decisions_) {
+				for (auto& it : lap_it) {
+					d_it->evaluate(it, lap_it.size());
+				}
+			}
+			for (auto& it : results_) {
+				it->result();
 			}
 		}
-		for (auto& it : results_) {
-			it->result();
-		}
+		laps_data_.clear();
 		cout << "Finished Processing" << endl;
-		lap_data_.clear();
 	}
 }
 

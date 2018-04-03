@@ -27,10 +27,15 @@ private:
 
 	Request_Race_State_Racing race_racing_;
 	Request_Session_State_Race race_;
+
 	Request_Race_State_Racing qualy_racing_;
 	Request_Session_State_Qualify  qualy_;
+
 	Request_Race_State_Racing practice_racing_;
 	Request_Session_State_Practice practice_;
+
+	Request_Race_State_Racing practice_racing_live_;
+	Request_Session_State_Practice practice_live_;
 
 	Request_Race_State_Racing practice_capture_decision_;
 	Request_Session_State_Practice pracitice_decision_;
