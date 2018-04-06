@@ -16,78 +16,78 @@ void Absolute::if_false(Decision_Shared_Ptr decision)
 	false_.push_back(decision);
 }
 
-void Absolute_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size)
+void Absolute_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	if (static_cast<Terrain>(data->car_states()->terrain().at(0)) == Terrain::TERRAIN_ROAD && 
 	    static_cast<Terrain>(data->car_states()->terrain().at(1)) == Terrain::TERRAIN_ROAD && 
 	    static_cast<Terrain>(data->car_states()->terrain().at(2)) == Terrain::TERRAIN_ROAD && 
 	    static_cast<Terrain>(data->car_states()->terrain().at(3)) == Terrain::TERRAIN_ROAD) {
 		for(auto& it : true_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 	else {
 		for(auto& it : false_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 }
 
-void Absolute_2_Tyres_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size)
+void Absolute_2_Tyres_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	if ((static_cast<Terrain>(data->car_states()->terrain().at(0)) == Terrain::TERRAIN_ROAD && 
 	     static_cast<Terrain>(data->car_states()->terrain().at(2)) == Terrain::TERRAIN_ROAD) || 
 	    (static_cast<Terrain>(data->car_states()->terrain().at(1)) == Terrain::TERRAIN_ROAD && 
 	     static_cast<Terrain>(data->car_states()->terrain().at(3)) == Terrain::TERRAIN_ROAD)) {
 		for(auto& it : true_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 	else {
 		for(auto& it : false_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 }
 
-void Absolute_Top_Gear::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size)
+void Absolute_Top_Gear::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	if (data->car_states()->gears() == data->car_states()->gear()) {
 		for(auto& it : true_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 	else {
 		for(auto& it : false_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 }
 
-void Absolute_Steering_Straight::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size)
+void Absolute_Steering_Straight::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	if (data->car_states()->steering() == 0) {
 		for(auto& it : true_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 	else {
 		for(auto& it : false_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 }
 
-void Absolute_Full_Throttle::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size)
+void Absolute_Full_Throttle::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	if (data->car_states()->throttle() > 250) {
 		for(auto& it : true_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 	else {
 		for(auto& it : false_) {
-			it->evaluate(data, lap_data_size);
+			it->evaluate(data, lap_data_size, pos);
 		}
 	}
 }
@@ -140,7 +140,7 @@ void Decision_MAX_RPM::result()
 	result_ = false;
 }
 
-void Decision_MAX_RPM::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size)
+void Decision_MAX_RPM::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
 {
 	if (data->car_states()->rpm() == data->car_states()->max_rpm()) {
 		result_ = true;
@@ -162,7 +162,7 @@ void Decision_RPM_GT_80_Percent::result()
 	result_ = false;
 }
 
-void Decision_RPM_GT_80_Percent::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size)
+void Decision_RPM_GT_80_Percent::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
 {
 	if (data->car_states()->rpm() > (data->car_states()->max_rpm() * 0.80)) {
 		result_ = true;
@@ -184,10 +184,12 @@ void Decision_Percent_Per_Lap::result()
 	percent_ = 0;
 }
 
-void Decision_Percent_Per_Lap::evaluate(const Data_Shared_Ptr & , const Lap_Data_Size lap_data_size)
+void Decision_Percent_Per_Lap::evaluate(const Data_Shared_Ptr & , const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	++count_;
-	percent_ = (count_/static_cast<double>(lap_data_size)) * 100;
+	if (lap_data_size == pos) {
+		percent_ = (count_/static_cast<double>(lap_data_size)) * 100;
+	}
 }
 
 
@@ -214,7 +216,7 @@ void Decision_MAX_Tyre_Temp::result()
 	rr_temp_ = 0;
 }
 
-void Decision_MAX_Tyre_Temp::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size)
+void Decision_MAX_Tyre_Temp::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
 {
 	if (data->car_states()->tyre_temp().at(0) > fl_temp_) {
 		fl_temp_ = data->car_states()->tyre_temp().at(0);
