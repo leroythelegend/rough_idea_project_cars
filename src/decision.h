@@ -13,10 +13,11 @@ public:
 	using Decision_Shared_Ptr = std::shared_ptr<Decision>;
 	using Data_Shared_Ptr = std::shared_ptr<Data>;
 	using Lap_Data_Size = unsigned int;
+	using Lap_Pos = unsigned int;
 
 	virtual ~Decision() {}
 
-	virtual void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) = 0;
+	virtual void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) = 0;
 
 	virtual void if_true(Decision_Shared_Ptr) = 0;
 	virtual void if_false(Decision_Shared_Ptr) = 0;
@@ -41,35 +42,35 @@ class Absolute_On_Road : public Absolute {
 public:
 	virtual ~Absolute_On_Road() {}
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
 class Absolute_Top_Gear : public Absolute {
 public:
 	virtual ~Absolute_Top_Gear() {}
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
 class Absolute_2_Tyres_On_Road : public Absolute {
 public:
 	virtual ~Absolute_2_Tyres_On_Road() {}
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
 class Absolute_Steering_Straight : public Absolute {
 public:
 	virtual ~Absolute_Steering_Straight() {}
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
 class Absolute_Full_Throttle : public Absolute {
 public:
 	virtual ~Absolute_Full_Throttle() {}
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
 
@@ -125,7 +126,7 @@ public:
 
 	void result() override;
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 
 private:
 	bool result_;
@@ -144,7 +145,7 @@ public:
 
 	void result() override;
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 
 private:
 	bool result_;
@@ -165,7 +166,7 @@ public:
 
 	void result() override;
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 
 private:
 	Count count_;
@@ -186,7 +187,7 @@ public:
 
 	void result() override;
 
-	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size) override;
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 
 private:
 	Conclusion_Ptr conclusion_;

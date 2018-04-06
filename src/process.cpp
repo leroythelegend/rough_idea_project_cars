@@ -288,8 +288,9 @@ void Process_Decision_Tree::process_session()
 			++lap_number;
 			cout << "Evaluate Lap " << lap_number << endl;
 			for (auto& d_it : decisions_) {
+				unsigned int pos = 0;
 				for (auto& it : lap_it) {
-					d_it->evaluate(it, lap_it.size());
+					d_it->evaluate(it, lap_it.size(), ++pos);
 				}
 			}
 			for (auto& it : results_) {
