@@ -74,7 +74,9 @@ Record_Live_Data::Record_Live_Data(Live * live)
 
 void Record_Live_Data::record(std::shared_ptr<Data> data)
 {
-	live_->live(data);
+	if (live_) {
+		live_->live(data);
+	}
 }
 	using Vector_Lap_Data = std::vector<std::shared_ptr<Data> >;
 

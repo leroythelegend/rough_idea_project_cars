@@ -48,7 +48,7 @@ bool Request_Package_Telemetry::request(const PCars_Data & packet) {
 			race_.request(data);
 			qualy_.request(data);	
 			practice_.request(data);
-			//practice_live_.request(data);
+			practice_live_.request(data);
 			pracitice_decision_.request(data);
 			pracitice_result_.request(data);
 
