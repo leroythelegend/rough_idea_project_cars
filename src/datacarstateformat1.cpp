@@ -58,7 +58,7 @@ unsigned int Data_Car_State_Format_1::rpm() const {
 }
 
 unsigned int Data_Car_State_Format_1::max_rpm() const {
-	return telemetry_data_->rpm();
+	return telemetry_data_->max_rpm();
 }
 
 int Data_Car_State_Format_1::steering() const {
