@@ -147,13 +147,14 @@ void Decision_MAX_RPM::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Siz
 	}
 }
 
-Decision_RPM_GT_80_Percent::Decision_RPM_GT_80_Percent(Conclusion_Ptr conclusion)
+Decision_RPM_GT_Percent::Decision_RPM_GT_Percent(Conclusion_Ptr conclusion, const Percent percent)
 	: result_{false},
-	  conclusion_{conclusion}
+	  conclusion_{conclusion},
+	  percent_{percent}
 {
 }
 
-void Decision_RPM_GT_80_Percent::result()
+void Decision_RPM_GT_Percent::result()
 {
 	if (result_) {
 		conclusion_->conclude("TRUE");
@@ -162,9 +163,9 @@ void Decision_RPM_GT_80_Percent::result()
 	result_ = false;
 }
 
-void Decision_RPM_GT_80_Percent::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+void Decision_RPM_GT_Percent::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
 {
-	if (data->car_states()->rpm() > (data->car_states()->max_rpm() * 0.80)) {
+	if (data->car_states()->rpm() > (data->car_states()->max_rpm() * static_cast<double>((static_cast<double>(percent_)/100)))) {
 		result_ = true;
 	}
 }

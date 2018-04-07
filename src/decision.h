@@ -136,12 +136,13 @@ private:
 	void if_false(Decision_Shared_Ptr) override {};
 };
 
-class Decision_RPM_GT_80_Percent : public Decision, public Result {
+class Decision_RPM_GT_Percent : public Decision, public Result {
 public:
 	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Percent = unsigned int; 
 
-	Decision_RPM_GT_80_Percent(Conclusion_Ptr);
-	virtual ~Decision_RPM_GT_80_Percent() {}
+	Decision_RPM_GT_Percent(Conclusion_Ptr, const Percent);
+	virtual ~Decision_RPM_GT_Percent() {}
 
 	void result() override;
 
@@ -150,6 +151,7 @@ public:
 private:
 	bool result_;
 	Conclusion_Ptr conclusion_;
+	Percent percent_;
 
 	void if_true(Decision_Shared_Ptr) override {};
 	void if_false(Decision_Shared_Ptr) override {};

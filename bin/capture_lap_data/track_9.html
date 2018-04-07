@@ -338,14 +338,14 @@ function draw_tele_graph() {
 							}
 							draw_line_data(line_data, line_position, 'rgb(' + line_colours[t] + ',' + line_colours3[t] + ','+ line_colours2[t] +')');
 							break;
-						case 9:
+						case 9: // engine torque
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
 								var dist = telemetery[i].data[s].current_distance * 1;
 								if ((corner.start < dist) && (corner.finish > dist)) {
-									line_data.push((d[s][teles[k][0]] * 1) + 150); 
+									line_data.push((d[s][teles[k][0]] / 1000 ) * 300); 
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
 								}
 							}
