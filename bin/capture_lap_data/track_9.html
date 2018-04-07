@@ -397,7 +397,7 @@ function draw_tele_graph() {
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
 								var dist = telemetery[i].data[s].current_distance * 1;
 								if ((corner.start < dist) && (corner.finish > dist)) {
-									max_rpm = (teles[k- 1][1] * 1);
+									max_rpm = (d[s][teles[k - 1][0]] * 1);
 									line_data.push(((d[s][teles[k][0]] * 1) / max_rpm) * 280);
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
 								}

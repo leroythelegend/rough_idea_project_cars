@@ -178,6 +178,9 @@ void Decision_RPM_GT_Percent::result()
 	if (result_) {
 		conclusion_->conclude("TRUE");
 	}
+	else {
+		conclusion_->conclude("FALSE");
+	}
 
 	result_ = false;
 }
