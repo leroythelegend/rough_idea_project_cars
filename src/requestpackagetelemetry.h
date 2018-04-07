@@ -8,6 +8,7 @@
 #include "requestsessionstaterace.h"
 #include "requestracestateracing.h"
 #include "requestpitmodeingarage.h"
+#include "requestpitmodenone.h"
 
 namespace pcars {
 
@@ -25,16 +26,16 @@ private:
 	Record_Session session_;
 	Record_Session_Result session_result_;
 
-	Request_Race_State_Racing race_racing_;
+	Request_Pit_Mode_None race_not_in_pits_;
 	Request_Session_State_Race race_;
 
-	Request_Race_State_Racing qualy_racing_;
+	Request_Pit_Mode_None qualy_not_in_pits_;
 	Request_Session_State_Qualify  qualy_;
 
 	Request_Race_State_Racing practice_racing_;
 	Request_Session_State_Practice practice_;
 
-	Request_Race_State_Racing practice_racing_live_;
+	Request_Pit_Mode_None practice_not_in_pits_;
 	Request_Session_State_Practice practice_live_;
 
 	Request_Race_State_Racing practice_capture_decision_;

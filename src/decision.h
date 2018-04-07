@@ -45,6 +45,18 @@ public:
 	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
+class Absolute_Gear : public Absolute {
+public:
+	using Gear = unsigned int;
+
+	Absolute_Gear(const Gear);
+	virtual ~Absolute_Gear() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+private:
+	Gear gear_;
+};
+
 class Absolute_Top_Gear : public Absolute {
 public:
 	virtual ~Absolute_Top_Gear() {}

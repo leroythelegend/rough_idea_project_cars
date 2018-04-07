@@ -49,6 +49,25 @@ void Absolute_2_Tyres_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_
 		}
 	}
 }
+Absolute_Gear::Absolute_Gear(const Gear gear) 
+	: gear_{gear} {}
+
+void Absolute_Gear::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (gear_ <= data->car_states()->gears()) {
+		if (gear_ == data->car_states()->gear()) {
+			for(auto& it : true_) {
+				it->evaluate(data, lap_data_size, pos);
+			}
+		}
+		else {
+			for(auto& it : false_) {
+				it->evaluate(data, lap_data_size, pos);
+			}
+		}
+	}
+}
+
 
 void Absolute_Top_Gear::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
@@ -158,6 +177,9 @@ void Decision_RPM_GT_Percent::result()
 {
 	if (result_) {
 		conclusion_->conclude("TRUE");
+	}
+	else {
+		conclusion_->conclude("FALSE");
 	}
 
 	result_ = false;
