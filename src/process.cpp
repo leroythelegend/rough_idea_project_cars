@@ -262,16 +262,20 @@ Process_Decision_Tree::Process_Decision_Tree()
 	std::shared_ptr<Decision_Percent_Per_Lap> percent_full_throttle = std::make_shared<Decision_Percent_Per_Lap>(std::make_shared<Conclusion_Cout>("Percent full throttle per lap "));
 	full_throttle->if_true(percent_full_throttle);
 	// Decision > On_Road T Top_Gear T MAX_RPM
-	// Decision > On_Road T Top_Gear T RPM_GT_80
+	// Decision > On_Road T Top_Gear T RPM_GT_90
+	// Decision > On_Road T Top_Gear T RPM_GT_95
 	std::shared_ptr<Decision_MAX_RPM> max_rpm = std::make_shared<Decision_MAX_RPM>(std::make_shared<Conclusion_Cout>("Top gear hit max rpms "));
-	std::shared_ptr<Decision_RPM_GT_80_Percent> rpm_gt_80 = std::make_shared<Decision_RPM_GT_80_Percent>(std::make_shared<Conclusion_Cout>("Top gear rpm greater than 80% "));
+	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90 = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("Top gear rpm greater than 90% "), 90);
+	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_95 = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("Top gear rpm greater than 95% "), 95);
 	top_gear->if_true(max_rpm);
-	top_gear->if_true(rpm_gt_80);
+	top_gear->if_true(rpm_gt_90);
+	top_gear->if_true(rpm_gt_95);
 
 	// Results
 	results_.push_back(percent_full_throttle);
 	results_.push_back(max_rpm);
-	results_.push_back(rpm_gt_80);
+	results_.push_back(rpm_gt_90);
+	results_.push_back(rpm_gt_95);
 	results_.push_back(tyre_temp);
 }
 
