@@ -242,73 +242,94 @@ Process_Decision_Tree::Process_Decision_Tree()
 {
 	// Decision > tyres2_on_road
 	// Decision > On_Road
+	// Decision > Brake 
 	// Decision > Tyre_Temp
+	// Decision > Brake_Temp
 	// Decision > Lap_Time 
 	// Decision > Speed 
 	std::shared_ptr<Decision> tyres2_on_road = std::make_shared<Absolute_2_Tyres_On_Road>();  
 	std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
+	std::shared_ptr<Decision> brake = std::make_shared<Absolute_Brake_GT>(50);  
 	std::shared_ptr<Decision_MAX_Tyre_Temp> tyre_temp =  std::make_shared<Decision_MAX_Tyre_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Tyre Temp ",
 	  "FR MAX Tyre Temp ",
 	  "RL MAX Tyre Temp ",
 	  "RR MAX Tyre Temp "));
+	std::shared_ptr<Decision_MAX_Brake_Temp> brake_temp =  std::make_shared<Decision_MAX_Brake_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Brake Temp ",
+	  "FR MAX Brake Temp ",
+	  "RL MAX Brake Temp ",
+	  "RR MAX Brake Temp "));
 	std::shared_ptr<Decision_Lap_Time> lap_time =  std::make_shared<Decision_Lap_Time>(std::make_shared<Conclusion_Cout>("Time "));
 	std::shared_ptr<Decision_MAX_Speed> speed =  std::make_shared<Decision_MAX_Speed>(std::make_shared<Conclusion_Cout>("Top Speed "));
+
 	decisions_.push_back(tyres2_on_road);
 	decisions_.push_back(on_road);
+	decisions_.push_back(brake);
 	decisions_.push_back(tyre_temp);
+	decisions_.push_back(brake_temp);
 	decisions_.push_back(lap_time);
 	decisions_.push_back(speed);
+	// Decision > Brake T MAX_Tyre_layer_temp 
+	std::shared_ptr<Decision_MAX_Tyre_Layer_Temp> brake_layer_temp = std::make_shared<Decision_MAX_Tyre_Layer_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Braking Tyre Layer Temp ",
+	  "FR MAX Braking Tyre Layer Temp ",
+	  "RL MAX Braking Tyre Layer Temp ",
+	  "RR MAX Braking Tyre Layer Temp "));  
+	std::shared_ptr<Decision_MAX_Tyre_Slip_Speed> brake_slip_speed = std::make_shared<Decision_MAX_Tyre_Slip_Speed>(std::make_shared<Conclusion_Cout>("FL MAX Braking Tyre Slip Speed ",
+	  "FR MAX Braking Tyre Slip Speed ",
+	  "RL MAX Braking Tyre Slip Speed ",
+	  "RR MAX Braking Tyre Slip Speed "));  
+	brake->if_true(brake_layer_temp);
+	brake->if_true(brake_slip_speed);
 	// Decision > tyres2_on_road T full_throttle
 	std::shared_ptr<Decision> full_throttle = std::make_shared<Absolute_Full_Throttle>();  
 	tyres2_on_road->if_true(full_throttle);
-	// Decision > tyres2_on_road T gear_1st 
-	std::shared_ptr<Decision> gear_1st = std::make_shared<Absolute_Gear>(1);  
-	tyres2_on_road->if_true(gear_1st);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_1st
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_1st = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("1st gear rpm greater than 90% "), 90);
-	gear_1st->if_true(rpm_gt_90_1st);
-	// Decision > tyres2_on_road T gear_2st 
-	std::shared_ptr<Decision> gear_2nd = std::make_shared<Absolute_Gear>(2);  
-	tyres2_on_road->if_true(gear_2nd);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_2nd
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_2nd = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("2nd gear rpm greater than 90% "), 90);
-	gear_2nd->if_true(rpm_gt_90_2nd);
-	// Decision > tyres2_on_road T gear_3rd 
-	std::shared_ptr<Decision> gear_3rd = std::make_shared<Absolute_Gear>(3);  
-	tyres2_on_road->if_true(gear_3rd);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_3rd
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_3rd = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("3rd gear rpm greater than 90% "), 90);
-	gear_3rd->if_true(rpm_gt_90_3rd);
-	// Decision > tyres2_on_road T gear_4th 
-	std::shared_ptr<Decision> gear_4th = std::make_shared<Absolute_Gear>(4);  
-	tyres2_on_road->if_true(gear_4th);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_4th
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_4th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("4th gear rpm greater than 90% "), 90);
-	gear_4th->if_true(rpm_gt_90_4th);
-	// Decision > tyres2_on_road T gear_5th 
-	std::shared_ptr<Decision> gear_5th = std::make_shared<Absolute_Gear>(5);  
-	tyres2_on_road->if_true(gear_5th);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_5th
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_5th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("5th gear rpm greater than 90% "), 90);
-	gear_5th->if_true(rpm_gt_90_5th);
-	// Decision > tyres2_on_road T gear_6th 
-	std::shared_ptr<Decision> gear_6th = std::make_shared<Absolute_Gear>(6);  
-	tyres2_on_road->if_true(gear_6th);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_6th
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_6th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("6th gear rpm greater than 90% "), 90);
-	gear_6th->if_true(rpm_gt_90_6th);
-	// Decision > tyres2_on_road T gear_7th 
-	std::shared_ptr<Decision> gear_7th = std::make_shared<Absolute_Gear>(7);  
-	tyres2_on_road->if_true(gear_7th);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_7th
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_7th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("7th gear rpm greater than 90% "), 90);
-	gear_7th->if_true(rpm_gt_90_7th);
-	// Decision > tyres2_on_road T gear_8th 
-	std::shared_ptr<Decision> gear_8th = std::make_shared<Absolute_Gear>(8);  
-	tyres2_on_road->if_true(gear_8th);
-	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_8th
-	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_8th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("8th gear rpm greater than 90% "), 90);
-	gear_8th->if_true(rpm_gt_90_8th);
+//	// Decision > tyres2_on_road T gear_1st 
+//	std::shared_ptr<Decision> gear_1st = std::make_shared<Absolute_Gear>(1);  
+//	tyres2_on_road->if_true(gear_1st);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_1st
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_1st = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("1st gear rpm greater than 90% "), 90);
+//	gear_1st->if_true(rpm_gt_90_1st);
+//	// Decision > tyres2_on_road T gear_2st 
+//	std::shared_ptr<Decision> gear_2nd = std::make_shared<Absolute_Gear>(2);  
+//	tyres2_on_road->if_true(gear_2nd);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_2nd
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_2nd = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("2nd gear rpm greater than 90% "), 90);
+//	gear_2nd->if_true(rpm_gt_90_2nd);
+//	// Decision > tyres2_on_road T gear_3rd 
+//	std::shared_ptr<Decision> gear_3rd = std::make_shared<Absolute_Gear>(3);  
+//	tyres2_on_road->if_true(gear_3rd);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_3rd
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_3rd = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("3rd gear rpm greater than 90% "), 90);
+//	gear_3rd->if_true(rpm_gt_90_3rd);
+//	// Decision > tyres2_on_road T gear_4th 
+//	std::shared_ptr<Decision> gear_4th = std::make_shared<Absolute_Gear>(4);  
+//	tyres2_on_road->if_true(gear_4th);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_4th
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_4th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("4th gear rpm greater than 90% "), 90);
+//	gear_4th->if_true(rpm_gt_90_4th);
+//	// Decision > tyres2_on_road T gear_5th 
+//	std::shared_ptr<Decision> gear_5th = std::make_shared<Absolute_Gear>(5);  
+//	tyres2_on_road->if_true(gear_5th);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_5th
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_5th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("5th gear rpm greater than 90% "), 90);
+//	gear_5th->if_true(rpm_gt_90_5th);
+//	// Decision > tyres2_on_road T gear_6th 
+//	std::shared_ptr<Decision> gear_6th = std::make_shared<Absolute_Gear>(6);  
+//	tyres2_on_road->if_true(gear_6th);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_6th
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_6th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("6th gear rpm greater than 90% "), 90);
+//	gear_6th->if_true(rpm_gt_90_6th);
+//	// Decision > tyres2_on_road T gear_7th 
+//	std::shared_ptr<Decision> gear_7th = std::make_shared<Absolute_Gear>(7);  
+//	tyres2_on_road->if_true(gear_7th);
+//	// Decision > tyres2_on_road T gear_1st T rpm_gt_90_7th
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_7th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("7th gear rpm greater than 90% "), 90);
+//	gear_7th->if_true(rpm_gt_90_7th);
+//	// Decision > tyres2_on_road T gear_8th 
+//	std::shared_ptr<Decision> gear_8th = std::make_shared<Absolute_Gear>(8);  
+//	tyres2_on_road->if_true(gear_8th);
+//	// Decision > tyres2_on_road T gear_8st T rpm_gt_90_8th
+//	std::shared_ptr<Decision_RPM_GT_Percent> rpm_gt_90_8th = std::make_shared<Decision_RPM_GT_Percent>(std::make_shared<Conclusion_Cout>("8th gear rpm greater than 90% "), 90);
+//	gear_8th->if_true(rpm_gt_90_8th);
 	// Decision > On_Road T Top_Gear
 	std::shared_ptr<Decision> top_gear = std::make_shared<Absolute_Top_Gear>();  
 	on_road->if_true(top_gear);
@@ -332,15 +353,18 @@ Process_Decision_Tree::Process_Decision_Tree()
 	results_.push_back(max_rpm);
 	results_.push_back(rpm_gt_90);
 	results_.push_back(rpm_gt_95);
-	results_.push_back(rpm_gt_90_1st);
-	results_.push_back(rpm_gt_90_2nd);
-	results_.push_back(rpm_gt_90_3rd);
-	results_.push_back(rpm_gt_90_4th);
-	results_.push_back(rpm_gt_90_5th);
-	results_.push_back(rpm_gt_90_6th);
-	results_.push_back(rpm_gt_90_7th);
-	results_.push_back(rpm_gt_90_8th);
+//	results_.push_back(rpm_gt_90_1st);
+//	results_.push_back(rpm_gt_90_2nd);
+//	results_.push_back(rpm_gt_90_3rd);
+//	results_.push_back(rpm_gt_90_4th);
+//	results_.push_back(rpm_gt_90_5th);
+//	results_.push_back(rpm_gt_90_6th);
+//	results_.push_back(rpm_gt_90_7th);
+//	results_.push_back(rpm_gt_90_8th);
 	results_.push_back(tyre_temp);
+	results_.push_back(brake_temp);
+	results_.push_back(brake_layer_temp);
+	results_.push_back(brake_slip_speed);
 
 }
 
