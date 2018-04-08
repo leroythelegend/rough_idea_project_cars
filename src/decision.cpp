@@ -215,8 +215,6 @@ void Decision_Percent_Per_Lap::evaluate(const Data_Shared_Ptr & , const Lap_Data
 	}
 }
 
-
-
 Decision_MAX_Tyre_Temp::Decision_MAX_Tyre_Temp(Conclusion_Ptr conclusion)
 	: conclusion_{conclusion},
 	  fl_temp_{0},
@@ -254,6 +252,48 @@ void Decision_MAX_Tyre_Temp::evaluate(const Data_Shared_Ptr & data, const Lap_Da
 		rr_temp_ = data->car_states()->tyre_temp().at(3);
 	}
 }
+
+Decision_MAX_Speed::Decision_MAX_Speed(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  speed_{0}
+{
+}
+
+void Decision_MAX_Speed::result()
+{
+	conclusion_->conclude(to_string(speed_));
+
+	speed_ = 0;
+}
+
+void Decision_MAX_Speed::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->speed() > speed_) {
+		speed_ = data->car_states()->speed();
+	}
+}
+
+
+Decision_Lap_Time::Decision_Lap_Time(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  lap_time_{0}
+{
+}
+
+void Decision_Lap_Time::result()
+{
+	conclusion_->conclude(to_string(lap_time_));
+
+	lap_time_ = 0;
+}
+
+void Decision_Lap_Time::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (pos == lap_data_size) {
+		lap_time_ = data->times()->current_time();
+	}
+}
+
 
 
 }

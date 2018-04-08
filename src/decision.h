@@ -215,6 +215,49 @@ private:
 	void if_false(Decision_Shared_Ptr) override {};
 };
 
+class Decision_MAX_Speed : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Speed = float;
+
+	Decision_MAX_Speed(Conclusion_Ptr);
+	virtual ~Decision_MAX_Speed() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	Speed speed_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+
+class Decision_Lap_Time : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Lap_Time = float;
+
+	Decision_Lap_Time(Conclusion_Ptr);
+	virtual ~Decision_Lap_Time() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+	Lap_Time lap_time_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+
 
 }
 
