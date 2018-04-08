@@ -33,6 +33,24 @@ void Absolute_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Siz
 	}
 }
 
+Absolute_Brake_GT::Absolute_Brake_GT(const Brake brake)
+	: brake_{brake} {}
+
+void Absolute_Brake_GT::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (data->car_states()->brake() > brake_) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+
 void Absolute_2_Tyres_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
 	if ((static_cast<Terrain>(data->car_states()->terrain().at(0)) == Terrain::TERRAIN_ROAD && 
@@ -215,8 +233,6 @@ void Decision_Percent_Per_Lap::evaluate(const Data_Shared_Ptr & , const Lap_Data
 	}
 }
 
-
-
 Decision_MAX_Tyre_Temp::Decision_MAX_Tyre_Temp(Conclusion_Ptr conclusion)
 	: conclusion_{conclusion},
 	  fl_temp_{0},
@@ -228,10 +244,10 @@ Decision_MAX_Tyre_Temp::Decision_MAX_Tyre_Temp(Conclusion_Ptr conclusion)
 
 void Decision_MAX_Tyre_Temp::result()
 {
-	conclusion_->conclude(to_string(fl_temp_));
-	conclusion_->conclude(to_string(fr_temp_));
-	conclusion_->conclude(to_string(rl_temp_));
-	conclusion_->conclude(to_string(rr_temp_));
+	conclusion_->conclude(to_string(fl_temp_),
+	                      to_string(fr_temp_),
+	                      to_string(rl_temp_),
+	                      to_string(rr_temp_));
 
 	fl_temp_ = 0;
 	fr_temp_ = 0;
@@ -254,6 +270,166 @@ void Decision_MAX_Tyre_Temp::evaluate(const Data_Shared_Ptr & data, const Lap_Da
 		rr_temp_ = data->car_states()->tyre_temp().at(3);
 	}
 }
+
+Decision_MAX_Tyre_Slip_Speed::Decision_MAX_Tyre_Slip_Speed(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  fl_slip_speed_{0},
+	  fr_slip_speed_{0},
+	  rl_slip_speed_{0},
+	  rr_slip_speed_{0}
+{
+}
+
+void Decision_MAX_Tyre_Slip_Speed::result()
+{
+	conclusion_->conclude(to_string(fl_slip_speed_),
+	                      to_string(fr_slip_speed_),
+	                      to_string(rl_slip_speed_),
+	                      to_string(rr_slip_speed_));
+
+	fl_slip_speed_ = 0;
+	fr_slip_speed_ = 0;
+	rl_slip_speed_ = 0;
+	rr_slip_speed_ = 0;
+}
+
+void Decision_MAX_Tyre_Slip_Speed::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->tyre_slip_speed().at(0) > fl_slip_speed_) {
+		fl_slip_speed_ = data->car_states()->tyre_slip_speed().at(0);
+	}
+	if (data->car_states()->tyre_slip_speed().at(1) > fr_slip_speed_) {
+		fr_slip_speed_ = data->car_states()->tyre_slip_speed().at(1);
+	}
+	if (data->car_states()->tyre_slip_speed().at(2) > rl_slip_speed_) {
+		rl_slip_speed_ = data->car_states()->tyre_slip_speed().at(2);
+	}
+	if (data->car_states()->tyre_slip_speed().at(3) > rr_slip_speed_) {
+		rr_slip_speed_ = data->car_states()->tyre_slip_speed().at(3);
+	}
+}
+
+
+Decision_MAX_Brake_Temp::Decision_MAX_Brake_Temp(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  fl_temp_{0},
+	  fr_temp_{0},
+	  rl_temp_{0},
+	  rr_temp_{0}
+{
+}
+
+void Decision_MAX_Brake_Temp::result()
+{
+	conclusion_->conclude(to_string(fl_temp_),
+	                      to_string(fr_temp_),
+	                      to_string(rl_temp_),
+	                      to_string(rr_temp_));
+
+	fl_temp_ = 0;
+	fr_temp_ = 0;
+	rl_temp_ = 0;
+	rr_temp_ = 0;
+}
+
+void Decision_MAX_Brake_Temp::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->brake_temp_celsius().at(0) > fl_temp_) {
+		fl_temp_ = data->car_states()->brake_temp_celsius().at(0);
+	}
+	if (data->car_states()->brake_temp_celsius().at(1) > fr_temp_) {
+		fr_temp_ = data->car_states()->brake_temp_celsius().at(1);
+	}
+	if (data->car_states()->brake_temp_celsius().at(2) > rl_temp_) {
+		rl_temp_ = data->car_states()->brake_temp_celsius().at(2);
+	}
+	if (data->car_states()->brake_temp_celsius().at(3) > rr_temp_) {
+		rr_temp_ = data->car_states()->brake_temp_celsius().at(3);
+	}
+}
+
+Decision_MAX_Tyre_Layer_Temp::Decision_MAX_Tyre_Layer_Temp(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  fl_temp_{0},
+	  fr_temp_{0},
+	  rl_temp_{0},
+	  rr_temp_{0}
+{
+}
+
+void Decision_MAX_Tyre_Layer_Temp::result()
+{
+	conclusion_->conclude(to_string(fl_temp_),
+	                      to_string(fr_temp_),
+	                      to_string(rl_temp_),
+	                      to_string(rr_temp_));
+
+	fl_temp_ = 0;
+	fr_temp_ = 0;
+	rl_temp_ = 0;
+	rr_temp_ = 0;
+}
+
+void Decision_MAX_Tyre_Layer_Temp::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->tyre_layer_temp().at(0) > fl_temp_) {
+		fl_temp_ = data->car_states()->tyre_layer_temp().at(0);
+	}
+	if (data->car_states()->tyre_layer_temp().at(1) > fr_temp_) {
+		fr_temp_ = data->car_states()->tyre_layer_temp().at(1);
+	}
+	if (data->car_states()->tyre_layer_temp().at(2) > rl_temp_) {
+		rl_temp_ = data->car_states()->tyre_layer_temp().at(2);
+	}
+	if (data->car_states()->tyre_layer_temp().at(3) > rr_temp_) {
+		rr_temp_ = data->car_states()->tyre_layer_temp().at(3);
+	}
+}
+
+
+
+
+Decision_MAX_Speed::Decision_MAX_Speed(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  speed_{0}
+{
+}
+
+void Decision_MAX_Speed::result()
+{
+	conclusion_->conclude(to_string(speed_));
+
+	speed_ = 0;
+}
+
+void Decision_MAX_Speed::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->speed() > speed_) {
+		speed_ = data->car_states()->speed();
+	}
+}
+
+
+Decision_Lap_Time::Decision_Lap_Time(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  lap_time_{0}
+{
+}
+
+void Decision_Lap_Time::result()
+{
+	conclusion_->conclude(to_string(lap_time_));
+
+	lap_time_ = 0;
+}
+
+void Decision_Lap_Time::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (pos == lap_data_size) {
+		lap_time_ = data->times()->current_time();
+	}
+}
+
 
 
 }
