@@ -33,6 +33,65 @@ void Absolute_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Siz
 	}
 }
 
+void Absolute_On_Road_FL::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (static_cast<Terrain>(data->car_states()->terrain().at(0)) == Terrain::TERRAIN_ROAD) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+void Absolute_On_Road_FR::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (static_cast<Terrain>(data->car_states()->terrain().at(1)) == Terrain::TERRAIN_ROAD) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+
+void Absolute_On_Road_RL::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (static_cast<Terrain>(data->car_states()->terrain().at(2)) == Terrain::TERRAIN_ROAD) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+
+void Absolute_On_Road_RR::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (static_cast<Terrain>(data->car_states()->terrain().at(3)) == Terrain::TERRAIN_ROAD) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+
 Absolute_Brake_GT::Absolute_Brake_GT(const Brake brake)
 	: brake_{brake} {}
 
@@ -409,6 +468,85 @@ void Decision_MAX_Speed::evaluate(const Data_Shared_Ptr & data, const Lap_Data_S
 	}
 }
 
+Decision_MIN_FL_Ride_Height::Decision_MIN_FL_Ride_Height(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  height_{1000}
+{
+}
+
+void Decision_MIN_FL_Ride_Height::result()
+{
+	conclusion_->conclude(to_string(height_));
+
+	height_ = 1000;
+}
+
+void Decision_MIN_FL_Ride_Height::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->ride_height().at(0) < height_) {
+		height_ = data->car_states()->ride_height().at(0);
+	}
+}
+
+Decision_MIN_FR_Ride_Height::Decision_MIN_FR_Ride_Height(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  height_{1000}
+{
+}
+
+void Decision_MIN_FR_Ride_Height::result()
+{
+	conclusion_->conclude(to_string(height_));
+
+	height_ = 1000;
+}
+
+void Decision_MIN_FR_Ride_Height::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->ride_height().at(1) < height_) {
+		height_ = data->car_states()->ride_height().at(1);
+	}
+}
+
+Decision_MIN_RL_Ride_Height::Decision_MIN_RL_Ride_Height(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  height_{1000}
+{
+}
+
+void Decision_MIN_RL_Ride_Height::result()
+{
+	conclusion_->conclude(to_string(height_));
+
+	height_ = 1000;
+}
+
+void Decision_MIN_RL_Ride_Height::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->ride_height().at(2) < height_) {
+		height_ = data->car_states()->ride_height().at(2);
+	}
+}
+
+Decision_MIN_RR_Ride_Height::Decision_MIN_RR_Ride_Height(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  height_{1000}
+{
+}
+
+void Decision_MIN_RR_Ride_Height::result()
+{
+	conclusion_->conclude(to_string(height_));
+
+	height_ = 1000;
+}
+
+void Decision_MIN_RR_Ride_Height::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->ride_height().at(3) < height_) {
+		height_ = data->car_states()->ride_height().at(3);
+	}
+}
 
 Decision_Lap_Time::Decision_Lap_Time(Conclusion_Ptr conclusion)
 	: conclusion_{conclusion},
