@@ -45,6 +45,37 @@ public:
 	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
+class Absolute_On_Road_FL : public Absolute {
+public:
+	virtual ~Absolute_On_Road_FL() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+};
+
+class Absolute_On_Road_FR : public Absolute {
+public:
+	virtual ~Absolute_On_Road_FR() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+};
+
+
+class Absolute_On_Road_RL : public Absolute {
+public:
+	virtual ~Absolute_On_Road_RL() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+};
+
+
+class Absolute_On_Road_RR : public Absolute {
+public:
+	virtual ~Absolute_On_Road_RR() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+};
+
+
 class Absolute_Brake_GT : public Absolute {
 public:
 	using Brake = unsigned int;
@@ -325,6 +356,89 @@ private:
 	void if_false(Decision_Shared_Ptr) override {};
 };
 
+class Decision_MIN_FL_Ride_Height : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Height = float;
+
+	Decision_MIN_FL_Ride_Height(Conclusion_Ptr);
+	virtual ~Decision_MIN_FL_Ride_Height() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	Height height_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+class Decision_MIN_FR_Ride_Height : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Height = float;
+
+	Decision_MIN_FR_Ride_Height(Conclusion_Ptr);
+	virtual ~Decision_MIN_FR_Ride_Height() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	Height height_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+class Decision_MIN_RL_Ride_Height : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Height = float;
+
+	Decision_MIN_RL_Ride_Height(Conclusion_Ptr);
+	virtual ~Decision_MIN_RL_Ride_Height() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	Height height_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+class Decision_MIN_RR_Ride_Height : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Height = float;
+
+	Decision_MIN_RR_Ride_Height(Conclusion_Ptr);
+	virtual ~Decision_MIN_RR_Ride_Height() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	Height height_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
 
 class Decision_Lap_Time : public Decision, public Result {
 public:

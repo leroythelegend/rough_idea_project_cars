@@ -242,6 +242,10 @@ Process_Decision_Tree::Process_Decision_Tree()
 {
 	// Decision > tyres2_on_road
 	// Decision > On_Road
+	// Decision > On_Road_FL
+	// Decision > On_Road_FR
+	// Decision > On_Road_RL
+	// Decision > On_Road_RR
 	// Decision > Brake 
 	// Decision > Tyre_Temp
 	// Decision > Brake_Temp
@@ -249,6 +253,12 @@ Process_Decision_Tree::Process_Decision_Tree()
 	// Decision > Speed 
 	std::shared_ptr<Decision> tyres2_on_road = std::make_shared<Absolute_2_Tyres_On_Road>();  
 	std::shared_ptr<Decision> on_road = std::make_shared<Absolute_On_Road>();  
+
+	std::shared_ptr<Decision> on_road_fl = std::make_shared<Absolute_On_Road_FL>();  
+	std::shared_ptr<Decision> on_road_fr = std::make_shared<Absolute_On_Road_FR>();  
+	std::shared_ptr<Decision> on_road_rl = std::make_shared<Absolute_On_Road_RL>();  
+	std::shared_ptr<Decision> on_road_rr = std::make_shared<Absolute_On_Road_RR>();  
+
 	std::shared_ptr<Decision> brake = std::make_shared<Absolute_Brake_GT>(50);  
 	std::shared_ptr<Decision_MAX_Tyre_Temp> tyre_temp =  std::make_shared<Decision_MAX_Tyre_Temp>(std::make_shared<Conclusion_Cout>("FL MAX Tyre Temp ",
 	  "FR MAX Tyre Temp ",
@@ -263,6 +273,10 @@ Process_Decision_Tree::Process_Decision_Tree()
 
 	decisions_.push_back(tyres2_on_road);
 	decisions_.push_back(on_road);
+	decisions_.push_back(on_road_fl);
+	decisions_.push_back(on_road_fr);
+	decisions_.push_back(on_road_rl);
+	decisions_.push_back(on_road_rr);
 	decisions_.push_back(brake);
 	decisions_.push_back(tyre_temp);
 	decisions_.push_back(brake_temp);
@@ -345,6 +359,18 @@ Process_Decision_Tree::Process_Decision_Tree()
 	top_gear->if_true(max_rpm);
 	top_gear->if_true(rpm_gt_90);
 	top_gear->if_true(rpm_gt_95);
+	// Decision > On_Road_FL T Ride_Height_FL
+	std::shared_ptr<Decision_MIN_FL_Ride_Height> ride_height_fl = std::make_shared<Decision_MIN_FL_Ride_Height>(std::make_shared<Conclusion_Cout>("Ride height fl MIN "));
+	on_road_fl->if_true(ride_height_fl);
+	// Decision > On_Road_FR T Ride_Height_FR
+	std::shared_ptr<Decision_MIN_FR_Ride_Height> ride_height_fr = std::make_shared<Decision_MIN_FR_Ride_Height>(std::make_shared<Conclusion_Cout>("Ride height fr MIN "));
+	on_road_fr->if_true(ride_height_fr);
+	// Decision > On_Road_RL T Ride_Height_RL
+	std::shared_ptr<Decision_MIN_RL_Ride_Height> ride_height_rl = std::make_shared<Decision_MIN_RL_Ride_Height>(std::make_shared<Conclusion_Cout>("Ride height rl MIN "));
+	on_road_rl->if_true(ride_height_rl);
+	// Decision > On_Road_RR T Ride_Height_RR
+	std::shared_ptr<Decision_MIN_RR_Ride_Height> ride_height_rr = std::make_shared<Decision_MIN_RR_Ride_Height>(std::make_shared<Conclusion_Cout>("Ride height rr MIN "));
+	on_road_rr->if_true(ride_height_rr);
 
 	// Results
 	results_.push_back(lap_time);
@@ -365,6 +391,10 @@ Process_Decision_Tree::Process_Decision_Tree()
 	results_.push_back(brake_temp);
 	results_.push_back(brake_layer_temp);
 	results_.push_back(brake_slip_speed);
+	results_.push_back(ride_height_fl);
+	results_.push_back(ride_height_fr);
+	results_.push_back(ride_height_rl);
+	results_.push_back(ride_height_rr);
 
 }
 
