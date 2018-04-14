@@ -530,7 +530,7 @@ function draw_tele_graph() {
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
-								console.log((d[s][teles[k][0]] * 1));
+								// console.log((d[s][teles[k][0]] * 1));
 								var dist = telemetery[i].data[s].current_distance * 1;
 								if ((corner.start < dist) && (corner.finish > dist)) {
 									line_data.push((((d[s][teles[k][0]] * 1) / 800) * 300)); 
@@ -542,12 +542,12 @@ function draw_tele_graph() {
 						case 51:
 						case 52:
 						case 53:
-						case 54:
+						case 54: // tyre height above ground
 							var d = Object(telemetery[i].data);
 							var line_data = []; 
 							var line_position = []; 
 							for (var s = 0; s < telemetery[i].data.length; ++s) {
-								//console.log((d[s][teles[k][0]] * 1));
+								console.log((d[s][teles[k][0]] * 1));
 								var dist = telemetery[i].data[s].current_distance * 1;
 								if ((corner.start < dist) && (corner.finish > dist)) {
 									line_data.push(((((d[s][teles[k][0]] * 1))) * 100000) + 100); 

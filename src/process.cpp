@@ -119,6 +119,8 @@ void Process_Lap_V2::process(const Lap_Data lap_data) const
 	std::ofstream file("lap_data.json", ios::app);
 	file << "lap" << ++lap_number << " = \'{\"data\":[";
 
+	std::cout << "Recording Started " << lap_number << std::endl;
+
 	for (auto iter = lap_data.begin(); iter != lap_data.end(); iter++) {
 		file << "{ " << "\"track_distance\":" << "\"" << (*iter)->track_states()->track_length() << "\","
 		      	     << "\"current_distance\":" << "\"" << (*iter)->participants_info()->current_lap_distance(0) << "\","
