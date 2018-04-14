@@ -4,6 +4,8 @@
 
 A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Telemetry.
 
+Version 2 is working now.
+
 ## Contents
 
 * [Version 1 Tutorial](#T-Tutorial)
