@@ -37,13 +37,13 @@ private:
 	Request_Pit_Mode_None qualy_not_in_pits_;
 	Request_Session_State_Qualify  qualy_;
 
-	Request_Race_State_Racing practice_racing_;
+	Request_Pit_Mode_None practice_racing_;
 	Request_Session_State_Practice practice_;
 
 	Request_Pit_Mode_None practice_not_in_pits_;
 	Request_Session_State_Practice practice_live_;
 
-	Request_Race_State_Racing practice_capture_decision_;
+	Request_Pit_Mode_None practice_capture_decision_;
 	Request_Session_State_Practice pracitice_decision_;
 
 	Request_Pit_Mode_In_Garage pracitice_decision_result_;
