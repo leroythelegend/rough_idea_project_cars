@@ -31,7 +31,7 @@ I only have three track files at the moment oulton park island, dubai club and z
 
 Project Cars 2 or 1 running on your console and UDP in options set to "UDP Protocol Version" "Project CARS 1". 
 
-Note for the "UDP Frequency" my PlayStation says higher the value more packets but I think this is back to front I found lower the value more the packets. Anyway experiment with these values to get the right setting for you.
+Experiment with the packet frequency for the right values for your system.
 
 #### Tute
 
@@ -74,11 +74,13 @@ Your_User$ ./pcars
 * May get a pop up asking to allow this app to read from a network port, press Allow. (Don't leave the app running because this leaves the port open, to close the exe press "control-c" e.g. control button and the letter c at the same time).
 * Do some practice laps.
 
-Out lap in practice is not recorded so you must do at least one full lap. Recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. You will see output "Recording Finished #" when that lap has been added to the json file. Open track_9.html in safari or Firefox (browser).
+Out lap in practice is not recorded so you must do at least one full lap. The recording happens while you are driving but actually writing to the json file does not happen until the lap is finished. 
+
+You will see output "Recording Finished #" when that lap has been added to the json file. 
+
+Open track_9.html in safari or Firefox (browser).
 
 ![alt text](https://github.com/leroythelegend/rough_idea_project_cars/blob/master/img/track_9.png)
-
-* Create your own display using JavaScript to read the lap_data.json file.
 
 ## <a name="T-Part2"></a>Part 2 Roll Your Own Live feed
 
@@ -182,11 +184,11 @@ public:
 Your_User$ vi ./live.h
 ```
 * Ok so what I'm going to demonstrate is how you can capture the tyre temp and tread temp during qualifying, so you know when your tyres are up to temp for that one hot lap.
-* Add the include vector with rest of the live.h includes. 
+* Add the include vector with the rest of the live.h includes. 
 ```
 4 #include <vector>
 ```
-* We want to derive a new Live_Temp class from the Live type, add this code to live.h between the pcars namespace.
+* We want to derive a new Live_Temp class from the Live type base class, add this code to live.h between the pcars namespace.
 ```
  class Live_Temp : public Live {
  public:
@@ -395,6 +397,8 @@ Your_User$ vi ./live.h
 ```
 Your_User$ make clean
 rm -f ../obj/*.o *~ ../lib/librough_idea_pcars.dylib
+```
+```
 Your_User$ make
 g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetry.cpp  -o ../obj/capturetelemetry.o
 g++ -m64 -std=c++14 -Wall -Wextra  -I./ -c capturetelemetryv2.cpp  -o ../obj/capturetelemetryv2.o
@@ -441,7 +445,7 @@ Have done tute 1 and 2.
 ### Tute
 
 * I'm going to assume that you have done tute 1 and 2 and skip a lot of the basics and just get straight into adding a new process because this is very similar to extending the live class.
-* Open process.h from the src directory in your editor. We want to use the Process_Track instead of the Process_Lap. 
+* Open process.h from the src directory in your editor. We want to use the Process_Track class instead of the Process_Lap. 
 ```
 class Process_Track : public Process {
 public:
@@ -451,22 +455,23 @@ public:
         void process(const Lap_Data lap_data) const override;
 };
 ```
-* We don't need to build this as I have already implemented this class, you can take a look at the implementation in process.cpp. I use this class to create my track data for track_9.html. (I need to do a lot of work to improve my JavaScript, I have no excuse I'm bad at sequential programming and cannot get my head around using JavaScript).
+* We don't need to build this as I have already implemented this class, you can take a look at the implementation in process.cpp. I use this class to create my track data for track_9.html. (I need to do a lot of work to improve my JavaScript).
 * Go to the bin/capture_track_data and open the main.cpp, I have replaced Process_Lap with Process_Track.
 ```
-#include "capturetelemetry.h"
-#include "process.h"
-#include "live.h"
-
-int main() {
-
-        pcars::Process_Track track; <------ HERE
-        pcars::Live_Feed live;
-        pcars::Capture_Telemetry telemetry(&track, &live);
-
-        return 0;
-
-}
+  1 #include "capturetelemetry.h"
+  2 #include "process.h"
+  3 #include "live.h"
+  4 
+  5 int main() {
+  6 
+  7         pcars::Process_Decision_Tree decision_tree;
+  8         pcars::Process_Track track;  <-------------- HERE
+  9         pcars::Live_Feed live;
+ 10         pcars::Capture_Telemetry telemetry(&track, &live, &decision_tree);
+ 11 
+ 12         return 0;
+ 13 
+ 14 }
 ```
 * Set up your Library Path as in the previous tutes and run pcars. When I capture a lap I have the race line switched on and I do 1 lap on the outside, one on the inside and one on the race line.  Then I open this up in track_map.html and zoom into the track by changing the JavaScript and then record all the start, turn-in, apexes, exit and finish distances for each corner and some zoom to see the corners and the track and add this data to track_9.html. Finally do a lap using the capture_lap_data exe breaking on the turn-in, apexes and exit to fine tune track_9.html. It is a lot of work and needs to be improved hence this is why I only have 3 tracks.
 
