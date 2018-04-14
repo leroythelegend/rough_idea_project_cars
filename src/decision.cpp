@@ -354,17 +354,19 @@ void Decision_MAX_Tyre_Slip_Speed::result()
 
 void Decision_MAX_Tyre_Slip_Speed::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
 {
-	if (data->car_states()->tyre_slip_speed().at(0) > fl_slip_speed_) {
-		fl_slip_speed_ = data->car_states()->tyre_slip_speed().at(0);
-	}
-	if (data->car_states()->tyre_slip_speed().at(1) > fr_slip_speed_) {
-		fr_slip_speed_ = data->car_states()->tyre_slip_speed().at(1);
-	}
-	if (data->car_states()->tyre_slip_speed().at(2) > rl_slip_speed_) {
-		rl_slip_speed_ = data->car_states()->tyre_slip_speed().at(2);
-	}
-	if (data->car_states()->tyre_slip_speed().at(3) > rr_slip_speed_) {
-		rr_slip_speed_ = data->car_states()->tyre_slip_speed().at(3);
+	if (data->car_states()->tyre_slip_speed().size()) {
+		if (data->car_states()->tyre_slip_speed().at(0) > fl_slip_speed_) {
+			fl_slip_speed_ = data->car_states()->tyre_slip_speed().at(0);
+		}
+		if (data->car_states()->tyre_slip_speed().at(1) > fr_slip_speed_) {
+			fr_slip_speed_ = data->car_states()->tyre_slip_speed().at(1);
+		}
+		if (data->car_states()->tyre_slip_speed().at(2) > rl_slip_speed_) {
+			rl_slip_speed_ = data->car_states()->tyre_slip_speed().at(2);
+		}
+		if (data->car_states()->tyre_slip_speed().at(3) > rr_slip_speed_) {
+			rr_slip_speed_ = data->car_states()->tyre_slip_speed().at(3);
+		}
 	}
 }
 

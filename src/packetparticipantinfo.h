@@ -10,6 +10,7 @@
 #include "decoderf32.h"
 #include "decoderu8.h"
 #include "decoder3bit3bit.h"
+#include "decoder4bit4bit.h"
 #include "decoderboolu8.h"
 #include "decoderboolu16.h"
 #include "decoder4bit4bit.h"
@@ -52,7 +53,7 @@ private:
 	Decoder_Bool_U8 race_position_;
 	Decoder_4bit_4bit sector_;
 	Decoder_3bit_3bit highest_flag_;
-	Decoder_3bit_3bit pit_mode_schedule_;
+	Decoder_4bit_4bit pit_mode_schedule_;
 	Decoder_Bool_U16 car_index_;
 	Decoder_Bool_U8 race_state_;
 	Decoder_U8 current_lap_;

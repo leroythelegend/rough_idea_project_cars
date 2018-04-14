@@ -54,11 +54,11 @@ unsigned int Packet_Participant_Info::flag_reason() const {
 	return highest_flag_.ls3bits();
 }
 unsigned int Packet_Participant_Info::pit_mode() const {
-	return pit_mode_schedule_.ms3bits();
+	return pit_mode_schedule_.ls4bits();
 }
 
 unsigned int Packet_Participant_Info::pit_mode_schedule() const {
-	return pit_mode_schedule_.ls3bits();
+	return pit_mode_schedule_.ms4bits();
 }
 
 unsigned int Packet_Participant_Info::car_index() const {
