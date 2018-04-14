@@ -4,19 +4,17 @@
 
 A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Telemetry.
 
-Version 2 is working now.
-
 ## Contents
 
-* [Version 1 Tutorial](#T-Tutorial)
+* [Version 1 and 2 Tutorial](#T-Tutorial)
 
 ## <a name="T-Tutorial"></a>Tutorial
 
 ### <a name="T-Tutorial"></a> Version 1 UDP Format
 
 * [Part 1](#T-Part1)  Running Demo Executable
-* [Part 2](#T-Part2)  Roll Your Own Live Feed (WIP)
-* [Part 3](#T-Part3)  Roll Your Post Lap Process (WIP)
+* [Part 2](#T-Part2)  Roll Your Own Live Feed
+* [Part 3](#T-Part3)  Roll Your Post Lap Process
 * [Part 3](#T-Part4)  Roll Your Decision Tree (WIP)
 
 ## <a name="T-Part1"></a>Part 1  Running Demo Executable
@@ -29,9 +27,9 @@ I only have three track files at the moment oulton park island, dubai club and z
 
 ### Prerequisites
 
-Project Cars 2 or 1 running on your console and UDP in options set to "UDP Protocol Version" "Project CARS 1". 
+Project Cars 2 or 1 running on your console and UDP in options set to "UDP Protocol Version" "Project CARS 1" or "Project CARS 2". 
 
-Experiment with the packet frequency for the right values for your system.
+Experiment with the packet frequency for the right value for your system.
 
 #### Tute
 
@@ -47,7 +45,7 @@ Your_User$ cp -r ~/Downloads/rough_idea_project_cars-master ~/your_working_dir/
 ```
 Your_User$ cd ~/your_working_dir/rough_idea_project_cars-master/bin
 ```
-* Change Directory to capture_lap_data
+* Change Directory to capture_lap_data for version 1 or capture_lap_data_v2 for version 2.
 ```
 Your_User$ cd ./capture_lap_data
 ```
@@ -108,7 +106,7 @@ Your_User$ cp -r ~/Downloads/rough_idea_project_cars-master ~/your_working_dir/
 ```
 Your_User$ cd ~/your_working_dir/rough_idea_project_cars-master/src
 ```
-* Open dataformat1.h in an editor.
+* Open dataformat1.h for version 1 or dataformat2.h for version 2 in an editor. Note the interface for both versions is the same however if the telemetry is not supported it's implementation returns 0.
 ```
 Your_User$ vi ./dataformat1.h
 ```
@@ -167,7 +165,7 @@ public:
         Vector_Float tyre_y() const override;
 ...
 ```
-* Open the implementation file datacarstateformat1.cpp. NOTE there are some hard coded values these are only for the Format 2 Packets. You can see in this snippet that the tyre_temp_left is a Format 2 only data where tyre_internal_air_temp is for Format 1.
+* Open the implementation file datacarstateformat1.cpp or atacarstateformat2.cpp. NOTE again there are some hard coded values, these are for unsupported telemetry across the Format Packets. You can see in this snippet that the tyre_temp_left is a Format 2 only data where tyre_internal_air_temp is for Format 1.
 ```
  
  Vector_UInt Data_Car_State_Format_1::tyre_internal_air_temp() const {
@@ -456,7 +454,7 @@ public:
 };
 ```
 * We don't need to build this as I have already implemented this class, you can take a look at the implementation in process.cpp. I use this class to create my track data for track_9.html. (I need to do a lot of work to improve my JavaScript).
-* Go to the bin/capture_track_data and open the main.cpp, I have replaced Process_Lap with Process_Track.
+* Go to the bin/capture_track_data or bin/capture_track_data_v2 and open the main.cpp, I have replaced Process_Lap with Process_Track.
 ```
   1 #include "capturetelemetry.h"
   2 #include "process.h"
