@@ -89,6 +89,27 @@ private:
 	Brake brake_;
 };
 
+class Absolute_Throttle_GT : public Absolute {
+public:
+	using Throttle = unsigned int;
+
+	Absolute_Throttle_GT(const Throttle = 0);
+	virtual ~Absolute_Throttle_GT() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Throttle throttle_;
+};
+
+class Absolute_Coast : public Absolute {
+public:
+	virtual ~Absolute_Coast() {}
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+};
+
+
 class Absolute_Gear : public Absolute {
 public:
 	using Gear = unsigned int;
@@ -168,6 +189,9 @@ public:
 	virtual void conclude(const Result_OutCome&) const = 0;
 	virtual void conclude(const Result_OutCome&, 
 	                      const Result_OutCome&,
+			      const Result_OutCome&) const = 0;
+	virtual void conclude(const Result_OutCome&, 
+	                      const Result_OutCome&,
 			      const Result_OutCome&,
 			      const Result_OutCome&) const = 0;
 };
@@ -179,11 +203,17 @@ public:
 	Conclusion_Cout(const Outcome&);
 	Conclusion_Cout(const Outcome&,
                         const Outcome&,
+		        const Outcome&);
+	Conclusion_Cout(const Outcome&,
+                        const Outcome&,
 		        const Outcome&,
 		        const Outcome&);
 	virtual ~Conclusion_Cout() {}
 
 	void conclude(const Result_OutCome&) const override;
+	void conclude(const Result_OutCome&, 
+                      const Result_OutCome&,
+		      const Result_OutCome&) const override;
 	void conclude(const Result_OutCome&, 
                       const Result_OutCome&,
 		      const Result_OutCome&,
@@ -485,6 +515,29 @@ public:
 private:
 	Conclusion_Ptr conclusion_;
 	Lap_Time lap_time_;
+
+	void if_true(Decision_Shared_Ptr) override {};
+	void if_false(Decision_Shared_Ptr) override {};
+};
+
+class Decision_MAX_Tyre_Temps_FL : public Decision, public Result {
+public:
+	using Conclusion_Ptr = std::shared_ptr<Conclusion>;
+	using Temp = unsigned int;
+
+	Decision_MAX_Tyre_Temps_FL(Conclusion_Ptr);
+	virtual ~Decision_MAX_Tyre_Temps_FL() {}
+
+	void result() override;
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Conclusion_Ptr conclusion_;
+
+	Temp fl_left_temp_;
+	Temp fl_centre_temp_;
+	Temp fl_right_temp_;
 
 	void if_true(Decision_Shared_Ptr) override {};
 	void if_false(Decision_Shared_Ptr) override {};

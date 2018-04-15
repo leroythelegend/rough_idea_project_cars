@@ -109,6 +109,39 @@ void Absolute_Brake_GT::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Si
 	}
 }
 
+Absolute_Throttle_GT::Absolute_Throttle_GT(const Throttle throttle)
+	: throttle_{throttle} {}
+
+void Absolute_Throttle_GT::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (data->car_states()->throttle() > throttle_) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+void Absolute_Coast::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if (data->car_states()->throttle() == 0 &&
+	    data->car_states()->brake() == 0) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+
 
 void Absolute_2_Tyres_On_Road::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
@@ -194,9 +227,9 @@ Absolute_Turn_Left_Between::Absolute_Turn_Left_Between(const Percent_GT& percent
 
 void Absolute_Turn_Left_Between::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
-	if ((data->car_states()->steering() > 0)           &&
-	    (data->car_states()->steering() > percent_gt_) &&
-	    (data->car_states()->steering() < percent_lt_)) {
+	if ((data->car_states()->steering() < 0)           &&
+	    ((data->car_states()->steering() * -1) > percent_gt_) &&
+	    ((data->car_states()->steering() * -1) <= percent_lt_)) {
 		for(auto& it : true_) {
 			it->evaluate(data, lap_data_size, pos);
 		}
@@ -214,9 +247,9 @@ Absolute_Turn_Right_Between::Absolute_Turn_Right_Between(const Percent_GT& perce
 
 void Absolute_Turn_Right_Between::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
 {
-	if ((data->car_states()->steering() < 0)           &&
-	    ((data->car_states()->steering() * -1) > percent_gt_) &&
-	    ((data->car_states()->steering() * -1) < percent_lt_)) {
+	if ((data->car_states()->steering() > 0)           &&
+	    (data->car_states()->steering() > percent_gt_) &&
+	    (data->car_states()->steering() < percent_lt_)) {
 		for(auto& it : true_) {
 			it->evaluate(data, lap_data_size, pos);
 		}
@@ -236,6 +269,15 @@ Conclusion_Cout::Conclusion_Cout(const Outcome & outcome)
 
 Conclusion_Cout::Conclusion_Cout(const Outcome & outcome1,
 				 const Outcome & outcome2,
+				 const Outcome & outcome3)
+	: outcome1_{outcome1},
+	  outcome2_{outcome2},
+	  outcome3_{outcome3}
+{
+}
+
+Conclusion_Cout::Conclusion_Cout(const Outcome & outcome1,
+				 const Outcome & outcome2,
 				 const Outcome & outcome3,
 				 const Outcome & outcome4)
 	: outcome1_{outcome1},
@@ -249,6 +291,16 @@ void Conclusion_Cout::conclude(const Result_OutCome & result) const
 {
 	cout << outcome1_ << result << endl;
 }
+
+void Conclusion_Cout::conclude(const Result_OutCome & result1,
+			       const Result_OutCome & result2,
+			       const Result_OutCome & result3) const
+{
+	cout << outcome1_ << result1 << endl;
+	cout << outcome2_ << result2 << endl;
+	cout << outcome3_ << result3 << endl;
+}
+
 
 void Conclusion_Cout::conclude(const Result_OutCome & result1,
 			       const Result_OutCome & result2,
@@ -609,7 +661,38 @@ void Decision_Lap_Time::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Si
 		lap_time_ = data->times()->current_time();
 	}
 }
+Decision_MAX_Tyre_Temps_FL::Decision_MAX_Tyre_Temps_FL(Conclusion_Ptr conclusion)
+	: conclusion_{conclusion},
+	  fl_left_temp_{0},
+	  fl_centre_temp_{0},
+	  fl_right_temp_{0}
+{
+}
+void Decision_MAX_Tyre_Temps_FL::result()
+{
+	conclusion_->conclude(to_string(fl_left_temp_),
+	                      to_string(fl_centre_temp_),
+			      to_string(fl_right_temp_));
 
+	fl_left_temp_ = 0;
+	fl_centre_temp_ = 0;
+	fl_right_temp_ = 0;
+}
+
+void Decision_MAX_Tyre_Temps_FL::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size, const Lap_Pos)
+{
+	if (data->car_states()->tyre_temp_left().size()) {
+		if (data->car_states()->tyre_temp_left().at(0) > fl_left_temp_) {
+			fl_left_temp_ = data->car_states()->tyre_temp_left().at(0);
+		}
+		if (data->car_states()->tyre_temp_center().at(0) > fl_centre_temp_) {
+			fl_centre_temp_ = data->car_states()->tyre_temp_center().at(0);
+		}
+		if (data->car_states()->tyre_temp_right().at(0) > fl_right_temp_) {
+			fl_right_temp_ = data->car_states()->tyre_temp_right().at(0);
+		}
+	}
+}
 
 
 }
