@@ -188,6 +188,46 @@ void Absolute_Full_Throttle::evaluate(const Data_Shared_Ptr & data, const Lap_Da
 	}
 }
 
+Absolute_Turn_Left_Between::Absolute_Turn_Left_Between(const Percent_GT& percent_gt, const Percent_LT& percent_lt)
+	: percent_gt_{(percent_gt/100) * 255},
+	  percent_lt_{(percent_lt/100) * 255} {}
+
+void Absolute_Turn_Left_Between::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if ((data->car_states()->steering() > 0)           &&
+	    (data->car_states()->steering() > percent_gt_) &&
+	    (data->car_states()->steering() < percent_lt_)) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
+Absolute_Turn_Right_Between::Absolute_Turn_Right_Between(const Percent_GT& percent_gt, const Percent_LT& percent_lt)
+	: percent_gt_{(percent_gt/100) * 255},
+	  percent_lt_{(percent_lt/100) * 255} {}
+
+void Absolute_Turn_Right_Between::evaluate(const Data_Shared_Ptr & data, const Lap_Data_Size lap_data_size, const Lap_Pos pos)
+{
+	if ((data->car_states()->steering() < 0)           &&
+	    ((data->car_states()->steering() * -1) > percent_gt_) &&
+	    ((data->car_states()->steering() * -1) < percent_lt_)) {
+		for(auto& it : true_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+	else {
+		for(auto& it : false_) {
+			it->evaluate(data, lap_data_size, pos);
+		}
+	}
+}
+
 
 Conclusion_Cout::Conclusion_Cout(const Outcome & outcome)
 	: outcome1_{outcome}

@@ -129,6 +129,36 @@ public:
 	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
 };
 
+class Absolute_Turn_Left_Between : public Absolute {
+public:
+	using Percent_GT = int;
+	using Percent_LT = int;
+
+	Absolute_Turn_Left_Between(const Percent_GT&, const Percent_LT&);
+	virtual ~Absolute_Turn_Left_Between() {} 
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Percent_GT percent_gt_;
+	Percent_LT percent_lt_;
+};
+
+class Absolute_Turn_Right_Between : public Absolute {
+public:
+	using Percent_GT = int;
+	using Percent_LT = int;
+
+	Absolute_Turn_Right_Between(const Percent_GT&, const Percent_LT&);
+	virtual ~Absolute_Turn_Right_Between() {} 
+
+	void evaluate(const Data_Shared_Ptr &, const Lap_Data_Size, const Lap_Pos) override;
+
+private:
+	Percent_GT percent_gt_;
+	Percent_LT percent_lt_;
+};
+
 
 class Conclusion {
 public:
