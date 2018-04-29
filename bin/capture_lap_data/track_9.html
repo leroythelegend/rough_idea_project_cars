@@ -72,8 +72,8 @@ function load_json() {
 			corners.push(new Corner(1410,1496,[1525, 1570, 1605],1620,1635, 1.1, -400, -350));
 			corners.push(new Corner(1635,1645,[1735],1800,1825, 1.1, -500, -250));
 			corners.push(new Corner(1825,1845,[1900],2000,2090, 1.1, -650, -180));
-			corners.push(new Corner(2090,2203,[2280],2355,2510, 1.1, -750, -30));
-			track = new Track(0.3, 150, 90);
+			corners.push(new Corner(2090,2203,[2280],2305,2510, 1.1, -750, -30));
+			track = new Track(0.3, 150, 90);// 1st param zoom, 2st param higher the value move right 3rd param higher the value move higher
 			break;
 		case "4146":
 			raceline = JSON.parse(zolder_track_raceline);
@@ -88,9 +88,23 @@ function load_json() {
 			corners.push(new Corner(1945,1963,[2010],2060,2150, 0.6, 590, 400));
 			corners.push(new Corner(2350,2410,[2491, 2633, 2722],2803,2900, 0.6, 500, 95));
 			corners.push(new Corner(2900,3152,[3202],3280,3380, 1.1, 350, -125));
-			track = new Track(0.2, 360, 215); // 1st param higher the value move right 2nd param higher the value move higher
+			track = new Track(0.2, 370, 225); // 1st param zoom, 2st param higher the value move right 3rd param higher the value move higher
 			break;
-
+		case "3567":
+			track_name = "Sportsland SUGO";
+			raceline = JSON.parse(sportsland_sugo);
+			corners.push(new Corner(0, 214, [282, 334, 384], 455, 480, 1, 40, 9)); // 6th zoom, 7th param higher the value move right 8th param higher the value move higher
+			corners.push(new Corner(480, 515, [562], 611, 655, 1.2, 60, 110));
+			corners.push(new Corner(655,683,[754],810,815, 1.5, 90, 260));
+			corners.push(new Corner(815,831,[872, 909],975,1050, 1.6, -120, 240));
+			corners.push(new Corner(1050,1097,[1159],1222,1230, 1.8, -450, 100));
+			corners.push(new Corner(1230,1245,[1310],1385,1600, 1.6, -350, 260));
+			corners.push(new Corner(1700,2010,[2068],2150,2200, 1.4, 320, 430));
+       			corners.push(new Corner(2200,2256,[2301],2348,2370, 1.5, 520, 230));
+			corners.push(new Corner(2370,2391,[2458],2525,2580, 1.6, 660, 90));
+			corners.push(new Corner(2580,2657,[2888],3140,3380, 1.0, 660, 9));
+			track = new Track(0.4, 320, 150); // 1st param zoom, 2st param higher the value move right 3rd param higher the value move higher
+			break;
 		default:
 			alert("no track data");
 	}
@@ -777,6 +791,7 @@ function main() {
 <script type="text/javascript" src="zolder_raceline_track.json"></script>
 <script type="text/javascript" src="DubaiAeroDromeClub_raceline_track.json"></script>
 <script type="text/javascript" src="oulton_park_island.json"></script>
+<script type="text/javascript" src="sportsland_sugo.json"></script>
 
 </head>
 <body onload='main()'>
