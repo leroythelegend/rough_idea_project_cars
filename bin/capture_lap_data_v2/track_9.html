@@ -63,7 +63,7 @@ function load_json() {
 
 	// create specific track data
 	switch (telemetery[0].data[1].track_name) {
-		case "2525":
+		case "Dubai_Autodrome_Club":
 			track_name = "Dubai Aero Drome Club";
 			raceline = JSON.parse(dubaiclub_track_raceline);
 			corners.push(new Corner(480, 680, [775], 975, 1060, 1.1, 100, -60));
