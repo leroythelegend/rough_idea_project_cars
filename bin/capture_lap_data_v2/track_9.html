@@ -75,8 +75,20 @@ function load_json() {
 			corners.push(new Corner(2090,2203,[2280],2355,2510, 1.1, -750, -30));
 			track = new Track(0.3, 150, 90);
 			break;
-		case "4146":
-			raceline = JSON.parse(zolder_track_raceline);
+		case "Zolder_GP":
+			track_name = "Zolder";
+            raceline = JSON.parse(zolder_track_raceline);
+			corners.push(new Corner(0, 236, [325], 420, 430, 1, -250, -100)); // 1st param higher the value move right 2nd param higher the value move higher
+            corners.push(new Corner(430, 560, [656, 728, 863], 998, 1020, 0.8, -380, -200));
+			corners.push(new Corner(1020,1095,[1202],1312,1500, 0.8, -310, -10));
+			corners.push(new Corner(1500,1797,[1839, 1864],1928,2000, 0.8, -0, 100));
+			corners.push(new Corner(2000,2120,[2210],2295,2350, 0.8, 300, 250));
+        	corners.push(new Corner(2352,2376,[2416, 2449, 2510],2583,2600, 1, 430, 480));
+			corners.push(new Corner(2600,2600,[2672],2761, 2800, 1, 580, 480));
+            corners.push(new Corner(2800,2700,[2910],2960, 3020, 1, 690, 300));
+            corners.push(new Corner(3020,3119,[3163],3216, 3500, 1, 690, 140));
+            corners.push(new Corner(3500,3740,[3766,3810],3892, 4140, 1, 225, -10));
+			track = new Track(0.25, 285, 140); // 1st param zoom, 2st param higher the value move right 3rd param higher the value move higher
 			break;
 		case "Oulton_Park_Island":
 			track_name = "Oulton Park Island";
@@ -100,7 +112,7 @@ function load_json() {
 			corners.push(new Corner(1050,1097,[1159],1222,1230, 1.8, -450, 100));
 			corners.push(new Corner(1230,1245,[1310],1385,1600, 1.6, -350, 260));
 			corners.push(new Corner(1700,2010,[2068],2150,2200, 1.4, 320, 430));
-       			corners.push(new Corner(2200,2256,[2301],2348,2370, 1.5, 520, 230));
+       		corners.push(new Corner(2200,2256,[2301],2348,2370, 1.5, 520, 230));
 			corners.push(new Corner(2370,2391,[2458],2525,2580, 1.6, 660, 90));
 			corners.push(new Corner(2580,2657,[2888],3140,3380, 1.0, 660, 9));
 			track = new Track(0.4, 320, 150); // 1st param zoom, 2st param higher the value move right 3rd param higher the value move higher
