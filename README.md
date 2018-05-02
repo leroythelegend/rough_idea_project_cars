@@ -23,7 +23,7 @@ The demo application writes the post lap telemetry to a json file during practic
 
 JavaScript developers can write their own web app to display the json file.
 
-I only have three track files at the moment oulton park island, dubai club and zolder.
+I only have four track files at the moment oulton park island, dubai club, zolder and sporstland SUGO.
 
 ### Prerequisites
 
