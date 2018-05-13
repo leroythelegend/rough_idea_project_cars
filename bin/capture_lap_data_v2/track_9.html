@@ -156,27 +156,32 @@ function draw_corner_buttons() {
 function draw_lap_buttons() {
 	for ( i = 0; i < telemetery.length; i++) { 
 
-		var sector1;
-		var sector2;
-		var sector3;
+		var sector1 = 0;
+		var sector2 = 0;
+		var sector3 = 0;
+        
+		var cumlative_sector2 = 0;
+		var cumlative_sector3 = 0;
 		
 		for (var k = 0; k < telemetery[i].data.length; k++) {
 			switch(telemetery[i].data[k].sector * 1) {
-			case 1:
+			case 0:
 				sector1 = telemetery[i].data[k].current_time;
 				break;
-			case 2: 
-				sector2 = telemetery[i].data[k].current_time;
+			case 1: 
+				cumlative_sector2 = telemetery[i].data[k].current_time;
 				break;
-			case 3: 
-				sector3 = telemetery[i].data[k].current_time;
+			case 2: 
+				cumlative_sector3 = telemetery[i].data[k].current_time;
 				break;
 			default:
 			}
-
-			telemetery[i].data[k].current_time
 		}
 
+        sector1 = (sector1 * 1).toFixed(3);
+        sector2 = (cumlative_sector2 - sector1).toFixed(3);;
+        sector3 = (cumlative_sector3 - cumlative_sector2).toFixed(3);
+        
 		lap_buttons.push(document.createElement("INPUT"));
 		lap_buttons[i].setAttribute("type", "checkbox");
 		lap_buttons[i].name = "laps";
