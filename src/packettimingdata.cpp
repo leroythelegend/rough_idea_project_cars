@@ -13,6 +13,7 @@ Packet_Timing_Data::Packet_Timing_Data() {
 	add(&split_time_);
 	add(&partcipants_);
 	add(&local_participant_index_);
+	add(&tick_count_);
 }
 
 Packet_Base Packet_Timing_Data::packet_base() const {
@@ -50,6 +51,11 @@ Packet_32_Participant_Info::Vector_Participant_Info Packet_Timing_Data::partcipa
 unsigned int Packet_Timing_Data::local_participant_index() const {
 	return 0; 
 }
+
+unsigned int Packet_Timing_Data::tick_count() const {
+	return tick_count_.u32(); 
+}
+
 
 }
 

@@ -30,6 +30,7 @@ public:
 	float split_time() const;
 	Packet_32_Participant_Info::Vector_Participant_Info partcipants() const;
 	unsigned int local_participant_index() const;
+	unsigned int tick_count() const;
 
 private:
 
@@ -42,6 +43,7 @@ private:
 	Decoder_F32 split_time_;
 	Packet_32_Participant_Info partcipants_;
 	Decoder_U16 local_participant_index_;
+	Decoder_U32 tick_count_;
 };
 
 }

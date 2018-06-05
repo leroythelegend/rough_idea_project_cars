@@ -18,6 +18,7 @@ public:
 	float fastest_sector1_time() const override;
 	float fastest_sector2_time() const override;
 	float fastest_sector3_time() const override;
+	unsigned int tick_count() const override;
 
 private:
 	Packet packet_;

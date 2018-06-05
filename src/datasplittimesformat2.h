@@ -16,6 +16,7 @@ public:
 	float split_time_ahead() const override;
 	float split_time_behind() const override;
 	float split_time() const override;
+	unsigned int tick_count() const override;
 
 public:
 	Packet packet_;

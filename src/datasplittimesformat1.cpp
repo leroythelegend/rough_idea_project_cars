@@ -25,6 +25,12 @@ float Data_Split_Times_Format_1::split_time() const {
 	return telemetry_data_->split_time();
 }
 
+unsigned int Data_Split_Times_Format_1::tick_count() const {
+	// not in v1
+	return 0;
+}
+
+
 
 
 

@@ -16,6 +16,7 @@ public:
 	virtual float fastest_sector1_time() const = 0;
 	virtual float fastest_sector2_time() const = 0;
 	virtual float fastest_sector3_time() const = 0;
+	virtual unsigned int tick_count() const = 0;
 };
 
 }

@@ -65,6 +65,7 @@ public:
 	float turbo_boost_pressure() const override;
 	unsigned int brake_bias() const override;
 	Vector_Float full_position() const override;
+	unsigned int tick_count() const override;
 
 private:
 	std::shared_ptr<Decoder_Telemetry_Data> telemetry_data_;

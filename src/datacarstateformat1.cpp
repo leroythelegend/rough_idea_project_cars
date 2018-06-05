@@ -223,7 +223,10 @@ Vector_Float Data_Car_State_Format_1::full_position() const {
 	return vf;
 }
 
-
+unsigned int Data_Car_State_Format_1::tick_count() const {
+	// not supported in v1
+	return 0;
+}
 
 };
 
