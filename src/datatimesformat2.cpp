@@ -33,5 +33,10 @@ float Data_Times_Format_2::fastest_sector3_time() const {
 	return packet_.time_stats_data().stats().at(packet_.timing_data().local_participant_index()).fastest_sector3_time();
 }
 
+unsigned int Data_Times_Format_2::tick_count() const {
+	return packet_.timing_data().tick_count();
+}
+
+
 }
 

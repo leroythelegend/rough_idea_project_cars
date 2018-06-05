@@ -71,6 +71,7 @@ Packet_Telemetry_Data::Packet_Telemetry_Data() {
 	add(&turbo_boost_pressure_);
 	add(&full_position_);
 	add(&brake_bias_);
+	add(&tick_count_);
 }
 
 Packet_Base Packet_Telemetry_Data::packet_base() const {
@@ -347,4 +348,9 @@ Vector_Float Packet_Telemetry_Data::full_position() const {
 unsigned int Packet_Telemetry_Data::brake_bias() const {
 	return brake_bias_.u8();
 }
+
+unsigned int Packet_Telemetry_Data::tick_count() const {
+	return tick_count_.u32();
+}
+
 }

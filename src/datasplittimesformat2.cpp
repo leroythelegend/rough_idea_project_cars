@@ -25,6 +25,11 @@ float Data_Split_Times_Format_2::split_time() const {
 	return packet_.timing_data().split_time();
 }
 
+unsigned int Data_Split_Times_Format_2::tick_count() const {
+	return packet_.timing_data().tick_count();
+}
+
+
 
 
 

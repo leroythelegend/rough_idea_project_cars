@@ -98,6 +98,7 @@ public:
 	float turbo_boost_pressure() const;
 	Vector_Float full_position() const;
 	unsigned int brake_bias() const;
+	unsigned int tick_count() const;
 
 private:
 	Packet_Base packet_base_;
@@ -168,6 +169,7 @@ private:
 	Decoder_F32 turbo_boost_pressure_;
 	Decoder_3Times_Float full_position_;
 	Decoder_U8 brake_bias_;
+	Decoder_U32 tick_count_;
 
 };
 

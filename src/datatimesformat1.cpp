@@ -33,5 +33,11 @@ float Data_Times_Format_1::fastest_sector3_time() const {
 	return telemetry_data_->fastest_sector3_time();
 }
 
+unsigned int Data_Times_Format_1::tick_count() const {
+	// not in v1
+	return 0;
+}
+
+
 }
 

@@ -220,7 +220,9 @@ Vector_Float Data_Car_State_Format_2::full_position() const {
 	return packet_.telemetry_data().full_position(); 
 }
 
-
+unsigned int Data_Car_State_Format_2::tick_count() const {
+	return packet_.telemetry_data().tick_count();
+}
 
 };
 

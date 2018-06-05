@@ -62,6 +62,7 @@ public:
 	virtual	float turbo_boost_pressure() const = 0;
 	virtual	unsigned int brake_bias() const = 0;
 	virtual	Vector_Float full_position() const = 0;
+	virtual unsigned int tick_count() const = 0;
 };
 
 }
