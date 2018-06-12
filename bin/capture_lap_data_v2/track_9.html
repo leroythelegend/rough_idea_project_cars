@@ -47,10 +47,10 @@ function Track(zoom, across, up) {
 	this.up = up;
 }
 
-function load_json() {
+function load_json(num) {
 	// load lap data from json
 	var name_lap = "lap";
-	for (var i = 1; i < 1000; ++i) {
+	for (var i = num; i < 1000; ++i) {
 		try {
 			var name = name_lap.concat(i.toString());
 			var lap = JSON.parse(eval(name));
@@ -120,7 +120,7 @@ function load_json() {
 		case "Sakitto_Sprint":
 			track_name = "Sakitto Sprint";
 			raceline = JSON.parse(sakitto_sprint);
-			corners.push(new Corner(0, 280, [400, 500], 600, 660, .8, -120, 860)); // 6th zoom, 7th param higher the value move right 8th param higher the value move higher
+			corners.push(new Corner(0, 280, [400, 500], 600, 660, .75, -120, 860)); // 6th zoom, 7th param higher the value move right 8th param higher the value move higher
 			corners.push(new Corner(660, 800, [900], 950, 960, 1.0, -120, 950));
 			corners.push(new Corner(960, 961, [1000], 1049, 1050, 1.5, -330, 1080));
 			corners.push(new Corner(1050, 1080, [1230], 1305, 1325, 1.3, -180, 750));
@@ -132,8 +132,10 @@ function load_json() {
 			corners.push(new Corner(2580, 2620,[2700 ,2820, 2900, 2960],3180,3520, .4, 100, 250));
 			track = new Track(0.20, 260, 240); // 1st param zoom, 2st param higher the value move right 3rd param higher the value move higher
 			break;
-
-
+        case "_":
+            telemetery = [];
+            load_json(2);
+            break;
 		default:
 			alert("no track data");
 	}
@@ -590,7 +592,7 @@ function draw_tele_graph() {
 								// console.log((d[s][teles[k][0]] * 1));
 								var dist = telemetery[i].data[s].current_distance * 1;
 								if ((corner.start < dist) && (corner.finish > dist)) {
-									line_data.push((((d[s][teles[k][0]] * 1)))); 
+									line_data.push((((d[s][teles[k][0]] * 1) * 5 ) - 250)); 
 									line_position.push((dist - corner.start) * (1265/(corner.finish - corner.start)));
 								}
 							}
@@ -860,7 +862,7 @@ function draw_track_raceline() {
 }
 
 function main() {
-	load_json();
+	load_json(1);
 	opening_phase();
 }
 
