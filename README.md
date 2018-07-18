@@ -475,6 +475,8 @@ public:
 
 ## <a name="T-Part4"></a>Part 4  Roll Your Own Decision Tree
 
+THIS IS WORK IN PROGRESS, WHEN USING V2 CAN CAUSE THE APP TO HANG. I HAVE SWITCHED MY FOCUS AT THE MO AND MAY GET BACK TO THIS.
+
 This is still work in progress so far so good working as expected added some more absolutes and decisions.
 
 The idea is that you think of some setup question you might have for example "Does the top gear hit the rev limiter" and build up the decision tree with this question. If I have this right there will be one decision tree answering multiple questions.
