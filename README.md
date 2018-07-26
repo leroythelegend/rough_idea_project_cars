@@ -4,6 +4,8 @@
 
 A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Telemetry.
 
+WIP https://github.com/leroythelegend/rough_idea_project_cars_csharp
+
 ## Contents
 
 * [Version 1 and 2 Tutorial](#T-Tutorial)
