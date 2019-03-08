@@ -4,6 +4,8 @@
 #include "datasplittimes.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Split_Times_Format_1 : public Data_Split_Times {

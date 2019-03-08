@@ -4,6 +4,8 @@
 #include "datainputstate.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Input_State_Format_1 : public Data_Input_State {

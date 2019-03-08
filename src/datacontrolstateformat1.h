@@ -4,6 +4,8 @@
 #include "datacontrolstate.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Control_State_Format_1 : public Data_Control_State {

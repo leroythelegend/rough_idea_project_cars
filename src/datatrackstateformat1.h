@@ -4,6 +4,8 @@
 #include "datatrackstate.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Track_State_Format_1 : public Data_Track_State {

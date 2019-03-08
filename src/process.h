@@ -13,6 +13,7 @@ namespace pcars {
 
 class Process {
 public:
+
 	using Lap_Data = std::vector<std::shared_ptr<Data> >;
 
 	virtual ~Process() {}

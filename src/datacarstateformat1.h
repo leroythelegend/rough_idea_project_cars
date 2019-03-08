@@ -5,10 +5,13 @@
 #include "datacarstate.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Car_State_Format_1 : public Data_Car_State {
 public:
+
 	Data_Car_State_Format_1(std::shared_ptr<Decoder_Telemetry_Data>);
 	virtual ~Data_Car_State_Format_1() {}
 
