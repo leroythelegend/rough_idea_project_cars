@@ -4,6 +4,8 @@
 #include "decoder.h"
 #include "data.h"
 
+#include <memory>
+
 namespace pcars { 
 
 class Live {

@@ -4,6 +4,8 @@
 #include "datadamagestate.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Damage_State_Format_1 : public Data_Damage_State {

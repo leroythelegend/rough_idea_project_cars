@@ -4,6 +4,8 @@
 #include "datatimes.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Times_Format_1 : public Data_Times {

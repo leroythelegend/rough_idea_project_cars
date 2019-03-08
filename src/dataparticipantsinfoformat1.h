@@ -4,6 +4,8 @@
 #include "dataparticipantsinfo.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Participants_Info_Format_1 : public Data_Participants_Info {

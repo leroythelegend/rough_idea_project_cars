@@ -4,6 +4,8 @@
 #include "datavelocitystate.h"
 #include "decodertelemetrydata.h"
 
+#include <memory>
+
 namespace pcars {
 
 class Data_Velocity_State_Format_1 : public Data_Velocity_State {
