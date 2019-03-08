@@ -9,8 +9,8 @@ CC       = g++
 ifeq (${detected_OS}, Linux  )
   CFLAGS   = -m64 -fPIC -I./ -std=c++14 -Wall -Wextra 
 else
-  #CFLAGS   = -g -m64 -std=c++11 -Wall -Wextra 
-  CFLAGS   = -m64 -std=c++11 -Wall -Wextra 
+  #CFLAGS   = -g -m64 -std=c++14 -Wall -Wextra 
+  CFLAGS   = -m64 -std=c++14 -Wall -Wextra 
 endif
 
 INCLUDES = -I./
