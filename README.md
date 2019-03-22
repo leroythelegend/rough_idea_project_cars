@@ -6,7 +6,7 @@ A set of c++ classes for capturing Project Car's Version 1 and Version 2 UDP Tel
 
 CSharp classes https://github.com/leroythelegend/rough_idea_project_cars_csharp
 
-Simpler C++ classes https://github.com/leroythelegend/rough_idea_project_cars_cpp
+BETTER NEWER Simpler C++ classes https://github.com/leroythelegend/rough_idea_project_cars_cpp
 ## Contents
 
 * [Version 1 and 2 Tutorial](#T-Tutorial)
